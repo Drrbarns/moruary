@@ -1,0 +1,389 @@
+'use client'
+
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { createClient } from '@/utils/supabase/client'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select'
+import { Separator } from '@/components/ui/separator'
+import { ArrowLeft, Loader2, Save, User, Phone, FileText, DollarSign } from 'lucide-react'
+import Link from 'next/link'
+import { toast } from 'sonner'
+
+interface CaseFormProps {
+    branchId: string
+    initialData?: any
+    mode: 'create' | 'edit'
+}
+
+export function CaseForm({ branchId, initialData, mode }: CaseFormProps) {
+    const router = useRouter()
+    const supabase = createClient()
+    const [loading, setLoading] = useState(false)
+
+    // Form state
+    const [formData, setFormData] = useState({
+        tag_no: initialData?.tag_no || '',
+        name_of_deceased: initialData?.name_of_deceased || '',
+        age: initialData?.age || '',
+        gender: initialData?.gender || '',
+        place: initialData?.place || '',
+        admission_date: initialData?.admission_date || new Date().toISOString().split('T')[0],
+        admission_time: initialData?.admission_time || new Date().toTimeString().slice(0, 5),
+        type: initialData?.type || 'Normal',
+        relative_name: initialData?.relative_name || '',
+        relative_contact: initialData?.relative_contact || '',
+        relative_contact_secondary: initialData?.relative_contact_secondary || '',
+        embalming_fee: initialData?.embalming_fee || 0,
+        coldroom_fee: initialData?.coldroom_fee || 0,
+        storage_fee: initialData?.storage_fee || 0,
+        notes: initialData?.notes || '',
+    })
+
+    const handleChange = (field: string, value: any) => {
+        setFormData(prev => ({ ...prev, [field]: value }))
+    }
+
+    const calculateTotalBill = () => {
+        return (
+            Number(formData.embalming_fee || 0) +
+            Number(formData.coldroom_fee || 0) +
+            Number(formData.storage_fee || 0)
+        )
+    }
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        setLoading(true)
+
+        try {
+            const totalBill = calculateTotalBill()
+            const totalPaid = initialData?.total_paid || 0
+            const balance = totalBill - totalPaid
+
+            const caseData = {
+                branch_id: branchId,
+                tag_no: formData.tag_no,
+                name_of_deceased: formData.name_of_deceased,
+                age: formData.age ? Number(formData.age) : null,
+                gender: formData.gender || null,
+                place: formData.place || null,
+                admission_date: formData.admission_date,
+                admission_time: formData.admission_time,
+                type: formData.type,
+                relative_name: formData.relative_name || null,
+                relative_contact: formData.relative_contact || null,
+                relative_contact_secondary: formData.relative_contact_secondary || null,
+                embalming_fee: Number(formData.embalming_fee) || 0,
+                coldroom_fee: Number(formData.coldroom_fee) || 0,
+                storage_fee: Number(formData.storage_fee) || 0,
+                total_bill: totalBill,
+                total_paid: totalPaid,
+                balance: balance,
+                notes: formData.notes || null,
+                status: 'IN_CUSTODY',
+            }
+
+            if (mode === 'create') {
+                const { data, error } = await supabase
+                    .from('deceased_cases')
+                    .insert(caseData)
+                    .select()
+                    .single()
+
+                if (error) throw error
+
+                toast.success('Case created successfully', {
+                    description: `Tag: ${formData.tag_no}`,
+                })
+                router.push(`/dashboard/${branchId}/cases/${data.id}`)
+            } else {
+                const { error } = await supabase
+                    .from('deceased_cases')
+                    .update({ ...caseData, updated_at: new Date().toISOString() })
+                    .eq('id', initialData.id)
+
+                if (error) throw error
+
+                toast.success('Case updated successfully')
+                router.push(`/dashboard/${branchId}/cases/${initialData.id}`)
+            }
+
+            router.refresh()
+        } catch (error: any) {
+            toast.error('Failed to save case', {
+                description: error.message,
+            })
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    return (
+        <form onSubmit={handleSubmit} className="space-y-6 p-8">
+            {/* Header */}
+            <div className="flex items-center gap-4">
+                <Link href={`/dashboard/${branchId}/cases`}>
+                    <Button variant="ghost" size="icon">
+                        <ArrowLeft className="h-5 w-5" />
+                    </Button>
+                </Link>
+                <div>
+                    <h1 className="text-3xl font-bold tracking-tight">
+                        {mode === 'create' ? 'New Admission' : 'Edit Case'}
+                    </h1>
+                    <p className="text-muted-foreground">
+                        {mode === 'create' ? 'Record a new deceased admission' : `Editing: ${initialData?.tag_no}`}
+                    </p>
+                </div>
+            </div>
+
+            <div className="grid gap-6 lg:grid-cols-3">
+                {/* Main Form - Left Side */}
+                <div className="lg:col-span-2 space-y-6">
+                    {/* Deceased Information */}
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="flex items-center gap-2">
+                                <FileText className="h-5 w-5 text-blue-600" />
+                                Deceased Information
+                            </CardTitle>
+                            <CardDescription>Basic details about the deceased</CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                            <div className="grid gap-4 sm:grid-cols-2">
+                                <div className="space-y-2">
+                                    <Label htmlFor="tag_no">Tag Number *</Label>
+                                    <Input
+                                        id="tag_no"
+                                        placeholder="e.g., ACC-2024-001"
+                                        value={formData.tag_no}
+                                        onChange={(e) => handleChange('tag_no', e.target.value)}
+                                        required
+                                        className="font-mono"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="type">Case Type</Label>
+                                    <Select value={formData.type} onValueChange={(v) => handleChange('type', v)}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select type" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="Normal">Normal</SelectItem>
+                                            <SelectItem value="VIP">VIP</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="name_of_deceased">Name of Deceased *</Label>
+                                <Input
+                                    id="name_of_deceased"
+                                    placeholder="Full name"
+                                    value={formData.name_of_deceased}
+                                    onChange={(e) => handleChange('name_of_deceased', e.target.value)}
+                                    required
+                                />
+                            </div>
+
+                            <div className="grid gap-4 sm:grid-cols-3">
+                                <div className="space-y-2">
+                                    <Label htmlFor="age">Age</Label>
+                                    <Input
+                                        id="age"
+                                        type="number"
+                                        placeholder="Years"
+                                        value={formData.age}
+                                        onChange={(e) => handleChange('age', e.target.value)}
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="gender">Gender</Label>
+                                    <Select value={formData.gender} onValueChange={(v) => handleChange('gender', v)}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="Male">Male</SelectItem>
+                                            <SelectItem value="Female">Female</SelectItem>
+                                            <SelectItem value="Other/Unknown">Other/Unknown</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="place">Place/Town</Label>
+                                    <Input
+                                        id="place"
+                                        placeholder="Location"
+                                        value={formData.place}
+                                        onChange={(e) => handleChange('place', e.target.value)}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="grid gap-4 sm:grid-cols-2">
+                                <div className="space-y-2">
+                                    <Label htmlFor="admission_date">Admission Date</Label>
+                                    <Input
+                                        id="admission_date"
+                                        type="date"
+                                        value={formData.admission_date}
+                                        onChange={(e) => handleChange('admission_date', e.target.value)}
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="admission_time">Admission Time</Label>
+                                    <Input
+                                        id="admission_time"
+                                        type="time"
+                                        value={formData.admission_time}
+                                        onChange={(e) => handleChange('admission_time', e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    {/* Relative Information */}
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="flex items-center gap-2">
+                                <User className="h-5 w-5 text-green-600" />
+                                Next of Kin
+                            </CardTitle>
+                            <CardDescription>Contact information for relatives</CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="relative_name">Relative Name</Label>
+                                <Input
+                                    id="relative_name"
+                                    placeholder="Full name of next of kin"
+                                    value={formData.relative_name}
+                                    onChange={(e) => handleChange('relative_name', e.target.value)}
+                                />
+                            </div>
+                            <div className="grid gap-4 sm:grid-cols-2">
+                                <div className="space-y-2">
+                                    <Label htmlFor="relative_contact">Primary Contact</Label>
+                                    <div className="relative">
+                                        <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                        <Input
+                                            id="relative_contact"
+                                            placeholder="0244xxxxxxx"
+                                            className="pl-10"
+                                            value={formData.relative_contact}
+                                            onChange={(e) => handleChange('relative_contact', e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="relative_contact_secondary">Secondary Contact</Label>
+                                    <div className="relative">
+                                        <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                        <Input
+                                            id="relative_contact_secondary"
+                                            placeholder="Optional"
+                                            className="pl-10"
+                                            value={formData.relative_contact_secondary}
+                                            onChange={(e) => handleChange('relative_contact_secondary', e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    {/* Notes */}
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Additional Notes</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <Textarea
+                                placeholder="Any additional information..."
+                                rows={4}
+                                value={formData.notes}
+                                onChange={(e) => handleChange('notes', e.target.value)}
+                            />
+                        </CardContent>
+                    </Card>
+                </div>
+
+                {/* Right Sidebar - Fees */}
+                <div className="space-y-6">
+                    <Card className="sticky top-8">
+                        <CardHeader>
+                            <CardTitle className="flex items-center gap-2">
+                                <DollarSign className="h-5 w-5 text-amber-600" />
+                                Initial Charges
+                            </CardTitle>
+                            <CardDescription>Set the initial fees for this case</CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="embalming_fee">Embalming Fee (GHS)</Label>
+                                <Input
+                                    id="embalming_fee"
+                                    type="number"
+                                    step="0.01"
+                                    placeholder="0.00"
+                                    value={formData.embalming_fee}
+                                    onChange={(e) => handleChange('embalming_fee', e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="coldroom_fee">Coldroom Fee (GHS)</Label>
+                                <Input
+                                    id="coldroom_fee"
+                                    type="number"
+                                    step="0.01"
+                                    placeholder="0.00"
+                                    value={formData.coldroom_fee}
+                                    onChange={(e) => handleChange('coldroom_fee', e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="storage_fee">Storage Fee (GHS)</Label>
+                                <Input
+                                    id="storage_fee"
+                                    type="number"
+                                    step="0.01"
+                                    placeholder="0.00"
+                                    value={formData.storage_fee}
+                                    onChange={(e) => handleChange('storage_fee', e.target.value)}
+                                />
+                            </div>
+
+                            <Separator />
+
+                            <div className="flex justify-between items-center py-2">
+                                <span className="font-medium">Total Bill:</span>
+                                <span className="text-xl font-bold text-blue-600">
+                                    GHS {calculateTotalBill().toFixed(2)}
+                                </span>
+                            </div>
+
+                            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700" disabled={loading}>
+                                {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
+                                {mode === 'create' ? 'Create Case' : 'Save Changes'}
+                            </Button>
+                        </CardContent>
+                    </Card>
+                </div>
+            </div>
+        </form>
+    )
+}
