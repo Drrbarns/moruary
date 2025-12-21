@@ -94,7 +94,7 @@ export default async function PayrollPage({ params }: { params: Promise<{ branch
         <div className="space-y-6">
             {/* Stats Row */}
             <div className="grid gap-4 md:grid-cols-4">
-                <Card className="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white border-0">
+                <Card className="bg-gradient-to-br from-blue-600 to-blue-700 text-white border-0">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium opacity-90">Current Month</CardTitle>
                         <DollarSign className="h-5 w-5 opacity-80" />
@@ -120,7 +120,7 @@ export default async function PayrollPage({ params }: { params: Promise<{ branch
                     </CardContent>
                 </Card>
 
-                <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white border-0">
+                <Card className="bg-gradient-to-br from-blue-400 to-blue-500 text-white border-0">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium opacity-90">Employees</CardTitle>
                         <Users className="h-5 w-5 opacity-80" />
@@ -131,7 +131,7 @@ export default async function PayrollPage({ params }: { params: Promise<{ branch
                     </CardContent>
                 </Card>
 
-                <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white border-0">
+                <Card className="bg-gradient-to-br from-slate-600 to-slate-700 text-white border-0">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium opacity-90">Last Month</CardTitle>
                         <Calendar className="h-5 w-5 opacity-80" />

@@ -83,7 +83,7 @@ export default async function LeavesPage({ params }: { params: Promise<{ branchI
         <div className="space-y-6">
             {/* Stats Row */}
             <div className="grid gap-4 md:grid-cols-4">
-                <Card className="bg-gradient-to-br from-yellow-500 to-yellow-600 text-white border-0">
+                <Card className="bg-gradient-to-br from-blue-400 to-blue-500 text-white border-0">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium opacity-90">Pending</CardTitle>
                         <Clock className="h-5 w-5 opacity-80" />
@@ -94,7 +94,7 @@ export default async function LeavesPage({ params }: { params: Promise<{ branchI
                     </CardContent>
                 </Card>
 
-                <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white border-0">
+                <Card className="bg-gradient-to-br from-blue-600 to-blue-700 text-white border-0">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium opacity-90">Approved</CardTitle>
                         <CheckCircle2 className="h-5 w-5 opacity-80" />
@@ -105,7 +105,7 @@ export default async function LeavesPage({ params }: { params: Promise<{ branchI
                     </CardContent>
                 </Card>
 
-                <Card className="bg-gradient-to-br from-red-500 to-red-600 text-white border-0">
+                <Card className="bg-gradient-to-br from-slate-600 to-slate-700 text-white border-0">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium opacity-90">Rejected</CardTitle>
                         <XCircle className="h-5 w-5 opacity-80" />

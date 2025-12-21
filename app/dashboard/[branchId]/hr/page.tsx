@@ -60,7 +60,7 @@ export default async function HRStaffPage({ params }: { params: Promise<{ branch
         <div className="space-y-6">
             {/* Stats Grid */}
             <div className="grid gap-4 md:grid-cols-4">
-                <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0">
+                <Card className="bg-gradient-to-br from-blue-600 to-blue-700 text-white border-0">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium opacity-90">Total Staff</CardTitle>
                         <Users className="h-5 w-5 opacity-80" />
@@ -71,7 +71,7 @@ export default async function HRStaffPage({ params }: { params: Promise<{ branch
                     </CardContent>
                 </Card>
 
-                <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white border-0">
+                <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium opacity-90">Active</CardTitle>
                         <UserCheck className="h-5 w-5 opacity-80" />
@@ -82,7 +82,7 @@ export default async function HRStaffPage({ params }: { params: Promise<{ branch
                     </CardContent>
                 </Card>
 
-                <Card className="bg-gradient-to-br from-red-500 to-red-600 text-white border-0">
+                <Card className="bg-gradient-to-br from-slate-600 to-slate-700 text-white border-0">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium opacity-90">Inactive</CardTitle>
                         <UserX className="h-5 w-5 opacity-80" />
@@ -93,7 +93,7 @@ export default async function HRStaffPage({ params }: { params: Promise<{ branch
                     </CardContent>
                 </Card>
 
-                <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white border-0">
+                <Card className="bg-gradient-to-br from-blue-400 to-blue-500 text-white border-0">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium opacity-90">Departments</CardTitle>
                         <Briefcase className="h-5 w-5 opacity-80" />

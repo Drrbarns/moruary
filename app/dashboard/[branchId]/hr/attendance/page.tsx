@@ -108,7 +108,7 @@ export default async function AttendancePage({
         <div className="space-y-6">
             {/* Stats Row */}
             <div className="grid gap-4 md:grid-cols-5">
-                <Card className="bg-gradient-to-br from-slate-700 to-slate-800 text-white border-0">
+                <Card className="bg-gradient-to-br from-slate-600 to-slate-700 text-white border-0">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium opacity-90">Total Staff</CardTitle>
                         <Users className="h-5 w-5 opacity-80" />
@@ -118,7 +118,7 @@ export default async function AttendancePage({
                     </CardContent>
                 </Card>
 
-                <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white border-0">
+                <Card className="bg-gradient-to-br from-blue-600 to-blue-700 text-white border-0">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium opacity-90">Present</CardTitle>
                         <CheckCircle2 className="h-5 w-5 opacity-80" />
@@ -128,7 +128,7 @@ export default async function AttendancePage({
                     </CardContent>
                 </Card>
 
-                <Card className="bg-gradient-to-br from-red-500 to-red-600 text-white border-0">
+                <Card className="bg-gradient-to-br from-slate-500 to-slate-600 text-white border-0">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium opacity-90">Absent</CardTitle>
                         <XCircle className="h-5 w-5 opacity-80" />
@@ -138,7 +138,7 @@ export default async function AttendancePage({
                     </CardContent>
                 </Card>
 
-                <Card className="bg-gradient-to-br from-yellow-500 to-yellow-600 text-white border-0">
+                <Card className="bg-gradient-to-br from-blue-400 to-blue-500 text-white border-0">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium opacity-90">Late</CardTitle>
                         <AlertCircle className="h-5 w-5 opacity-80" />
