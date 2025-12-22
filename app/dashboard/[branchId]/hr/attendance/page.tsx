@@ -26,6 +26,8 @@ import {
 import Link from 'next/link'
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isWeekend, isSameDay, parseISO } from 'date-fns'
 import AttendanceMarker from '@/components/hr/attendance-marker'
+import { resolveBranch } from '@/lib/branch-resolver'
+import { notFound } from 'next/navigation'
 
 export default async function AttendancePage({
     params,
@@ -37,6 +39,10 @@ export default async function AttendancePage({
     const { branchId } = await params
     const { date: dateParam } = await searchParams
     const supabase = await createClient()
+
+    // Resolve branch from code or UUID
+    const branch = await resolveBranch(branchId)
+    if (!branch) notFound()
 
     // Get selected date or default to today
     const selectedDate = dateParam ? parseISO(dateParam) : new Date()
@@ -53,7 +59,7 @@ export default async function AttendancePage({
             user_id,
             profile:profiles(id, full_name, phone, is_active)
         `)
-        .eq('branch_id', branchId)
+        .eq('branch_id', branch.id)
 
     const staff = assignments?.map((a: any) => a.profile).filter((p: any) => p?.is_active) || []
 
@@ -61,7 +67,7 @@ export default async function AttendancePage({
     const { data: attendanceRecords } = await supabase
         .from('attendance')
         .select('*')
-        .eq('branch_id', branchId)
+        .eq('branch_id', branch.id)
         .eq('date', dateStr)
 
     // Create attendance map for quick lookup
@@ -78,7 +84,7 @@ export default async function AttendancePage({
     const { data: monthAttendance } = await supabase
         .from('attendance')
         .select('date, status')
-        .eq('branch_id', branchId)
+        .eq('branch_id', branch.id)
         .gte('date', format(monthStart, 'yyyy-MM-dd'))
         .lte('date', format(monthEnd, 'yyyy-MM-dd'))
 

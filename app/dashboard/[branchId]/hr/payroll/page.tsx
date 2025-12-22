@@ -34,6 +34,8 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import CreatePayrollButton from '@/components/hr/create-payroll-button'
+import { resolveBranch } from '@/lib/branch-resolver'
+import { notFound } from 'next/navigation'
 
 function formatCurrency(amount: number | null | undefined): string {
     if (amount === null || amount === undefined) return 'GH₵ 0.00'
@@ -44,6 +46,10 @@ export default async function PayrollPage({ params }: { params: Promise<{ branch
     const { branchId } = await params
     const supabase = await createClient()
 
+    // Resolve branch from code or UUID
+    const branch = await resolveBranch(branchId)
+    if (!branch) notFound()
+
     // Fetch payroll runs for this branch
     const { data: payrollRuns } = await supabase
         .from('payroll_runs')
@@ -51,7 +57,7 @@ export default async function PayrollPage({ params }: { params: Promise<{ branch
             *,
             processed_by_profile:profiles!payroll_runs_processed_by_fkey(full_name)
         `)
-        .eq('branch_id', branchId)
+        .eq('branch_id', branch.id)
         .order('year', { ascending: false })
         .order('month', { ascending: false })
         .limit(12)
@@ -60,7 +66,7 @@ export default async function PayrollPage({ params }: { params: Promise<{ branch
     const { data: assignments } = await supabase
         .from('user_branch_assignments')
         .select('user_id')
-        .eq('branch_id', branchId)
+        .eq('branch_id', branch.id)
 
     const employeeCount = assignments?.length || 0
 
@@ -151,7 +157,7 @@ export default async function PayrollPage({ params }: { params: Promise<{ branch
             <div className="flex flex-col sm:flex-row gap-4 justify-between">
                 <div className="flex gap-2">
                     <CreatePayrollButton branchId={branchId} />
-                    <Link href={`/dashboard/${branchId}/hr/payroll/salary-structures`}>
+                    <Link href={`/dashboard/${branch.code}/hr/payroll/salary-structures`}>
                         <Button variant="outline">
                             <Wallet className="mr-2 h-4 w-4" />
                             Salary Structures
@@ -233,7 +239,7 @@ export default async function PayrollPage({ params }: { params: Promise<{ branch
                                                     </DropdownMenuTrigger>
                                                     <DropdownMenuContent align="end">
                                                         <DropdownMenuItem asChild>
-                                                            <Link href={`/dashboard/${branchId}/hr/payroll/${payroll.id}`}>
+                                                            <Link href={`/dashboard/${branch.code}/hr/payroll/${payroll.id}`}>
                                                                 <Eye className="mr-2 h-4 w-4" />
                                                                 View Details
                                                             </Link>

@@ -19,14 +19,15 @@ import { Separator } from '@/components/ui/separator'
 import { ArrowLeft, Loader2, Save, User, Phone, FileText, DollarSign } from 'lucide-react'
 import Link from 'next/link'
 import { toast } from 'sonner'
+import type { Branch } from '@/lib/types'
 
 interface CaseFormProps {
-    branchId: string
+    branch: Branch
     initialData?: any
     mode: 'create' | 'edit'
 }
 
-export function CaseForm({ branchId, initialData, mode }: CaseFormProps) {
+export function CaseForm({ branch, initialData, mode }: CaseFormProps) {
     const router = useRouter()
     const supabase = createClient()
     const [loading, setLoading] = useState(false)
@@ -46,7 +47,7 @@ export function CaseForm({ branchId, initialData, mode }: CaseFormProps) {
         relative_contact_secondary: initialData?.relative_contact_secondary || '',
         embalming_fee: initialData?.embalming_fee || 0,
         coldroom_fee: initialData?.coldroom_fee || 0,
-        storage_fee: initialData?.storage_fee || 0,
+        initial_deposit: initialData?.total_paid || 0,
         notes: initialData?.notes || '',
     })
 
@@ -57,8 +58,7 @@ export function CaseForm({ branchId, initialData, mode }: CaseFormProps) {
     const calculateTotalBill = () => {
         return (
             Number(formData.embalming_fee || 0) +
-            Number(formData.coldroom_fee || 0) +
-            Number(formData.storage_fee || 0)
+            Number(formData.coldroom_fee || 0)
         )
     }
 
@@ -68,11 +68,11 @@ export function CaseForm({ branchId, initialData, mode }: CaseFormProps) {
 
         try {
             const totalBill = calculateTotalBill()
-            const totalPaid = initialData?.total_paid || 0
+            const totalPaid = mode === 'create' ? Number(formData.initial_deposit || 0) : (initialData?.total_paid || 0)
             const balance = totalBill - totalPaid
 
             const caseData = {
-                branch_id: branchId,
+                branch_id: branch.id,
                 tag_no: formData.tag_no,
                 name_of_deceased: formData.name_of_deceased,
                 age: formData.age ? Number(formData.age) : null,
@@ -86,7 +86,7 @@ export function CaseForm({ branchId, initialData, mode }: CaseFormProps) {
                 relative_contact_secondary: formData.relative_contact_secondary || null,
                 embalming_fee: Number(formData.embalming_fee) || 0,
                 coldroom_fee: Number(formData.coldroom_fee) || 0,
-                storage_fee: Number(formData.storage_fee) || 0,
+                storage_fee: 0,
                 total_bill: totalBill,
                 total_paid: totalPaid,
                 balance: balance,
@@ -106,7 +106,7 @@ export function CaseForm({ branchId, initialData, mode }: CaseFormProps) {
                 toast.success('Case created successfully', {
                     description: `Tag: ${formData.tag_no}`,
                 })
-                router.push(`/dashboard/${branchId}/cases/${data.id}`)
+                router.push(`/dashboard/${branch.code}/cases/${data.id}`)
             } else {
                 const { error } = await supabase
                     .from('deceased_cases')
@@ -116,7 +116,7 @@ export function CaseForm({ branchId, initialData, mode }: CaseFormProps) {
                 if (error) throw error
 
                 toast.success('Case updated successfully')
-                router.push(`/dashboard/${branchId}/cases/${initialData.id}`)
+                router.push(`/dashboard/${branch.code}/cases/${initialData.id}`)
             }
 
             router.refresh()
@@ -133,7 +133,7 @@ export function CaseForm({ branchId, initialData, mode }: CaseFormProps) {
         <form onSubmit={handleSubmit} className="space-y-6 p-8">
             {/* Header */}
             <div className="flex items-center gap-4">
-                <Link href={`/dashboard/${branchId}/cases`}>
+                <Link href={`/dashboard/${branch.code}/cases`}>
                     <Button variant="ghost" size="icon">
                         <ArrowLeft className="h-5 w-5" />
                     </Button>
@@ -356,15 +356,16 @@ export function CaseForm({ branchId, initialData, mode }: CaseFormProps) {
                                 />
                             </div>
                             <div className="space-y-2">
-                                <Label htmlFor="storage_fee">Storage Fee (GHS)</Label>
+                                <Label htmlFor="initial_deposit">Initial Deposit (GHS)</Label>
                                 <Input
-                                    id="storage_fee"
+                                    id="initial_deposit"
                                     type="number"
                                     step="0.01"
                                     placeholder="0.00"
-                                    value={formData.storage_fee}
-                                    onChange={(e) => handleChange('storage_fee', e.target.value)}
+                                    value={formData.initial_deposit}
+                                    onChange={(e) => handleChange('initial_deposit', e.target.value)}
                                 />
+                                <p className="text-xs text-muted-foreground">Amount paid upfront against the final bill</p>
                             </div>
 
                             <Separator />

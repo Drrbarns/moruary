@@ -2,7 +2,7 @@ export type CaseStatus = 'IN_CUSTODY' | 'DISCHARGED' | 'CANCELLED' | 'ARCHIVED'
 export type CaseType = 'Normal' | 'VIP'
 export type Gender = 'Male' | 'Female' | 'Other/Unknown'
 export type PaymentMethod = 'CASH' | 'MOMO' | 'BANK' | 'CARD'
-export type PaymentAllocation = 'EMBALMING' | 'COLDROOM' | 'STORAGE' | 'GENERAL'
+export type PaymentAllocation = 'EMBALMING' | 'COLDROOM' | 'GENERAL'
 
 export interface Branch {
     id: string

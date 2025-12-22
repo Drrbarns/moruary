@@ -105,7 +105,7 @@ CREATE TABLE payments (
   case_id UUID REFERENCES deceased_cases(id) ON DELETE SET NULL,
   amount DECIMAL(10,2) NOT NULL,
   method TEXT CHECK (method IN ('CASH', 'MOMO', 'BANK', 'CARD')),
-  allocation TEXT CHECK (allocation IN ('EMBALMING', 'COLDROOM', 'STORAGE', 'GENERAL')),
+  allocation TEXT CHECK (allocation IN ('EMBALMING', 'COLDROOM', 'GENERAL')),
   receipt_no TEXT,
   paid_on TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()),
   received_by UUID REFERENCES profiles(id),

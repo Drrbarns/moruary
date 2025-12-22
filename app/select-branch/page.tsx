@@ -37,26 +37,26 @@ export default async function SelectBranchPage({ searchParams }: PageProps) {
             // Get primary branch for super admin
             const { data: primaryAssignment } = await supabase
                 .from('user_branch_assignments')
-                .select('branch_id')
+                .select('branch_id, branches:branch_id(code)')
                 .eq('user_id', user.id)
                 .eq('is_primary', true)
                 .single()
 
-            if (primaryAssignment?.branch_id) {
-                redirect(`/dashboard/${primaryAssignment.branch_id}`)
+            if (primaryAssignment?.branches && 'code' in primaryAssignment.branches) {
+                redirect(`/dashboard/${primaryAssignment.branches.code}`)
             }
 
             // If no primary, get the first available branch
             const { data: firstBranch } = await supabase
                 .from('branches')
-                .select('id')
+                .select('code')
                 .eq('is_active', true)
                 .order('name')
                 .limit(1)
                 .single()
 
-            if (firstBranch?.id) {
-                redirect(`/dashboard/${firstBranch.id}`)
+            if (firstBranch?.code) {
+                redirect(`/dashboard/${firstBranch.code}`)
             }
         }
 
@@ -105,7 +105,7 @@ export default async function SelectBranchPage({ searchParams }: PageProps) {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {branches.map((branch) => (
-                            <Link key={branch.id} href={`/dashboard/${branch.id}`} className="group">
+                            <Link key={branch.id} href={`/dashboard/${branch.code}`} className="group">
                                 <Card className="h-full transition-all hover:shadow-lg hover:border-blue-500 cursor-pointer bg-white">
                                     <CardHeader>
                                         <div className="flex items-center justify-between mb-2">
@@ -157,7 +157,7 @@ export default async function SelectBranchPage({ searchParams }: PageProps) {
 
     // If staff has only one branch and NOT manual switch, redirect directly
     if (branches.length === 1 && !isManualSwitch) {
-        redirect(`/dashboard/${branches[0].id}`)
+        redirect(`/dashboard/${branches[0].code}`)
     }
 
     return (
@@ -186,7 +186,7 @@ export default async function SelectBranchPage({ searchParams }: PageProps) {
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {branches.map((branch) => (
-                            <Link key={branch.id} href={`/dashboard/${branch.id}`} className="group">
+                            <Link key={branch.id} href={`/dashboard/${branch.code}`} className="group">
                                 <Card className="h-full transition-all hover:shadow-lg hover:border-blue-500 cursor-pointer bg-white">
                                     <CardHeader>
                                         <div className="flex items-center justify-between mb-2">

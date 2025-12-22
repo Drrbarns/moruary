@@ -1,7 +1,8 @@
 import { ReactNode } from 'react'
 import { Sidebar } from '@/components/dashboard/sidebar'
 import { createClient } from '@/utils/supabase/server'
-import { redirect } from 'next/navigation'
+import { redirect, notFound } from 'next/navigation'
+import { resolveBranch } from '@/lib/branch-resolver'
 
 export default async function DashboardLayout({
     children,
@@ -20,6 +21,12 @@ export default async function DashboardLayout({
     // Next.js 15+ params are async promises
     const { branchId } = await params
 
+    // Resolve branch from code or UUID
+    const branch = await resolveBranch(branchId)
+    if (!branch) {
+        notFound()
+    }
+
     // Security Check: Does user have access to this branch?
     const { data: profile } = await supabase
         .from('profiles')
@@ -35,7 +42,7 @@ export default async function DashboardLayout({
             .from('user_branch_assignments')
             .select('branch_id')
             .eq('user_id', user.id)
-            .eq('branch_id', branchId)
+            .eq('branch_id', branch.id)  // Use resolved branch ID
             .single()
         if (data) hasAccess = true
     }
@@ -47,7 +54,7 @@ export default async function DashboardLayout({
     return (
         <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900">
             <div className="hidden md:flex flex-col w-64 fixed inset-y-0 z-50">
-                <Sidebar branchId={branchId} />
+                <Sidebar branch={branch} />
             </div>
             <main className="flex-1 md:pl-64 transition-all duration-300">
                 <div className="h-full">

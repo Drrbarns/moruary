@@ -13,14 +13,14 @@ import { Separator } from '@/components/ui/separator'
 import { Checkbox } from '@/components/ui/checkbox'
 import { ArrowLeft, Loader2, CheckCircle, AlertTriangle, Calendar, DollarSign } from 'lucide-react'
 import { toast } from 'sonner'
-import type { DeceasedCase } from '@/lib/types'
+import type { DeceasedCase, Branch } from '@/lib/types'
 
 interface DischargeFormProps {
-    branchId: string
+    branch: Branch
     caseData: DeceasedCase
 }
 
-export function DischargeForm({ branchId, caseData }: DischargeFormProps) {
+export function DischargeForm({ branch, caseData }: DischargeFormProps) {
     const router = useRouter()
     const supabase = createClient()
     const [loading, setLoading] = useState(false)
@@ -60,7 +60,7 @@ export function DischargeForm({ branchId, caseData }: DischargeFormProps) {
                 description: `${caseData.name_of_deceased} has been released`,
             })
 
-            router.push(`/dashboard/${branchId}/cases/${caseData.id}`)
+            router.push(`/dashboard/${branch.code}/cases/${caseData.id}`)
             router.refresh()
         } catch (error: any) {
             toast.error('Failed to discharge case', {
@@ -75,7 +75,7 @@ export function DischargeForm({ branchId, caseData }: DischargeFormProps) {
         <div className="space-y-6 p-8 max-w-3xl mx-auto">
             {/* Header */}
             <div className="flex items-center gap-4">
-                <Link href={`/dashboard/${branchId}/cases/${caseData.id}`}>
+                <Link href={`/dashboard/${branch.code}/cases/${caseData.id}`}>
                     <Button variant="ghost" size="icon">
                         <ArrowLeft className="h-5 w-5" />
                     </Button>
@@ -208,7 +208,7 @@ export function DischargeForm({ branchId, caseData }: DischargeFormProps) {
                     </div>
                 </CardContent>
                 <CardFooter className="flex gap-2">
-                    <Link href={`/dashboard/${branchId}/cases/${caseData.id}`} className="flex-1">
+                    <Link href={`/dashboard/${branch.code}/cases/${caseData.id}`} className="flex-1">
                         <Button variant="outline" className="w-full">Cancel</Button>
                     </Link>
                     <Button

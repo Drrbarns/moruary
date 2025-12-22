@@ -12,6 +12,8 @@ import {
 import { Input } from '@/components/ui/input'
 import { History, Search, User, FileText, CreditCard, Settings, LogIn } from 'lucide-react'
 import type { AuditLog } from '@/lib/types'
+import { resolveBranch } from '@/lib/branch-resolver'
+import { notFound } from 'next/navigation'
 
 const actionColors: Record<string, string> = {
     CREATE: 'bg-green-100 text-green-800',
@@ -33,11 +35,15 @@ export default async function AuditPage({ params }: { params: Promise<{ branchId
     const { branchId } = await params
     const supabase = await createClient()
 
+    // Resolve branch from code or UUID
+    const branch = await resolveBranch(branchId)
+    if (!branch) notFound()
+
     // Fetch audit logs for this branch
     const { data: logsData } = await supabase
         .from('audit_logs')
         .select('*, actor:profiles(full_name)')
-        .eq('branch_id', branchId)
+        .eq('branch_id', branch.id)
         .order('created_at', { ascending: false })
         .limit(100)
 

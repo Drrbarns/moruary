@@ -6,19 +6,19 @@ import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { Settings, Building2, Phone, MapPin, Save } from 'lucide-react'
 import type { Branch } from '@/lib/types'
+import { resolveBranch } from '@/lib/branch-resolver'
+import { notFound } from 'next/navigation'
 
 export default async function SettingsPage({ params }: { params: Promise<{ branchId: string }> }) {
     const { branchId } = await params
     const supabase = await createClient()
 
-    // Fetch branch details
-    const { data: branchData } = await supabase
-        .from('branches')
-        .select('*')
-        .eq('id', branchId)
-        .single()
+    // Resolve branch from code or UUID
+    const branch = await resolveBranch(branchId)
+    if (!branch) notFound()
 
-    const branch = branchData as Branch | null
+    // Branch is already resolved, no need to fetch again
+    // const branch = resolvedBranch as Branch
 
     return (
         <div className="space-y-6 p-8 max-w-4xl">

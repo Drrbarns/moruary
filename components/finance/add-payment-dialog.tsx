@@ -26,16 +26,16 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { Loader2, Plus, DollarSign, CheckCircle } from 'lucide-react'
 import { toast } from 'sonner'
-import type { DeceasedCase } from '@/lib/types'
+import type { DeceasedCase, Branch } from '@/lib/types'
 
 interface AddPaymentDialogProps {
-    branchId: string
+    branch: Branch
     cases: DeceasedCase[]
     preselectedCaseId?: string
     onSuccess?: () => void
 }
 
-export function AddPaymentDialog({ branchId, cases, preselectedCaseId, onSuccess }: AddPaymentDialogProps) {
+export function AddPaymentDialog({ branch, cases, preselectedCaseId, onSuccess }: AddPaymentDialogProps) {
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
     const supabase = createClient()
@@ -79,7 +79,7 @@ export function AddPaymentDialog({ branchId, cases, preselectedCaseId, onSuccess
             const { error: paymentError } = await supabase
                 .from('payments')
                 .insert({
-                    branch_id: branchId,
+                    branch_id: branch.id,
                     case_id: formData.case_id,
                     amount: paymentAmount,
                     method: formData.method,
@@ -209,7 +209,6 @@ export function AddPaymentDialog({ branchId, cases, preselectedCaseId, onSuccess
                                     <SelectItem value="GENERAL">General</SelectItem>
                                     <SelectItem value="EMBALMING">Embalming</SelectItem>
                                     <SelectItem value="COLDROOM">Coldroom</SelectItem>
-                                    <SelectItem value="STORAGE">Storage</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>

@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import type { Branch } from '@/lib/types'
 import {
     LayoutDashboard,
     FileText,
@@ -28,14 +29,14 @@ const navItems = [
     { href: '/settings', icon: Settings, label: 'Settings' },
 ]
 
-export function Sidebar({ branchId, className }: { branchId: string, className?: string }) {
+export function Sidebar({ branch, className }: { branch: Branch, className?: string }) {
     const pathname = usePathname()
     const router = useRouter()
     const supabase = createClient()
 
     // Helper to check active (exact or subpath)
     const isActive = (path: string) => {
-        const fullPath = `/dashboard/${branchId}${path}`
+        const fullPath = `/dashboard/${branch.code}${path}`
         if (path === '') return pathname === fullPath
         return pathname.startsWith(fullPath)
     }
@@ -57,7 +58,7 @@ export function Sidebar({ branchId, className }: { branchId: string, className?:
                     return (
                         <Link
                             key={item.href}
-                            href={`/dashboard/${branchId}${item.href}`}
+                            href={`/dashboard/${branch.code}${item.href}`}
                             className={cn(
                                 "flex items-center gap-3 px-6 py-3 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-white",
                                 active && "bg-blue-600/10 text-blue-400 border-r-4 border-blue-500"

@@ -16,6 +16,8 @@ import { Wallet, TrendingUp, CreditCard, Search, Filter, DollarSign, Calendar } 
 import type { Payment, DeceasedCase } from '@/lib/types'
 import { AddPaymentDialog } from '@/components/finance/add-payment-dialog'
 import { Toaster } from '@/components/ui/sonner'
+import { resolveBranch } from '@/lib/branch-resolver'
+import { notFound } from 'next/navigation'
 
 const methodColors: Record<string, string> = {
     CASH: 'bg-green-100 text-green-800',
@@ -35,11 +37,15 @@ export default async function FinancePage({
     const { case: preselectedCaseId } = await searchParams
     const supabase = await createClient()
 
+    // Resolve branch from code or UUID
+    const branch = await resolveBranch(branchId)
+    if (!branch) notFound()
+
     // Fetch payments for this branch
     const { data: paymentsData } = await supabase
         .from('payments')
         .select('*, case:deceased_cases(tag_no, name_of_deceased)')
-        .eq('branch_id', branchId)
+        .eq('branch_id', branch.id)
         .order('paid_on', { ascending: false })
         .limit(50)
 
@@ -49,7 +55,7 @@ export default async function FinancePage({
     const { data: casesData } = await supabase
         .from('deceased_cases')
         .select('*')
-        .eq('branch_id', branchId)
+        .eq('branch_id', branch.id)
         .eq('status', 'IN_CUSTODY')
         .order('created_at', { ascending: false })
 
@@ -77,7 +83,7 @@ export default async function FinancePage({
                     <h1 className="text-3xl font-bold tracking-tight">Finance & Payments</h1>
                     <p className="text-muted-foreground">Record and track all payments</p>
                 </div>
-                <AddPaymentDialog branchId={branchId} cases={cases} preselectedCaseId={preselectedCaseId} />
+                <AddPaymentDialog branch={branch} cases={cases} preselectedCaseId={preselectedCaseId} />
             </div>
 
             {/* Stats Cards */}
@@ -172,7 +178,7 @@ export default async function FinancePage({
                                         <TableCell className="font-mono text-blue-600">{payment.receipt_no}</TableCell>
                                         <TableCell>
                                             {payment.case ? (
-                                                <Link href={`/dashboard/${branchId}/cases/${payment.case_id}`} className="hover:underline">
+                                                <Link href={`/dashboard/${branch.code}/cases/${payment.case_id}`} className="hover:underline">
                                                     <span className="font-mono text-sm">{payment.case.tag_no}</span>
                                                     <span className="text-muted-foreground text-xs block">{payment.case.name_of_deceased}</span>
                                                 </Link>

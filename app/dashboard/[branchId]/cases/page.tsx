@@ -20,6 +20,8 @@ import {
 import { Plus, MoreHorizontal, Eye, Edit, FileText, Search, Filter } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import type { DeceasedCase, CaseStatus } from '@/lib/types'
+import { resolveBranch } from '@/lib/branch-resolver'
+import { notFound } from 'next/navigation'
 
 const statusColors: Record<CaseStatus, string> = {
     IN_CUSTODY: 'bg-blue-100 text-blue-800 border-blue-200',
@@ -39,11 +41,15 @@ export default async function CasesPage({ params }: { params: Promise<{ branchId
     const { branchId } = await params
     const supabase = await createClient()
 
-    // Fetch cases for this branch
+    // Resolve branch from code or UUID
+    const branch = await resolveBranch(branchId)
+    if (!branch) notFound()
+
+    // Fetch cases for this branch using resolved branch ID
     const { data: cases, error } = await supabase
         .from('deceased_cases')
         .select('*')
-        .eq('branch_id', branchId)
+        .eq('branch_id', branch.id)
         .order('created_at', { ascending: false })
 
     const casesData = (cases || []) as DeceasedCase[]
@@ -61,7 +67,7 @@ export default async function CasesPage({ params }: { params: Promise<{ branchId
                     <h1 className="text-3xl font-bold tracking-tight">Case Management</h1>
                     <p className="text-muted-foreground">Manage deceased admissions, storage, and discharges</p>
                 </div>
-                <Link href={`/dashboard/${branchId}/cases/new`}>
+                <Link href={`/dashboard/${branch.code}/cases/new`}>
                     <Button className="bg-blue-600 hover:bg-blue-700">
                         <Plus className="mr-2 h-4 w-4" />
                         New Admission
@@ -129,6 +135,10 @@ export default async function CasesPage({ params }: { params: Promise<{ branchId
                             <TableRow className="bg-slate-50 dark:bg-slate-800">
                                 <TableHead className="font-semibold">Tag No.</TableHead>
                                 <TableHead className="font-semibold">Name of Deceased</TableHead>
+                                <TableHead className="font-semibold">Age</TableHead>
+                                <TableHead className="font-semibold">Gender</TableHead>
+                                <TableHead className="font-semibold">Place/Town</TableHead>
+                                <TableHead className="font-semibold">Relative's Contact</TableHead>
                                 <TableHead className="font-semibold">Admission Date</TableHead>
                                 <TableHead className="font-semibold">Type</TableHead>
                                 <TableHead className="font-semibold">Status</TableHead>
@@ -139,11 +149,11 @@ export default async function CasesPage({ params }: { params: Promise<{ branchId
                         <TableBody>
                             {casesData.length === 0 ? (
                                 <TableRow>
-                                    <TableCell colSpan={7} className="h-32 text-center">
+                                    <TableCell colSpan={11} className="h-32 text-center">
                                         <div className="flex flex-col items-center justify-center text-muted-foreground">
                                             <FileText className="h-8 w-8 mb-2 opacity-50" />
                                             <p>No cases found</p>
-                                            <Link href={`/dashboard/${branchId}/cases/new`} className="mt-2">
+                                            <Link href={`/dashboard/${branch.code}/cases/new`} className="mt-2">
                                                 <Button variant="link" size="sm">Create your first admission</Button>
                                             </Link>
                                         </div>
@@ -158,6 +168,18 @@ export default async function CasesPage({ params }: { params: Promise<{ branchId
                                                 <p className="font-medium">{caseItem.name_of_deceased}</p>
                                                 <p className="text-xs text-muted-foreground">{caseItem.relative_name || 'No relative info'}</p>
                                             </div>
+                                        </TableCell>
+                                        <TableCell>
+                                            <span className="text-sm">{caseItem.age ? `${caseItem.age} yrs` : '-'}</span>
+                                        </TableCell>
+                                        <TableCell>
+                                            <span className="text-sm">{caseItem.gender || '-'}</span>
+                                        </TableCell>
+                                        <TableCell>
+                                            <span className="text-sm">{caseItem.place || '-'}</span>
+                                        </TableCell>
+                                        <TableCell>
+                                            <span className="text-sm font-mono">{caseItem.relative_contact || '-'}</span>
                                         </TableCell>
                                         <TableCell>{caseItem.admission_date || '-'}</TableCell>
                                         <TableCell>
@@ -182,13 +204,13 @@ export default async function CasesPage({ params }: { params: Promise<{ branchId
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end">
                                                     <DropdownMenuItem asChild>
-                                                        <Link href={`/dashboard/${branchId}/cases/${caseItem.id}`}>
+                                                        <Link href={`/dashboard/${branch.code}/cases/${caseItem.id}`}>
                                                             <Eye className="mr-2 h-4 w-4" />
                                                             View Details
                                                         </Link>
                                                     </DropdownMenuItem>
                                                     <DropdownMenuItem asChild>
-                                                        <Link href={`/dashboard/${branchId}/cases/${caseItem.id}/edit`}>
+                                                        <Link href={`/dashboard/${branch.code}/cases/${caseItem.id}/edit`}>
                                                             <Edit className="mr-2 h-4 w-4" />
                                                             Edit Case
                                                         </Link>

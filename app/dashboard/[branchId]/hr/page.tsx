@@ -18,10 +18,16 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { resolveBranch } from '@/lib/branch-resolver'
+import { notFound } from 'next/navigation'
 
 export default async function HRStaffPage({ params }: { params: Promise<{ branchId: string }> }) {
     const { branchId } = await params
     const supabase = await createClient()
+
+    // Resolve branch from code or UUID
+    const branch = await resolveBranch(branchId)
+    if (!branch) notFound()
 
     // Fetch staff assigned to this branch with employee profiles
     const { data: assignments } = await supabase
@@ -45,7 +51,7 @@ export default async function HRStaffPage({ params }: { params: Promise<{ branch
                 )
             )
         `)
-        .eq('branch_id', branchId)
+        .eq('branch_id', branch.id)
 
     const staff = assignments?.map((a: any) => ({
         ...a.profile,
@@ -110,7 +116,7 @@ export default async function HRStaffPage({ params }: { params: Promise<{ branch
             {/* Actions Bar */}
             <div className="flex flex-col sm:flex-row gap-4 justify-between">
                 <div className="flex gap-2">
-                    <Link href={`/dashboard/${branchId}/hr/staff/new`}>
+                    <Link href={`/dashboard/${branch.code}/hr/staff/new`}>
                         <Button className="bg-blue-600 hover:bg-blue-700">
                             <Plus className="mr-2 h-4 w-4" />
                             Add Employee
@@ -145,7 +151,7 @@ export default async function HRStaffPage({ params }: { params: Promise<{ branch
                                         <div className="flex flex-col items-center justify-center text-muted-foreground">
                                             <Users className="h-8 w-8 mb-2 opacity-50" />
                                             <p>No staff assigned to this branch</p>
-                                            <Link href={`/dashboard/${branchId}/hr/staff/new`} className="mt-2">
+                                            <Link href={`/dashboard/${branch.code}/hr/staff/new`} className="mt-2">
                                                 <Button variant="outline" size="sm">
                                                     <Plus className="mr-2 h-4 w-4" />
                                                     Add First Employee
@@ -217,13 +223,13 @@ export default async function HRStaffPage({ params }: { params: Promise<{ branch
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end">
                                                     <DropdownMenuItem asChild>
-                                                        <Link href={`/dashboard/${branchId}/hr/staff/${member.id}`}>
+                                                        <Link href={`/dashboard/${branch.code}/hr/staff/${member.id}`}>
                                                             <Eye className="mr-2 h-4 w-4" />
                                                             View Profile
                                                         </Link>
                                                     </DropdownMenuItem>
                                                     <DropdownMenuItem asChild>
-                                                        <Link href={`/dashboard/${branchId}/hr/staff/${member.id}/edit`}>
+                                                        <Link href={`/dashboard/${branch.code}/hr/staff/${member.id}/edit`}>
                                                             <Edit className="mr-2 h-4 w-4" />
                                                             Edit
                                                         </Link>

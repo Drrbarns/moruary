@@ -30,6 +30,7 @@ import {
     Plus,
 } from 'lucide-react'
 import type { DeceasedCase, CaseStatus, Payment } from '@/lib/types'
+import { resolveBranch } from '@/lib/branch-resolver'
 
 const statusColors: Record<CaseStatus, string> = {
     IN_CUSTODY: 'bg-blue-100 text-blue-800 border-blue-200',
@@ -53,12 +54,16 @@ export default async function CaseDetailsPage({
     const { branchId, caseId } = await params
     const supabase = await createClient()
 
+    // Resolve branch from code or UUID
+    const branch = await resolveBranch(branchId)
+    if (!branch) notFound()
+
     // Fetch case
     const { data: caseData, error } = await supabase
         .from('deceased_cases')
         .select('*')
         .eq('id', caseId)
-        .eq('branch_id', branchId)
+        .eq('branch_id', branch.id)
         .single()
 
     if (error || !caseData) {
@@ -95,7 +100,7 @@ export default async function CaseDetailsPage({
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                 <div className="flex items-start gap-4">
-                    <Link href={`/dashboard/${branchId}/cases`}>
+                    <Link href={`/dashboard/${branch.code}/cases`}>
                         <Button variant="ghost" size="icon">
                             <ArrowLeft className="h-5 w-5" />
                         </Button>
@@ -113,13 +118,13 @@ export default async function CaseDetailsPage({
                 <div className="flex gap-2">
                     {deceased.status === 'IN_CUSTODY' && (
                         <>
-                            <Link href={`/dashboard/${branchId}/finance?case=${caseId}`}>
+                            <Link href={`/dashboard/${branch.code}/finance?case=${caseId}`}>
                                 <Button variant="outline">
                                     <Plus className="mr-2 h-4 w-4" />
                                     Add Payment
                                 </Button>
                             </Link>
-                            <Link href={`/dashboard/${branchId}/cases/${caseId}/discharge`}>
+                            <Link href={`/dashboard/${branch.code}/cases/${caseId}/discharge`}>
                                 <Button className="bg-green-600 hover:bg-green-700">
                                     <CheckCircle className="mr-2 h-4 w-4" />
                                     Discharge
@@ -127,7 +132,7 @@ export default async function CaseDetailsPage({
                             </Link>
                         </>
                     )}
-                    <Link href={`/dashboard/${branchId}/cases/${caseId}/edit`}>
+                    <Link href={`/dashboard/${branch.code}/cases/${caseId}/edit`}>
                         <Button variant="outline">
                             <Edit className="mr-2 h-4 w-4" />
                             Edit
@@ -290,11 +295,6 @@ export default async function CaseDetailsPage({
                                             <TableCell className="font-mono text-sm">{deceased.coldroom_receipt_no || '-'}</TableCell>
                                             <TableCell className="text-right">{deceased.coldroom_fee.toFixed(2)}</TableCell>
                                         </TableRow>
-                                        <TableRow>
-                                            <TableCell>Storage Fee</TableCell>
-                                            <TableCell className="font-mono text-sm">-</TableCell>
-                                            <TableCell className="text-right">{deceased.storage_fee.toFixed(2)}</TableCell>
-                                        </TableRow>
                                         <TableRow className="font-bold bg-slate-50 dark:bg-slate-800">
                                             <TableCell>Total</TableCell>
                                             <TableCell></TableCell>
@@ -325,7 +325,7 @@ export default async function CaseDetailsPage({
                         <CardHeader className="flex flex-row items-center justify-between">
                             <CardTitle>Payment History</CardTitle>
                             {deceased.status === 'IN_CUSTODY' && (
-                                <Link href={`/dashboard/${branchId}/finance?case=${caseId}`}>
+                                <Link href={`/dashboard/${branch.code}/finance?case=${caseId}`}>
                                     <Button size="sm">
                                         <Plus className="mr-2 h-4 w-4" />
                                         Add Payment

@@ -11,10 +11,16 @@ import {
 } from '@/components/ui/table'
 import { FileBarChart, TrendingUp, Users, DollarSign, Calendar, Wallet, CreditCard } from 'lucide-react'
 import type { DeceasedCase, Payment } from '@/lib/types'
+import { resolveBranch } from '@/lib/branch-resolver'
+import { notFound } from 'next/navigation'
 
 export default async function ReportsPage({ params }: { params: Promise<{ branchId: string }> }) {
     const { branchId } = await params
     const supabase = await createClient()
+
+    // Resolve branch from code or UUID
+    const branch = await resolveBranch(branchId)
+    if (!branch) notFound()
 
     // Get current month range
     const now = new Date()
@@ -25,7 +31,7 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
     const { data: casesData } = await supabase
         .from('deceased_cases')
         .select('*')
-        .eq('branch_id', branchId)
+        .eq('branch_id', branch.id)
 
     const cases = (casesData || []) as DeceasedCase[]
 
@@ -33,7 +39,7 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
     const { data: paymentsData } = await supabase
         .from('payments')
         .select('*')
-        .eq('branch_id', branchId)
+        .eq('branch_id', branch.id)
 
     const payments = (paymentsData || []) as Payment[]
 
@@ -103,7 +109,7 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
 
                 <Card className="bg-gradient-to-br from-red-50 to-red-100 border-red-200">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium text-red-700">Outstanding</CardTitle>
+                        <CardTitle className="text-sm font-medium text-red-700">Deposit</CardTitle>
                         <DollarSign className="h-4 w-4 text-red-600" />
                     </CardHeader>
                     <CardContent>
@@ -214,8 +220,8 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
                     <CardDescription>How payments are allocated</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid gap-4 md:grid-cols-4">
-                        {['EMBALMING', 'COLDROOM', 'STORAGE', 'GENERAL'].map((allocation) => (
+                    <div className="grid gap-4 md:grid-cols-3">
+                        {['EMBALMING', 'COLDROOM', 'GENERAL'].map((allocation) => (
                             <div key={allocation} className="text-center p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
                                 <p className="text-sm text-muted-foreground">{allocation}</p>
                                 <p className="text-xl font-bold mt-1">GHS {(allocationBreakdown[allocation] || 0).toFixed(2)}</p>

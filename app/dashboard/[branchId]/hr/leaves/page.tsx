@@ -32,10 +32,16 @@ import {
 } from '@/components/ui/dropdown-menu'
 import NewLeaveRequestButton from '@/components/hr/new-leave-request-button'
 import LeaveActionButtons from '@/components/hr/leave-action-buttons'
+import { resolveBranch } from '@/lib/branch-resolver'
+import { notFound } from 'next/navigation'
 
 export default async function LeavesPage({ params }: { params: Promise<{ branchId: string }> }) {
     const { branchId } = await params
     const supabase = await createClient()
+
+    // Resolve branch from code or UUID
+    const branch = await resolveBranch(branchId)
+    if (!branch) notFound()
 
     // Fetch leave requests for this branch
     const { data: leaveRequests } = await supabase
@@ -46,7 +52,7 @@ export default async function LeavesPage({ params }: { params: Promise<{ branchI
             leave_type:leave_types(name, is_paid),
             approver:profiles!leave_requests_approved_by_fkey(full_name)
         `)
-        .eq('branch_id', branchId)
+        .eq('branch_id', branch.id)
         .order('created_at', { ascending: false })
         .limit(50)
 
@@ -60,7 +66,7 @@ export default async function LeavesPage({ params }: { params: Promise<{ branchI
     const { data: assignments } = await supabase
         .from('user_branch_assignments')
         .select(`profile:profiles(id, full_name, is_active)`)
-        .eq('branch_id', branchId)
+        .eq('branch_id', branch.id)
 
     const staff = assignments?.map((a: any) => a.profile).filter((p: any) => p?.is_active) || []
 
