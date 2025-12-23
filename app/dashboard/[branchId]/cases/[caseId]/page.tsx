@@ -242,7 +242,7 @@ export default async function CaseDetailsPage({
                             <CardHeader>
                                 <CardTitle className="flex items-center gap-2">
                                     <User className="h-5 w-5 text-green-600" />
-                                    Next of Kin
+                                    Relatives Information
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-4">
@@ -285,6 +285,11 @@ export default async function CaseDetailsPage({
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
+                                        <TableRow>
+                                            <TableCell>Registration Fee</TableCell>
+                                            <TableCell className="font-mono text-sm">-</TableCell>
+                                            <TableCell className="text-right">{(deceased.registration_fee || 0).toFixed(2)}</TableCell>
+                                        </TableRow>
                                         <TableRow>
                                             <TableCell>Embalming Fee</TableCell>
                                             <TableCell className="font-mono text-sm">{deceased.embalming_receipt_no || '-'}</TableCell>

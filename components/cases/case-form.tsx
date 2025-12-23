@@ -45,6 +45,7 @@ export function CaseForm({ branch, initialData, mode }: CaseFormProps) {
         relative_name: initialData?.relative_name || '',
         relative_contact: initialData?.relative_contact || '',
         relative_contact_secondary: initialData?.relative_contact_secondary || '',
+        registration_fee: initialData?.registration_fee || 0,
         embalming_fee: initialData?.embalming_fee || 0,
         coldroom_fee: initialData?.coldroom_fee || 0,
         initial_deposit: initialData?.total_paid || 0,
@@ -57,6 +58,7 @@ export function CaseForm({ branch, initialData, mode }: CaseFormProps) {
 
     const calculateTotalBill = () => {
         return (
+            Number(formData.registration_fee || 0) +
             Number(formData.embalming_fee || 0) +
             Number(formData.coldroom_fee || 0)
         )
@@ -84,6 +86,7 @@ export function CaseForm({ branch, initialData, mode }: CaseFormProps) {
                 relative_name: formData.relative_name || null,
                 relative_contact: formData.relative_contact || null,
                 relative_contact_secondary: formData.relative_contact_secondary || null,
+                registration_fee: Number(formData.registration_fee) || 0,
                 embalming_fee: Number(formData.embalming_fee) || 0,
                 coldroom_fee: Number(formData.coldroom_fee) || 0,
                 storage_fee: 0,
@@ -261,7 +264,7 @@ export function CaseForm({ branch, initialData, mode }: CaseFormProps) {
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
                                 <User className="h-5 w-5 text-green-600" />
-                                Next of Kin
+                                Relatives Information
                             </CardTitle>
                             <CardDescription>Contact information for relatives</CardDescription>
                         </CardHeader>
@@ -333,6 +336,17 @@ export function CaseForm({ branch, initialData, mode }: CaseFormProps) {
                             <CardDescription>Set the initial fees for this case</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="registration_fee">Registration Fee (GHS)</Label>
+                                <Input
+                                    id="registration_fee"
+                                    type="number"
+                                    step="0.01"
+                                    placeholder="0.00"
+                                    value={formData.registration_fee}
+                                    onChange={(e) => handleChange('registration_fee', e.target.value)}
+                                />
+                            </div>
                             <div className="space-y-2">
                                 <Label htmlFor="embalming_fee">Embalming Fee (GHS)</Label>
                                 <Input

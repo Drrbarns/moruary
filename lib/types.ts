@@ -42,6 +42,7 @@ export interface DeceasedCase {
     relative_name?: string
     relative_contact?: string
     relative_contact_secondary?: string
+    registration_fee: number
     embalming_fee: number
     coldroom_fee: number
     storage_fee: number
@@ -94,4 +95,19 @@ export interface AuditLog {
     created_at: string
     // Joined data
     actor?: Profile
+}
+
+export interface SalaryStructure {
+    id: string
+    branch_id: string
+    name: string
+    base_salary: number
+    transport_allowance: number
+    housing_allowance: number
+    meal_allowance: number
+    utility_allowance: number
+    apply_ssnit: boolean
+    apply_paye: boolean
+    created_at: string
+    updated_at: string
 }
