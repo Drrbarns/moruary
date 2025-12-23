@@ -31,6 +31,7 @@ import {
 } from 'lucide-react'
 import type { DeceasedCase, CaseStatus, Payment } from '@/lib/types'
 import { resolveBranch } from '@/lib/branch-resolver'
+import { DischargeDialog } from '@/components/cases/discharge-dialog'
 
 const statusColors: Record<CaseStatus, string> = {
     IN_CUSTODY: 'bg-blue-100 text-blue-800 border-blue-200',
@@ -124,12 +125,16 @@ export default async function CaseDetailsPage({
                                     Add Payment
                                 </Button>
                             </Link>
-                            <Link href={`/dashboard/${branch.code}/cases/${caseId}/discharge`}>
-                                <Button className="bg-green-600 hover:bg-green-700">
-                                    <CheckCircle className="mr-2 h-4 w-4" />
-                                    Discharge
-                                </Button>
-                            </Link>
+                            <DischargeDialog
+                                caseId={caseId}
+                                admissionDate={deceased.admission_date || new Date().toISOString()} // Fallback just in case
+                                caseType={deceased.type || 'Normal'}
+                                currentTotalBill={deceased.total_bill || 0}
+                                totalPaid={deceased.total_paid || 0}
+                                branchId={branch.id}
+                                tagNo={deceased.tag_no}
+                                name={deceased.name_of_deceased}
+                            />
                         </>
                     )}
                     <Link href={`/dashboard/${branch.code}/cases/${caseId}/edit`}>

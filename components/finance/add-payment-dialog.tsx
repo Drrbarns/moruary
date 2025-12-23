@@ -207,6 +207,7 @@ export function AddPaymentDialog({ branch, cases, preselectedCaseId, onSuccess }
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="GENERAL">General</SelectItem>
+                                    <SelectItem value="REGISTRATION">Registration</SelectItem>
                                     <SelectItem value="EMBALMING">Embalming</SelectItem>
                                     <SelectItem value="COLDROOM">Coldroom</SelectItem>
                                 </SelectContent>

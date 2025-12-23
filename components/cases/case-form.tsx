@@ -45,9 +45,9 @@ export function CaseForm({ branch, initialData, mode }: CaseFormProps) {
         relative_name: initialData?.relative_name || '',
         relative_contact: initialData?.relative_contact || '',
         relative_contact_secondary: initialData?.relative_contact_secondary || '',
-        registration_fee: initialData?.registration_fee || 0,
-        embalming_fee: initialData?.embalming_fee || 0,
-        coldroom_fee: initialData?.coldroom_fee || 0,
+        registration_fee: initialData?.registration_fee || 350,
+        embalming_fee: initialData?.embalming_fee || 50,
+        coldroom_fee: 0,
         initial_deposit: initialData?.total_paid || 0,
         notes: initialData?.notes || '',
     })
@@ -59,8 +59,7 @@ export function CaseForm({ branch, initialData, mode }: CaseFormProps) {
     const calculateTotalBill = () => {
         return (
             Number(formData.registration_fee || 0) +
-            Number(formData.embalming_fee || 0) +
-            Number(formData.coldroom_fee || 0)
+            Number(formData.embalming_fee || 0)
         )
     }
 
@@ -358,17 +357,7 @@ export function CaseForm({ branch, initialData, mode }: CaseFormProps) {
                                     onChange={(e) => handleChange('embalming_fee', e.target.value)}
                                 />
                             </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="coldroom_fee">Coldroom Fee (GHS)</Label>
-                                <Input
-                                    id="coldroom_fee"
-                                    type="number"
-                                    step="0.01"
-                                    placeholder="0.00"
-                                    value={formData.coldroom_fee}
-                                    onChange={(e) => handleChange('coldroom_fee', e.target.value)}
-                                />
-                            </div>
+
                             <div className="space-y-2">
                                 <Label htmlFor="initial_deposit">Initial Deposit (GHS)</Label>
                                 <Input
