@@ -54,7 +54,7 @@ export default async function DashboardLayout({
     return (
         <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900">
             <div className="hidden md:flex flex-col w-64 fixed inset-y-0 z-50">
-                <Sidebar branch={branch} />
+                <Sidebar branch={branch} userRole={profile?.role || 'staff'} />
             </div>
             <main className="flex-1 md:pl-64 transition-all duration-300">
                 <div className="h-full">

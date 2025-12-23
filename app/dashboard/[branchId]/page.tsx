@@ -6,9 +6,20 @@ export default async function DashboardPage({ params }: { params: Promise<{ bran
     const { branchId } = await params
     const supabase = await createClient()
 
+
     // Get start of current month
     const now = new Date()
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0]
+
+    // Check Role
+    const { data: { user } } = await supabase.auth.getUser()
+    let isStaff = true
+    if (user) {
+        const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+        if (profile && profile.role !== 'staff') {
+            isStaff = false
+        }
+    }
 
     const [
         { count: dischargeCount },
@@ -39,12 +50,12 @@ export default async function DashboardPage({ params }: { params: Promise<{ bran
             .eq('branch_id', branchId)
             .gte('admission_date', startOfMonth),
 
-        // Revenue this month
-        supabase
+        // Revenue this month (Mask for staff)
+        !isStaff ? supabase
             .from('payments')
             .select('amount')
             .eq('branch_id', branchId)
-            .gte('paid_on', startOfMonth),
+            .gte('paid_on', startOfMonth) : Promise.resolve({ data: [] }),
 
         // Active Cases Data for Charts (Gender, Age, Type, Place)
         supabase
@@ -112,13 +123,15 @@ export default async function DashboardPage({ params }: { params: Promise<{ bran
             </div>
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
-                    <h3 className="text-sm font-medium text-muted-foreground">Total Revenue (Month)</h3>
-                    <div className="text-2xl font-bold mt-2 text-gray-900 dark:text-white">
-                        GHS {totalRevenue.toLocaleString('en-GH', { minimumFractionDigits: 2 })}
+                {!isStaff && (
+                    <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+                        <h3 className="text-sm font-medium text-muted-foreground">Total Revenue (Month)</h3>
+                        <div className="text-2xl font-bold mt-2 text-gray-900 dark:text-white">
+                            GHS {totalRevenue.toLocaleString('en-GH', { minimumFractionDigits: 2 })}
+                        </div>
+                        <p className="text-xs text-muted-foreground mt-1">+0% from last month</p>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">+0% from last month</p>
-                </div>
+                )}
                 <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
                     <h3 className="text-sm font-medium text-muted-foreground">Active Cases</h3>
                     <div className="text-2xl font-bold mt-2 text-gray-900 dark:text-white">{activeCasesCount || 0}</div>

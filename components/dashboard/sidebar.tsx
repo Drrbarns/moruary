@@ -20,16 +20,16 @@ import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
 
 const navItems = [
-    { href: '', icon: LayoutDashboard, label: 'Dashboard' },
-    { href: '/cases', icon: FileText, label: 'Cases' },
-    { href: '/finance', icon: Wallet, label: 'Finance' },
-    { href: '/reports', icon: FileBarChart, label: 'Reports' },
-    { href: '/hr', icon: Users, label: 'HR' },
-    { href: '/audit', icon: History, label: 'Audit' },
-    { href: '/settings', icon: Settings, label: 'Settings' },
+    { href: '', icon: LayoutDashboard, label: 'Dashboard', roles: ['super_admin', 'branch_admin', 'staff'] },
+    { href: '/cases', icon: FileText, label: 'Cases', roles: ['super_admin', 'branch_admin', 'staff'] },
+    { href: '/finance', icon: Wallet, label: 'Finance', roles: ['super_admin', 'branch_admin'] },
+    { href: '/reports', icon: FileBarChart, label: 'Reports', roles: ['super_admin', 'branch_admin'] },
+    { href: '/hr', icon: Users, label: 'HR', roles: ['super_admin', 'branch_admin'] },
+    { href: '/audit', icon: History, label: 'Audit', roles: ['super_admin'] },
+    { href: '/settings', icon: Settings, label: 'Settings', roles: ['super_admin', 'branch_admin'] },
 ]
 
-export function Sidebar({ branch, className }: { branch: Branch, className?: string }) {
+export function Sidebar({ branch, userRole, className }: { branch: Branch, userRole?: string, className?: string }) {
     const pathname = usePathname()
     const router = useRouter()
     const supabase = createClient()
@@ -54,6 +54,9 @@ export function Sidebar({ branch, className }: { branch: Branch, className?: str
 
             <div className="flex-1 py-6 flex flex-col gap-1 overflow-y-auto">
                 {navItems.map((item) => {
+                    // Start of RBAC check
+                    if (userRole && !item.roles.includes(userRole)) return null
+
                     const active = isActive(item.href)
                     return (
                         <Link
