@@ -1,13 +1,28 @@
-import { redirect } from 'next/navigation'
-import { createClient } from '@/utils/supabase/server'
+import { SiteHeader } from '@/components/website/site-header'
+import { Hero } from '@/components/website/hero'
+import { ServicesSection } from '@/components/website/services-section'
+import { LocationsContact } from '@/components/website/locations-contact'
+import { SiteFooter } from '@/components/website/site-footer'
 
-export default async function Home() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+export default function Home() {
+  return (
+    <div className="min-h-screen flex flex-col font-sans bg-white">
+      {/* Navigation */}
+      <SiteHeader />
 
-  if (!user) {
-    redirect('/auth/login')
-  }
+      <main className="flex-1">
+        {/* Hero Section */}
+        <Hero />
 
-  redirect('/select-branch')
+        {/* Services */}
+        <ServicesSection />
+
+        {/* Locations & Contact */}
+        <LocationsContact />
+      </main>
+
+      {/* Footer */}
+      <SiteFooter />
+    </div>
+  )
 }
