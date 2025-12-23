@@ -57,7 +57,7 @@ export default async function CasesPage({ params }: { params: Promise<{ branchId
     // Stats
     const activeCases = casesData.filter(c => c.status === 'IN_CUSTODY').length
     const dischargedCases = casesData.filter(c => c.status === 'DISCHARGED').length
-    const totalOutstanding = casesData.reduce((sum, c) => sum + (c.balance || 0), 0)
+    const totalDeposits = casesData.reduce((sum, c) => sum + (c.total_paid || 0), 0)
 
     return (
         <div className="space-y-6 p-8">
@@ -103,14 +103,14 @@ export default async function CasesPage({ params }: { params: Promise<{ branchId
                 </Card>
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Outstanding Balance</CardTitle>
-                        <div className="h-8 w-8 rounded-full bg-red-100 flex items-center justify-center">
-                            <FileText className="h-4 w-4 text-red-600" />
+                        <CardTitle className="text-sm font-medium">Deposits Made</CardTitle>
+                        <div className="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
+                            <FileText className="h-4 w-4 text-green-600" />
                         </div>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold text-red-600">GHS {totalOutstanding.toFixed(2)}</div>
-                        <p className="text-xs text-muted-foreground">Unpaid balances</p>
+                        <div className="text-2xl font-bold text-green-600">GHS {totalDeposits.toFixed(2)}</div>
+                        <p className="text-xs text-muted-foreground">collected at admission</p>
                     </CardContent>
                 </Card>
             </div>
