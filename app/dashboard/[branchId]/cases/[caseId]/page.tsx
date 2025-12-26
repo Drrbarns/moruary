@@ -302,7 +302,7 @@ export default async function CaseDetailsPage({ params }: PageProps) {
                                             <TableCell className="font-mono text-sm">{deceased.coldroom_receipt_no || '-'}</TableCell>
                                             <TableCell className="text-right">
                                                 {deceased.status === 'IN_CUSTODY'
-                                                    ? (projected.storageFee || 0).toFixed(2)
+                                                    ? (projected.coldRoomFee || 0).toFixed(2)
                                                     : (deceased.coldroom_fee || 0).toFixed(2)}
                                             </TableCell>
                                         </TableRow>
