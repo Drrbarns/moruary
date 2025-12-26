@@ -105,6 +105,28 @@ export function CaseForm({ branch, initialData, mode }: CaseFormProps) {
 
                 if (error) throw error
 
+                // Record initial deposit as a payment
+                const initialDeposit = Number(formData.initial_deposit || 0)
+                if (initialDeposit > 0) {
+                    const { error: paymentError } = await supabase
+                        .from('payments')
+                        .insert({
+                            branch_id: branch.id,
+                            case_id: data.id,
+                            amount: initialDeposit,
+                            method: 'CASH', // Default for initial
+                            allocation: 'GENERAL',
+                            receipt_no: `RCT-${Date.now()}`, // Simple receipt generation
+                            paid_on: new Date().toISOString(),
+                            notes: 'Initial Deposit at Admission'
+                        })
+
+                    if (paymentError) {
+                        console.error('Failed to create payment record', paymentError)
+                        toast.error('Case created but failed to save payment record')
+                    }
+                }
+
                 toast.success('Case created successfully', {
                     description: `Tag: ${formData.tag_no}`,
                 })

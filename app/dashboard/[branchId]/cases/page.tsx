@@ -1,3 +1,4 @@
+
 import Link from 'next/link'
 import { createClient } from '@/utils/supabase/server'
 import { Button } from '@/components/ui/button'
@@ -11,14 +12,8 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table'
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Plus, MoreHorizontal, Eye, Edit, FileText, Search, Filter } from 'lucide-react'
-import { Input } from '@/components/ui/input'
+import { Plus, FileText, Filter } from 'lucide-react'
+import { Search } from '@/components/ui/search'
 import type { DeceasedCase, CaseStatus } from '@/lib/types'
 import { resolveBranch } from '@/lib/branch-resolver'
 import { notFound } from 'next/navigation'
@@ -39,27 +34,46 @@ const statusLabels: Record<CaseStatus, string> = {
     ARCHIVED: 'Archived',
 }
 
-export default async function CasesPage({ params }: { params: Promise<{ branchId: string }> }) {
+export default async function CasesPage({
+    params,
+    searchParams,
+}: {
+    params: Promise<{ branchId: string }>
+    searchParams: Promise<{ query?: string }>
+}) {
     const { branchId } = await params
+    const { query } = await searchParams
     const supabase = await createClient()
 
     // Resolve branch from code or UUID
     const branch = await resolveBranch(branchId)
     if (!branch) notFound()
 
-    // Fetch cases for this branch using resolved branch ID
-    const { data: cases, error } = await supabase
+    // Build query
+    let casesQuery = supabase
         .from('deceased_cases')
         .select('*')
         .eq('branch_id', branch.id)
         .order('tag_no', { ascending: true })
 
+    if (query) {
+        casesQuery = casesQuery.or(`name_of_deceased.ilike.%${query}%,tag_no.ilike.%${query}%`)
+    }
+
+    const { data: cases, error } = await casesQuery
     const casesData = (cases || []) as DeceasedCase[]
 
     // Stats
     const activeCases = casesData.filter(c => c.status === 'IN_CUSTODY').length
     const dischargedCases = casesData.filter(c => c.status === 'DISCHARGED').length
-    const totalDeposits = casesData.reduce((sum, c) => sum + (c.total_paid || 0), 0)
+
+    // Calculate Total Deposits from PAYMENTS table (Source of Truth for Cash)
+    const { data: paymentsData } = await supabase
+        .from('payments')
+        .select('amount')
+        .eq('branch_id', branch.id)
+
+    const totalDeposits = paymentsData?.reduce((sum, p) => sum + (p.amount || 0), 0) || 0
 
     return (
         <div className="space-y-6 p-8">
@@ -112,7 +126,7 @@ export default async function CasesPage({ params }: { params: Promise<{ branchId
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold text-green-600">GHS {totalDeposits.toFixed(2)}</div>
-                        <p className="text-xs text-muted-foreground">collected at admission</p>
+                        <p className="text-xs text-muted-foreground">Total collections collected</p>
                     </CardContent>
                 </Card>
             </div>
@@ -121,10 +135,7 @@ export default async function CasesPage({ params }: { params: Promise<{ branchId
             <Card>
                 <CardHeader className="pb-3">
                     <div className="flex flex-col md:flex-row md:items-center gap-4">
-                        <div className="relative flex-1">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                            <Input placeholder="Search by name, tag number..." className="pl-10" />
-                        </div>
+                        <Search placeholder="Search by name, tag number..." />
                         <Button variant="outline" size="sm">
                             <Filter className="mr-2 h-4 w-4" />
                             Filters
