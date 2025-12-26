@@ -87,6 +87,17 @@ export default async function DashboardPage({
         qAdmissions = qAdmissions.gte('admission_date', rangeStart)
     }
 
+    // Demographics Data (Gender, Age, Type, Place)
+    // Uses the same time filter as admissions to reflect the period's data
+    let qDemographics = supabase
+        .from('deceased_cases')
+        .select('gender, age, type, place')
+        .eq('branch_id', branchId)
+
+    if (rangeStart) {
+        qDemographics = qDemographics.gte('admission_date', rangeStart)
+    }
+
     // Revenue
     let qRevenue = !isStaff ? supabase
         .from('payments')
@@ -114,7 +125,7 @@ export default async function DashboardPage({
         { count: newAdmissionsCount },
         { data: revenueData },
         { data: previousRevenueData },
-        { data: activeCasesData },
+        { data: demographicsData },
         { data: recentAdmissions }
     ] = await Promise.all([
         qDischarges,
@@ -122,12 +133,7 @@ export default async function DashboardPage({
         qAdmissions,
         qRevenue ? qRevenue : Promise.resolve({ data: [] }),
         qPrevRevenue,
-        // Active Cases Data for Charts (Current Snapshot)
-        supabase
-            .from('deceased_cases')
-            .select('gender, age, type, place')
-            .eq('branch_id', branchId)
-            .eq('status', 'IN_CUSTODY'),
+        qDemographics,
         // Recent Admissions (Last 5)
         supabase
             .from('deceased_cases')
@@ -161,7 +167,7 @@ export default async function DashboardPage({
     const typeStats = { Normal: 0, VIP: 0 }
     const placeStats: Record<string, number> = {}
 
-    activeCasesData?.forEach(c => {
+    demographicsData?.forEach(c => {
         // Gender
         if (c.gender === 'Male') genderStats.Male++
         else if (c.gender === 'Female') genderStats.Female++
