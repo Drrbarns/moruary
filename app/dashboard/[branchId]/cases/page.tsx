@@ -51,7 +51,7 @@ export default async function CasesPage({ params }: { params: Promise<{ branchId
         .from('deceased_cases')
         .select('*')
         .eq('branch_id', branch.id)
-        .order('created_at', { ascending: false })
+        .order('tag_no', { ascending: true })
 
     const casesData = (cases || []) as DeceasedCase[]
 

@@ -21,8 +21,23 @@ DEFAULT_EMBALMING_FEE = 50.0
 BRANCH_NAME = 'Asuom Branch'
 
 # Supabase Configuration (load from environment or .env file)
+# Supabase Configuration (load from environment or .env file)
+import os
+
+def load_env(path):
+    try:
+        with open(path, 'r') as f:
+            for line in f:
+                if '=' in line:
+                    key, val = line.strip().split('=', 1)
+                    os.environ[key] = val.strip().strip('"').strip("'")
+    except Exception as e:
+        print(f"Error loading env: {e}")
+
+load_env('.env.local')
+
 SUPABASE_URL = os.getenv('NEXT_PUBLIC_SUPABASE_URL', '')
-SUPABASE_KEY = os.getenv('SUPABASE_SERVICE_ROLE_KEY', '')
+SUPABASE_KEY = os.getenv('SUPABASE_SERVICE_ROLE_KEY', '') or os.getenv('NEXT_PUBLIC_SUPABASE_ANON_KEY', '')
 
 if not SUPABASE_URL or not SUPABASE_KEY:
     print("ERROR: Supabase credentials not found!")
