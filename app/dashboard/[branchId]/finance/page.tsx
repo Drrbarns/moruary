@@ -102,8 +102,8 @@ export default async function FinancePage({
     // Total Coldroom = Sum of coldroom_fee from all cases
     const totalColdroom = allCases.reduce((sum, c) => sum + (c.coldroom_fee || 0), 0)
 
-    // Total Revenue = Sum of Total Bills (Expected/Billed Revenue)
-    const totalRevenueBilled = allCases.reduce((sum, c) => sum + (c.total_bill || 0), 0)
+    // Total Revenue = Registration + Coldroom (correct formula)
+    const totalRevenueBilled = totalRegistration + totalColdroom
 
     // Fetch active cases for the payment dialog
     const { data: casesData } = await supabase
