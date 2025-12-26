@@ -46,9 +46,20 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
     // Calculate stats
     const activeCases = cases.filter(c => c.status === 'IN_CUSTODY').length
     const dischargedCases = cases.filter(c => c.status === 'DISCHARGED').length
-    const totalBilled = cases.reduce((sum, c) => sum + (c.total_bill || 0), 0)
+
+    // Total Billed: Sum of Registration (350 or custom) + Coldroom Fees
+    // We strictly exclude Embalming Fee (force 0) and ignore potentially dirty 'total_bill' column
+    const totalBilled = cases.reduce((sum, c) => {
+        const reg = c.registration_fee || 350
+        const cold = c.coldroom_fee || 0
+        return sum + reg + cold
+    }, 0)
+
     const totalCollected = payments.reduce((sum, p) => sum + (p.amount || 0), 0)
-    const totalOutstanding = cases.reduce((sum, c) => sum + (c.balance || 0), 0)
+
+    // Outstanding = Billed - Collected
+    // This provides a consistent view avoiding individual row discrepancies
+    const totalOutstanding = Math.max(0, totalBilled - totalCollected)
 
     // Average Coldroom Fee
     const casesWithColdroom = cases.filter(c => (c.coldroom_fee || 0) > 0)
