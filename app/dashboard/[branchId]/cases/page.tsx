@@ -23,6 +23,7 @@ import type { DeceasedCase, CaseStatus } from '@/lib/types'
 import { resolveBranch } from '@/lib/branch-resolver'
 import { notFound } from 'next/navigation'
 import { CaseActions } from '@/components/cases/case-actions'
+import { calculateProjectedBill } from '@/lib/pricing'
 
 const statusColors: Record<CaseStatus, string> = {
     IN_CUSTODY: 'bg-blue-100 text-blue-800 border-blue-200',
@@ -161,50 +162,78 @@ export default async function CasesPage({ params }: { params: Promise<{ branchId
                                     </TableCell>
                                 </TableRow>
                             ) : (
-                                casesData.map((caseItem) => (
-                                    <TableRow key={caseItem.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
-                                        <TableCell className="font-mono font-medium text-blue-600">{caseItem.tag_no}</TableCell>
-                                        <TableCell>
-                                            <div>
-                                                <p className="font-medium">{caseItem.name_of_deceased}</p>
-                                                <p className="text-xs text-muted-foreground">{caseItem.relative_name || 'No relative info'}</p>
-                                            </div>
-                                        </TableCell>
-                                        <TableCell>
-                                            <span className="text-sm">{caseItem.age ? `${caseItem.age} yrs` : '-'}</span>
-                                        </TableCell>
-                                        <TableCell>
-                                            <span className="text-sm">{caseItem.gender || '-'}</span>
-                                        </TableCell>
-                                        <TableCell>
-                                            <span className="text-sm">{caseItem.place || '-'}</span>
-                                        </TableCell>
-                                        <TableCell>
-                                            <span className="text-sm font-mono">{caseItem.relative_contact || '-'}</span>
-                                        </TableCell>
-                                        <TableCell>{caseItem.admission_date || '-'}</TableCell>
-                                        <TableCell>
-                                            <Badge variant="outline" className={caseItem.type === 'VIP' ? 'bg-amber-50 text-amber-700 border-amber-200' : ''}>
-                                                {caseItem.type || 'Normal'}
-                                            </Badge>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Badge className={statusColors[caseItem.status]}>
-                                                {statusLabels[caseItem.status]}
-                                            </Badge>
-                                        </TableCell>
-                                        <TableCell className={`text-right font-medium ${caseItem.balance > 0 ? 'text-red-600' : 'text-green-600'}`}>
-                                            {caseItem.balance > 0 ? caseItem.balance.toFixed(2) : 'Cleared'}
-                                        </TableCell>
-                                        <TableCell>
-                                            <CaseActions
-                                                caseItem={caseItem}
-                                                branchCode={branch.code}
-                                                branchId={branch.id}
-                                            />
-                                        </TableCell>
-                                    </TableRow>
-                                ))
+                                casesData.map((caseItem) => {
+                                    // Calculate dynamic balance for active cases
+                                    let displayBalance = caseItem.balance || 0
+
+                                    if (caseItem.status === 'IN_CUSTODY') {
+                                        const proj = calculateProjectedBill(
+                                            caseItem.admission_date || caseItem.created_at,
+                                            (caseItem.type as 'Normal' | 'VIP') || 'Normal',
+                                            {
+                                                registration: caseItem.registration_fee || 350,
+                                                embalming: caseItem.embalming_fee || 0
+                                            }
+                                        )
+
+                                        // Logic: Balance = Coldroom Fee - (Total Paid - Registration)
+                                        // Registration is assumed paid.
+                                        const regFee = caseItem.registration_fee || 350
+                                        const totalPaid = caseItem.total_paid || 0
+                                        const paidTowardsStorage = Math.max(0, totalPaid - regFee)
+
+                                        // outstandingTotal from pricing is just the FEES (Coldroom + Embalming).
+                                        // But embalming is 0. So it's just Coldroom Fee.
+                                        const currentFees = proj.outstandingTotal
+
+                                        displayBalance = Math.max(0, currentFees - paidTowardsStorage)
+                                    }
+
+                                    return (
+                                        <TableRow key={caseItem.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                                            <TableCell className="font-mono font-medium text-blue-600">{caseItem.tag_no}</TableCell>
+                                            <TableCell>
+                                                <div>
+                                                    <p className="font-medium">{caseItem.name_of_deceased}</p>
+                                                    <p className="text-xs text-muted-foreground">{caseItem.relative_name || 'No relative info'}</p>
+                                                </div>
+                                            </TableCell>
+                                            <TableCell>
+                                                <span className="text-sm">{caseItem.age ? `${caseItem.age} yrs` : '-'}</span>
+                                            </TableCell>
+                                            <TableCell>
+                                                <span className="text-sm">{caseItem.gender || '-'}</span>
+                                            </TableCell>
+                                            <TableCell>
+                                                <span className="text-sm">{caseItem.place || '-'}</span>
+                                            </TableCell>
+                                            <TableCell>
+                                                <span className="text-sm font-mono">{caseItem.relative_contact || '-'}</span>
+                                            </TableCell>
+                                            <TableCell>{caseItem.admission_date || '-'}</TableCell>
+                                            <TableCell>
+                                                <Badge variant="outline" className={caseItem.type === 'VIP' ? 'bg-amber-50 text-amber-700 border-amber-200' : ''}>
+                                                    {caseItem.type || 'Normal'}
+                                                </Badge>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Badge className={statusColors[caseItem.status]}>
+                                                    {statusLabels[caseItem.status]}
+                                                </Badge>
+                                            </TableCell>
+                                            <TableCell className={`text-right font-medium ${displayBalance > 0 ? 'text-red-600' : 'text-green-600'}`}>
+                                                {displayBalance > 0 ? displayBalance.toFixed(2) : 'Cleared'}
+                                            </TableCell>
+                                            <TableCell>
+                                                <CaseActions
+                                                    caseItem={caseItem}
+                                                    branchCode={branch.code}
+                                                    branchId={branch.id}
+                                                />
+                                            </TableCell>
+                                        </TableRow>
+                                    )
+                                })
                             )}
                         </TableBody>
                     </Table>
