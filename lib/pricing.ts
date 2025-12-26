@@ -38,6 +38,8 @@ export function calculateProjectedBill(
         registrationFee,
         embalmingFee,
         baseTotal: registrationFee + embalmingFee,
-        total: coldRoomFee + registrationFee + embalmingFee
+        total: coldRoomFee + registrationFee + embalmingFee,
+        // Outstanding total excludes registration (paid at admission)
+        outstandingTotal: coldRoomFee + embalmingFee
     };
 }

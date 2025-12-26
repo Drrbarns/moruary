@@ -81,6 +81,13 @@ export default async function CaseDetailsPage({ params }: PageProps) {
     // For discharged, we show the finalized total from DB
     const displayTotalBill = deceased.status === 'IN_CUSTODY' ? projected.total : (deceased.total_bill || 0)
 
+    // Outstanding balance excludes registration fee (paid at admission)
+    // For active cases: use projected coldroom fee only
+    // For discharged: use stored coldroom_fee from DB
+    const outstandingBillAmount = deceased.status === 'IN_CUSTODY'
+        ? projected.outstandingTotal
+        : (deceased.coldroom_fee || 0)
+
     // Payments sum
     const totalPaymentsDerived = payments?.reduce((sum, p) => sum + (p.amount || 0), 0) || 0
     // Use DB total_paid if reliable, otherwise derived. Let's trust DB 'total_paid' if it's being updated, 
@@ -88,7 +95,11 @@ export default async function CaseDetailsPage({ params }: PageProps) {
     // OR just use deceased.total_paid. Let's use deceased.total_paid as primary.
     const paidAmount = deceased.total_paid || 0
 
-    const displayBalance = displayTotalBill - paidAmount
+    // Balance = Outstanding (Coldroom only) - Paid
+    // Note: paidAmount might include registration payments from historical data
+    // We only care about payments towards coldroom for the balance
+    const coldroomPayments = payments?.filter(p => p.allocation === 'COLDROOM' || p.allocation === 'GENERAL').reduce((sum, p) => sum + (p.amount || 0), 0) || 0
+    const displayBalance = Math.max(0, outstandingBillAmount - coldroomPayments)
 
     return (
         <div className="space-y-6 p-8">
@@ -284,11 +295,14 @@ export default async function CaseDetailsPage({ params }: PageProps) {
                                     </TableHeader>
                                     <TableBody>
                                         <TableRow>
-                                            <TableCell>Registration Fee</TableCell>
+                                            <TableCell>
+                                                Registration Fee
+                                                <span className="ml-2 text-xs px-1.5 py-0.5 rounded bg-green-100 text-green-700">Paid at Admission</span>
+                                            </TableCell>
                                             <TableCell className="font-mono text-sm">-</TableCell>
-                                            <TableCell className="text-right">{(deceased.registration_fee || 0).toFixed(2)}</TableCell>
+                                            <TableCell className="text-right text-green-600">{(deceased.registration_fee || 0).toFixed(2)}</TableCell>
                                         </TableRow>
-                                        <TableRow>
+                                        <TableRow className="text-muted-foreground">
                                             <TableCell>Embalming Fee</TableCell>
                                             <TableCell className="font-mono text-sm">{deceased.embalming_receipt_no || '-'}</TableCell>
                                             <TableCell className="text-right">{(deceased.embalming_fee || 0).toFixed(2)}</TableCell>

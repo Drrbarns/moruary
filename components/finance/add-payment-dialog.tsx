@@ -96,21 +96,20 @@ export function AddPaymentDialog({ branch, cases, preselectedCaseId, onSuccess }
         // Determine Balance display based on Allocation
         switch (formData.allocation) {
             case 'REGISTRATION':
+                // Registration is paid at admission, balance should be 0 or show as informational
                 displayBalance = Math.max(0, regFee - paymentStats.registrationPaid)
                 allocationLabel = 'Registration Balance'
                 break
             case 'COLDROOM':
                 // Coldroom balance = Cold Fee - (Total Paid for Coldroom)
-                // Note: Sometimes general payments might technically cover coldroom, but we'll stick to specific allocation if tracked
-                // If we want strict "What is left for Coldroom", we subtract coldroomPaid.
                 displayBalance = Math.max(0, coldFee - paymentStats.coldroomPaid)
                 allocationLabel = 'Coldroom Balance' + (isEstimated ? ' (Est)' : '')
                 break
             case 'GENERAL':
             default:
-                // General balance is Total Bill - Total Paid (all allocations)
-                displayBalance = totalVal - (paymentStats.totalPaid > 0 ? paymentStats.totalPaid : (selectedCase.total_paid || 0))
-                // If we successfully fetched payments, use updated totalPaid, else fallback to case.total_paid
+                // General balance = Coldroom Fee only (Registration is paid at admission)
+                displayBalance = Math.max(0, coldFee - paymentStats.coldroomPaid)
+                allocationLabel = 'Outstanding Balance' + (isEstimated ? ' (Est)' : '')
                 break
         }
     }
