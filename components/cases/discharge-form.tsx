@@ -14,6 +14,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { ArrowLeft, Loader2, CheckCircle, AlertTriangle, Calendar, DollarSign } from 'lucide-react'
 import { toast } from 'sonner'
 import type { DeceasedCase, Branch } from '@/lib/types'
+import { calculateProjectedBill } from '@/lib/pricing'
 
 interface DischargeFormProps {
     branch: Branch
@@ -71,6 +72,38 @@ export function DischargeForm({ branch, caseData }: DischargeFormProps) {
         }
     }
 
+    // Calculate fees dynamically based on selected date
+    const calculatedFees = calculateProjectedBill(
+        admissionDate,
+        (caseData.type as 'Normal' | 'VIP') || 'Normal',
+        {
+            registration: caseData.registration_fee,
+            embalming: caseData.embalming_fee // Should be 0 based on recent changes
+        }
+    )
+
+    // We override the days with our locally calculated one to match the date picker
+    const dailyRate = calculatedFees.dailyRate
+    const currentStorageFee = storageDays * dailyRate
+
+    // Outstanding Balance Logic:
+    // Total Bill = Registration + Coldroom + ...
+    // But Registration is paid at admission.
+    // So Final Balance to Pay = Computed Storage Fee - (Total Paid - Registration Paid)
+    // Simplified: Balance = Computed Storage Fee - (Payments made towards Coldroom)
+
+    // We need to estimate how much was paid towards coldroom.
+    // Since we don't have the payments array here, we rely on caseData.total_paid.
+    // Assumption: Registration fee (350) was paid if total_paid >= 350.
+    const regFee = caseData.registration_fee || 350
+    const totalPaid = caseData.total_paid || 0
+
+    // Amount paid towards storage = Total Paid - Registration Fee
+    // (If total paid is less than registration, then storage paid is 0)
+    const paidTowardsStorage = Math.max(0, totalPaid - regFee)
+
+    const finalBalance = Math.max(0, currentStorageFee - paidTowardsStorage)
+
     return (
         <div className="space-y-6 p-8 max-w-3xl mx-auto">
             {/* Header */}
@@ -87,14 +120,13 @@ export function DischargeForm({ branch, caseData }: DischargeFormProps) {
             </div>
 
             {/* Warning Banner for Outstanding Balance */}
-            {hasOutstandingBalance && (
+            {finalBalance > 0 && (
                 <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-start gap-3">
                     <AlertTriangle className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
                     <div>
                         <h3 className="font-medium text-amber-800">Outstanding Balance</h3>
                         <p className="text-sm text-amber-700">
-                            This case has an unpaid balance of <strong>GHS {caseData.balance.toFixed(2)}</strong>.
-                            You can still proceed with discharge, but ensure this is documented.
+                            This case has an unpaid storage balance of <strong>GHS {finalBalance.toFixed(2)}</strong>.
                         </p>
                     </div>
                 </div>
@@ -147,10 +179,19 @@ export function DischargeForm({ branch, caseData }: DischargeFormProps) {
                         />
                     </div>
 
-                    <div className="bg-slate-50 dark:bg-slate-800 rounded-lg p-4">
+                    <div className="bg-slate-50 dark:bg-slate-800 rounded-lg p-4 space-y-2">
                         <div className="flex justify-between items-center">
-                            <span className="text-muted-foreground">Total Storage Days</span>
-                            <span className="text-xl font-bold">{storageDays} days</span>
+                            <span className="text-muted-foreground">Duration</span>
+                            <span className="font-medium">{storageDays} days</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                            <span className="text-muted-foreground">Rate ({caseData.type})</span>
+                            <span className="font-medium">GHS {dailyRate.toFixed(2)}/day</span>
+                        </div>
+                        <Separator />
+                        <div className="flex justify-between items-center pt-2">
+                            <span className="font-semibold">Computed Storage Fee</span>
+                            <span className="text-xl font-bold text-blue-600">GHS {currentStorageFee.toFixed(2)}</span>
                         </div>
                     </div>
                 </CardContent>
@@ -161,23 +202,23 @@ export function DischargeForm({ branch, caseData }: DischargeFormProps) {
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <DollarSign className="h-5 w-5 text-green-600" />
-                        Financial Summary
+                        Final Payment Due
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                     <div className="flex justify-between">
-                        <span className="text-muted-foreground">Total Bill</span>
-                        <span className="font-medium">GHS {caseData.total_bill.toFixed(2)}</span>
+                        <span className="text-muted-foreground">Storage Fee</span>
+                        <span className="font-medium">GHS {currentStorageFee.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between">
-                        <span className="text-muted-foreground">Total Paid</span>
-                        <span className="font-medium text-green-600">GHS {caseData.total_paid.toFixed(2)}</span>
+                        <span className="text-muted-foreground">Less: Paid towards Storage</span>
+                        <span className="font-medium text-green-600">- GHS {paidTowardsStorage.toFixed(2)}</span>
                     </div>
                     <Separator />
                     <div className="flex justify-between text-lg">
-                        <span className="font-medium">Balance</span>
-                        <span className={`font-bold ${caseData.balance > 0 ? 'text-red-600' : 'text-green-600'}`}>
-                            {caseData.balance > 0 ? `GHS ${caseData.balance.toFixed(2)}` : 'Cleared'}
+                        <span className="font-medium">Balance Due</span>
+                        <span className={`font-bold ${finalBalance > 0 ? 'text-red-600' : 'text-green-600'}`}>
+                            {finalBalance > 0 ? `GHS ${finalBalance.toFixed(2)}` : 'Cleared'}
                         </span>
                     </div>
                 </CardContent>

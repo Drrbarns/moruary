@@ -37,6 +37,7 @@ interface AddPaymentDialogProps {
 }
 
 export function AddPaymentDialog({ branch, cases, preselectedCaseId, onSuccess }: AddPaymentDialogProps) {
+    const router = useRouter()
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
     const [fetchingBalances, setFetchingBalances] = useState(false)
@@ -169,8 +170,8 @@ export function AddPaymentDialog({ branch, cases, preselectedCaseId, onSuccess }
 
             const paymentAmount = Number(formData.amount)
 
-            // Insert payment
-            const { error: paymentError } = await supabase
+            // Insert payment and return data
+            const { data: paymentData, error: paymentError } = await supabase
                 .from('payments')
                 .insert({
                     branch_id: branch.id,
@@ -181,6 +182,8 @@ export function AddPaymentDialog({ branch, cases, preselectedCaseId, onSuccess }
                     receipt_no: `PMT-${Date.now()}`,
                     paid_on: new Date().toISOString(),
                 })
+                .select()
+                .single()
 
             if (paymentError) throw paymentError
 
@@ -209,6 +212,11 @@ export function AddPaymentDialog({ branch, cases, preselectedCaseId, onSuccess }
             setOpen(false)
             setFormData({ case_id: '', amount: '', method: 'CASH', allocation: 'GENERAL' })
             onSuccess?.()
+
+            // Redirect to receipt
+            if (paymentData) {
+                router.push(`/dashboard/${branch.code}/receipts/payment/${paymentData.id}`)
+            }
         } catch (error: any) {
             toast.error('Failed to record payment', {
                 description: error.message,

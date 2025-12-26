@@ -108,7 +108,8 @@ export function CaseForm({ branch, initialData, mode }: CaseFormProps) {
                 toast.success('Case created successfully', {
                     description: `Tag: ${formData.tag_no}`,
                 })
-                router.push(`/dashboard/${branch.code}/cases/${data.id}`)
+                // Redirect to receipt page for printing registration fee receipt
+                router.push(`/dashboard/${branch.code}/receipts/registration/${data.id}`)
             } else {
                 const { error } = await supabase
                     .from('deceased_cases')
