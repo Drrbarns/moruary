@@ -10,8 +10,8 @@
 
 -- Step 1: Create Default Branches
 INSERT INTO branches (id, name, code, address, phone, is_active) VALUES
-  ('11111111-1111-1111-1111-111111111111', 'Accra Main Branch', 'ACC', '123 Independence Avenue, Accra', '0302123456', true),
-  ('22222222-2222-2222-2222-222222222222', 'Kumasi Branch', 'KUM', '45 Prempeh Street, Kumasi', '0322654321', true),
+  ('11111111-1111-1111-1111-111111111111', 'Asuom Branch', 'ASU', 'Near Community Center, Asuom', '0302123456', true),
+  ('22222222-2222-2222-2222-222222222222', 'Asanteman Branch', 'ASA', 'Main Road, Asanteman', '0322654321', true),
   ('33333333-3333-3333-3333-333333333333', 'Takoradi Branch', 'TAK', '78 Market Circle, Takoradi', '0312789012', true)
 ON CONFLICT (code) DO NOTHING;
 
@@ -124,7 +124,7 @@ ON CONFLICT (id) DO UPDATE SET
   role = 'staff',
   full_name = 'John Staff';
 
--- Assign staff to Accra branch only
+-- Assign staff to Asuom branch only
 INSERT INTO user_branch_assignments (user_id, branch_id, is_primary) VALUES
   ('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', '11111111-1111-1111-1111-111111111111', true)
 ON CONFLICT (user_id, branch_id) DO NOTHING;

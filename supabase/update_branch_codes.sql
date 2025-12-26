@@ -15,14 +15,14 @@
 -- 3. Verify the changes in the branches table
 -- =============================================
 
--- Update Accra Main Branch code
+-- Update Asuom Branch code
 UPDATE branches 
-SET code = 'ACC'  -- Change 'ACC' to your desired 3-letter code
+SET code = 'ASU'  -- Change 'ASU' to your desired 3-letter code
 WHERE id = '11111111-1111-1111-1111-111111111111';
 
--- Update Kumasi Branch code
+-- Update Asanteman Branch code
 UPDATE branches 
-SET code = 'KUM'  -- Change 'KUM' to your desired 3-letter code
+SET code = 'ASA'  -- Change 'ASA' to your desired 3-letter code
 WHERE id = '22222222-2222-2222-2222-222222222222';
 
 -- Update Takoradi Branch code

@@ -70,7 +70,7 @@ The `resolveBranch()` function in `lib/branch-resolver.ts` handles both formats:
 
 ```typescript
 // Works with branch codes
-/dashboard/ACC → Resolves to Accra branch
+/dashboard/ASU → Resolves to Asuom branch
 
 // Still works with UUIDs (backward compatible)
 /dashboard/11111111-1111-1111-1111-111111111111 → Also works
