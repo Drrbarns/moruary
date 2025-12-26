@@ -17,8 +17,36 @@ export default async function SettingsPage({ params }: { params: Promise<{ branc
     const branch = await resolveBranch(branchId)
     if (!branch) notFound()
 
-    // Branch is already resolved, no need to fetch again
-    // const branch = resolvedBranch as Branch
+    // Fetch actual receipt sequence numbers
+    const [
+        { count: totalCases },
+        { count: totalPayments },
+        { count: totalDischarges }
+    ] = await Promise.all([
+        // Total admissions
+        supabase
+            .from('deceased_cases')
+            .select('*', { count: 'exact', head: true })
+            .eq('branch_id', branch.id),
+
+        // Total payments
+        supabase
+            .from('payments')
+            .select('*', { count: 'exact', head: true })
+            .eq('branch_id', branch.id),
+
+        // Total discharges
+        supabase
+            .from('deceased_cases')
+            .select('*', { count: 'exact', head: true })
+            .eq('branch_id', branch.id)
+            .eq('status', 'DISCHARGED')
+    ])
+
+    // Format sequence numbers (next number in sequence)
+    const nextAdmissionNo = String((totalCases || 0) + 1).padStart(4, '0')
+    const nextPaymentNo = String((totalPayments || 0) + 1).padStart(4, '0')
+    const nextDischargeNo = String((totalDischarges || 0) + 1).padStart(4, '0')
 
     return (
         <div className="space-y-6 p-8 max-w-4xl">
@@ -126,21 +154,24 @@ export default async function SettingsPage({ params }: { params: Promise<{ branc
             <Card>
                 <CardHeader>
                     <CardTitle>Receipt Numbering</CardTitle>
-                    <CardDescription>Current receipt sequence numbers</CardDescription>
+                    <CardDescription>Current receipt sequence numbers (next in sequence)</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <div className="grid gap-4 md:grid-cols-3">
                         <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg text-center">
-                            <p className="text-sm text-muted-foreground">Admission (ADM)</p>
-                            <p className="text-xl font-mono font-bold mt-1">{branch?.code}-ADM-0001</p>
+                            <p className="text-sm text-muted-foreground">Next Admission (ADM)</p>
+                            <p className="text-xl font-mono font-bold mt-1">{branch?.code}-ADM-{nextAdmissionNo}</p>
+                            <p className="text-xs text-muted-foreground mt-1">{totalCases || 0} total admissions</p>
                         </div>
                         <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg text-center">
-                            <p className="text-sm text-muted-foreground">Payment (PMT)</p>
-                            <p className="text-xl font-mono font-bold mt-1">{branch?.code}-PMT-0001</p>
+                            <p className="text-sm text-muted-foreground">Next Payment (PMT)</p>
+                            <p className="text-xl font-mono font-bold mt-1">{branch?.code}-PMT-{nextPaymentNo}</p>
+                            <p className="text-xs text-muted-foreground mt-1">{totalPayments || 0} total payments</p>
                         </div>
                         <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg text-center">
-                            <p className="text-sm text-muted-foreground">Discharge (DIS)</p>
-                            <p className="text-xl font-mono font-bold mt-1">{branch?.code}-DIS-0001</p>
+                            <p className="text-sm text-muted-foreground">Next Discharge (DIS)</p>
+                            <p className="text-xl font-mono font-bold mt-1">{branch?.code}-DIS-{nextDischargeNo}</p>
+                            <p className="text-xs text-muted-foreground mt-1">{totalDischarges || 0} total discharges</p>
                         </div>
                     </div>
                     <p className="text-xs text-muted-foreground mt-4">

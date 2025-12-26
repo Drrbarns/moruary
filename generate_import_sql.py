@@ -82,7 +82,10 @@ def generate_sql():
     print("Reading Excel file...")
     try:
         df = pd.read_excel(EXCEL_FILE)
+        # Clean column names (remove leading/trailing spaces)
+        df.columns = df.columns.str.strip()
         print(f"Found {len(df)} records\n")
+        print("Columns found:", df.columns.tolist())
     except Exception as e:
         print(f"ERROR reading Excel: {e}")
         return
@@ -169,7 +172,17 @@ def generate_sql():
                 f.write(f"    {balance},\n")
                 f.write(f"    '{safe_str(row.get('EMBALMING RECEIPT', ''))}',\n")
                 f.write(f"    '{safe_str(row.get('COLDROOM RECEIPT', ''))}'\n")
-                f.write("  );\n")
+                f.write("  )\n")
+                f.write("  ON CONFLICT (branch_id, tag_no) DO UPDATE SET\n")
+                f.write("    place = EXCLUDED.place,\n")
+                f.write("    name_of_deceased = EXCLUDED.name_of_deceased,\n")
+                f.write("    age = EXCLUDED.age,\n")
+                f.write("    gender = EXCLUDED.gender,\n")
+                f.write("    admission_date = EXCLUDED.admission_date,\n")
+                f.write("    admission_time = EXCLUDED.admission_time,\n")
+                f.write("    discharge_date = EXCLUDED.discharge_date,\n")
+                f.write("    status = EXCLUDED.status,\n")
+                f.write("    updated_at = NOW();\n")
                 
                 success_count += 1
                 

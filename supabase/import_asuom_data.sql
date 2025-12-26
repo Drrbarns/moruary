@@ -1,7 +1,7 @@
 -- =============================================
 -- ASUOM RECORDS DATA IMPORT
 -- =============================================
--- Generated: 2025-12-26 10:04:25
+-- Generated: 2025-12-26 10:54:34
 -- Total Records: 275
 -- Default Embalming Fee: GHS 50.0
 -- =============================================
@@ -34,7 +34,7 @@ BEGIN
     'Kwame Agbanyi',
     85,
     'Male',
-    '',
+    'Asuom',
     '2024-07-30',
     '07:30:00',
     'Normal',
@@ -52,7 +52,17 @@ BEGIN
     1128.0,
     '1.0',
     '1.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 2: Kwabena Nyame
   INSERT INTO deceased_cases (
@@ -68,7 +78,7 @@ BEGIN
     'Kwabena Nyame',
     100,
     'Male',
-    '',
+    'Abaam',
     '2024-08-01',
     '12:00:00',
     'Normal',
@@ -86,7 +96,17 @@ BEGIN
     1193.0,
     '2.0',
     '2.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 3: Joseph Awuah Gyimah
   INSERT INTO deceased_cases (
@@ -102,7 +122,7 @@ BEGIN
     'Joseph Awuah Gyimah',
     77,
     'Male',
-    '',
+    'Tweapease',
     '2024-08-04',
     '22:10:00',
     'Normal',
@@ -120,7 +140,17 @@ BEGIN
     2740.0,
     '3.0',
     '12.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 4: Akos Aboagyewaa
   INSERT INTO deceased_cases (
@@ -136,7 +166,7 @@ BEGIN
     'Akos Aboagyewaa',
     64,
     'Female',
-    '',
+    'Bomso',
     '2024-08-09',
     '09:41:00',
     'Normal',
@@ -154,7 +184,17 @@ BEGIN
     1518.0,
     '4.0',
     '5.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 5: Kwame
   INSERT INTO deceased_cases (
@@ -170,7 +210,7 @@ BEGIN
     'Kwame',
     45,
     'Male',
-    '',
+    'Asuom',
     '2024-08-15',
     '23:30:00',
     'Normal',
@@ -188,7 +228,17 @@ BEGIN
     998.0,
     '5.0',
     '4.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 6: Emmanuel Osei
   INSERT INTO deceased_cases (
@@ -204,7 +254,7 @@ BEGIN
     'Emmanuel Osei',
     85,
     'Male',
-    '',
+    'Asuom',
     '2024-08-16',
     '07:30:00',
     'Normal',
@@ -222,7 +272,17 @@ BEGIN
     1817.0,
     '6.0',
     '14.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 7: Kwabena Asiamah
   INSERT INTO deceased_cases (
@@ -238,7 +298,7 @@ BEGIN
     'Kwabena Asiamah',
     61,
     'Male',
-    '',
+    'Tweapease',
     '2024-08-16',
     '12:00:00',
     'Normal',
@@ -256,7 +316,17 @@ BEGIN
     3156.0,
     '7.0',
     '24.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 8: Dorothy Koranteng
   INSERT INTO deceased_cases (
@@ -272,7 +342,7 @@ BEGIN
     'Dorothy Koranteng',
     36,
     'Female',
-    '',
+    'Asuom',
     '2024-08-18',
     '07:59:00',
     'Normal',
@@ -290,7 +360,17 @@ BEGIN
     764.0,
     '8.0',
     '3.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 9: Nicholas Appiah
   INSERT INTO deceased_cases (
@@ -306,7 +386,7 @@ BEGIN
     'Nicholas Appiah',
     82,
     'Male',
-    '',
+    'Tweapease',
     '2024-08-20',
     '05:45:00',
     'Normal',
@@ -324,7 +404,17 @@ BEGIN
     5600.0,
     '9.0',
     '39.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 10: Frimpong Manso
   INSERT INTO deceased_cases (
@@ -340,7 +430,7 @@ BEGIN
     'Frimpong Manso',
     86,
     'Male',
-    '',
+    'Asuom',
     '2024-08-25',
     '12:45:00',
     'Normal',
@@ -358,7 +448,17 @@ BEGIN
     2922.0,
     '10.0',
     '19.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 11: Ama Asiedua
   INSERT INTO deceased_cases (
@@ -374,7 +474,7 @@ BEGIN
     'Ama Asiedua',
     67,
     'Female',
-    '',
+    'Asuom',
     '2024-08-28',
     '14:52:00',
     'Normal',
@@ -392,7 +492,17 @@ BEGIN
     5938.0,
     '11.0',
     '59.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 12: Elizabeth Anane
   INSERT INTO deceased_cases (
@@ -408,7 +518,7 @@ BEGIN
     'Elizabeth Anane',
     60,
     'Female',
-    '',
+    'Tweapease',
     '2024-08-28',
     '21:35:00',
     'Normal',
@@ -426,7 +536,17 @@ BEGIN
     6666.0,
     '12.0',
     '86.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 13: Alex Yeboah
   INSERT INTO deceased_cases (
@@ -442,7 +562,7 @@ BEGIN
     'Alex Yeboah',
     66,
     'Male',
-    '',
+    'Asuom',
     '2024-08-30',
     '14:45:00',
     'Normal',
@@ -460,7 +580,17 @@ BEGIN
     2064.0,
     '13.0',
     '13.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 14: Teye Louis
   INSERT INTO deceased_cases (
@@ -476,7 +606,7 @@ BEGIN
     'Teye Louis',
     56,
     'Male',
-    '',
+    'Atobiriso',
     '2024-09-01',
     '10:20:00',
     'Normal',
@@ -494,7 +624,17 @@ BEGIN
     2740.0,
     '14.0',
     '18.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 15: Kwaku Aboagye
   INSERT INTO deceased_cases (
@@ -510,7 +650,7 @@ BEGIN
     'Kwaku Aboagye',
     45,
     'Male',
-    '',
+    'Bomso',
     '2024-09-03',
     '17:40:00',
     'Normal',
@@ -528,7 +668,17 @@ BEGIN
     5782.0,
     '15.0',
     '61.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 16: Evans Kyei
   INSERT INTO deceased_cases (
@@ -544,7 +694,7 @@ BEGIN
     'Evans Kyei',
     31,
     'Male',
-    '',
+    'Asuom',
     '2024-09-04',
     '14:42:00',
     'Normal',
@@ -562,7 +712,17 @@ BEGIN
     2662.0,
     '16.0',
     '17.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 17: Eric Obeng
   INSERT INTO deceased_cases (
@@ -578,7 +738,7 @@ BEGIN
     'Eric Obeng',
     37,
     'Male',
-    '',
+    'Asuom',
     '2024-09-02',
     '17:30:00',
     'Normal',
@@ -596,7 +756,17 @@ BEGIN
     1986.0,
     '17.0',
     '9.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 18: Kojo Sarfo
   INSERT INTO deceased_cases (
@@ -612,7 +782,7 @@ BEGIN
     'Kojo Sarfo',
     78,
     'Male',
-    '',
+    'Asuom',
     '2024-09-08',
     '10:00:00',
     'Normal',
@@ -630,7 +800,17 @@ BEGIN
     1830.0,
     '18.0',
     '7.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 19: Mary Tikromah
   INSERT INTO deceased_cases (
@@ -646,7 +826,7 @@ BEGIN
     'Mary Tikromah',
     75,
     'Female',
-    '',
+    'Asuom',
     '2024-09-08',
     '16:30:00',
     'Normal',
@@ -664,7 +844,17 @@ BEGIN
     6380.0,
     '19.0',
     '87.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 20: Kwasi Fenting
   INSERT INTO deceased_cases (
@@ -680,7 +870,7 @@ BEGIN
     'Kwasi Fenting',
     77,
     'Male',
-    '',
+    'Asuom',
     '2024-09-10',
     '06:30:00',
     'Normal',
@@ -698,7 +888,17 @@ BEGIN
     6835.0,
     '20.0',
     '155.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 21: Vida Adomaa Yaa
   INSERT INTO deceased_cases (
@@ -714,7 +914,7 @@ BEGIN
     'Vida Adomaa Yaa',
     45,
     'Female',
-    '',
+    'Abaam',
     '2024-09-09',
     '20:00:00',
     'Normal',
@@ -732,7 +932,17 @@ BEGIN
     894.0,
     '21.0',
     '6.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 22: Ohene Asiedu
   INSERT INTO deceased_cases (
@@ -748,7 +958,7 @@ BEGIN
     'Ohene Asiedu',
     73,
     'Male',
-    '',
+    'Bomso',
     '2024-09-11',
     '21:30:00',
     'Normal',
@@ -766,7 +976,17 @@ BEGIN
     1752.0,
     '22.0',
     '10.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 23: Samuel Dankyei
   INSERT INTO deceased_cases (
@@ -782,7 +1002,7 @@ BEGIN
     'Samuel Dankyei',
     76,
     'Male',
-    '',
+    'Asuom',
     '2024-09-11',
     '17:30:00',
     'Normal',
@@ -800,7 +1020,17 @@ BEGIN
     2480.0,
     '23.0',
     '21.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 24: Margaret Abena
   INSERT INTO deceased_cases (
@@ -816,7 +1046,7 @@ BEGIN
     'Margaret Abena',
     53,
     'Female',
-    '',
+    'Asuom',
     '2024-09-17',
     '11:20:00',
     'Normal',
@@ -834,7 +1064,17 @@ BEGIN
     1050.0,
     '24.0',
     '8.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 25: Kwasi Anane
   INSERT INTO deceased_cases (
@@ -850,7 +1090,7 @@ BEGIN
     'Kwasi Anane',
     83,
     'Male',
-    '',
+    'Asuom',
     '2024-09-17',
     '18:30:00',
     'Normal',
@@ -868,7 +1108,17 @@ BEGIN
     2324.0,
     '25.0',
     '20.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 26: Samuel Antwi
   INSERT INTO deceased_cases (
@@ -884,7 +1134,7 @@ BEGIN
     'Samuel Antwi',
     35,
     'Male',
-    '',
+    'Abaam',
     '2024-09-25',
     '07:30:00',
     'Normal',
@@ -902,7 +1152,17 @@ BEGIN
     2116.0,
     '26.0',
     '23.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 27: Grace Dzaka
   INSERT INTO deceased_cases (
@@ -918,7 +1178,7 @@ BEGIN
     'Grace Dzaka',
     42,
     'Female',
-    '',
+    'Asuom',
     '2024-09-25',
     '18:30:00',
     'Normal',
@@ -936,7 +1196,17 @@ BEGIN
     2116.0,
     '27.0',
     '25.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 28: Kwaku Twum
   INSERT INTO deceased_cases (
@@ -952,7 +1222,7 @@ BEGIN
     'Kwaku Twum',
     49,
     'Male',
-    '',
+    'Bomso',
     '2024-09-30',
     '16:00:00',
     'Normal',
@@ -970,7 +1240,17 @@ BEGIN
     1986.0,
     '28.0',
     '22.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 29: Raphael Tettey
   INSERT INTO deceased_cases (
@@ -986,7 +1266,7 @@ BEGIN
     'Raphael Tettey',
     53,
     'Male',
-    '',
+    'Akenkase',
     '2024-10-01',
     '11:16:00',
     'Normal',
@@ -1004,7 +1284,17 @@ BEGIN
     2149.0,
     '29.0',
     '16.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 30: Akosua Manu
   INSERT INTO deceased_cases (
@@ -1020,7 +1310,7 @@ BEGIN
     'Akosua Manu',
     62,
     'Female',
-    '',
+    'Bomso',
     '2024-10-02',
     '14:50:00',
     'Normal',
@@ -1038,7 +1328,17 @@ BEGIN
     4573.0,
     '30.0',
     '38.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 31: Kwame Appiah
   INSERT INTO deceased_cases (
@@ -1054,7 +1354,7 @@ BEGIN
     'Kwame Appiah',
     65,
     'Male',
-    '',
+    'Akyemkroso',
     '2024-10-06',
     '17:25:00',
     'Normal',
@@ -1072,7 +1372,17 @@ BEGIN
     1466.0,
     '31.0',
     '15.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 32: Mercy Gyaubea
   INSERT INTO deceased_cases (
@@ -1088,7 +1398,7 @@ BEGIN
     'Mercy Gyaubea',
     90,
     'Female',
-    '',
+    'Asuom',
     '2024-10-07',
     '17:30:00',
     'Normal',
@@ -1106,7 +1416,17 @@ BEGIN
     4898.0,
     '32.0',
     '65.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 33: Janet Amissah
   INSERT INTO deceased_cases (
@@ -1122,7 +1442,7 @@ BEGIN
     'Janet Amissah',
     70,
     'Female',
-    '',
+    'Asuom',
     '2024-10-10',
     '13:30:00',
     'VIP',
@@ -1140,7 +1460,17 @@ BEGIN
     8320.0,
     '33.0',
     '84.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 34: Charlotte Addo
   INSERT INTO deceased_cases (
@@ -1156,7 +1486,7 @@ BEGIN
     'Charlotte Addo',
     23,
     'Female',
-    '',
+    'Tweapease',
     '2024-10-11',
     '17:30:00',
     'VIP',
@@ -1174,7 +1504,17 @@ BEGIN
     7120.0,
     '34.0',
     '54.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 35: Affum Joseph
   INSERT INTO deceased_cases (
@@ -1190,7 +1530,7 @@ BEGIN
     'Affum Joseph',
     60,
     'Male',
-    '',
+    'Subiriso',
     '2024-10-12',
     '08:00:00',
     'Normal',
@@ -1208,7 +1548,17 @@ BEGIN
     946.0,
     '35.0',
     '11.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 36: Kwaku Osei
   INSERT INTO deceased_cases (
@@ -1224,7 +1574,7 @@ BEGIN
     'Kwaku Osei',
     55,
     'Male',
-    '',
+    'Tweapease',
     '2024-10-11',
     '20:00:00',
     'Normal',
@@ -1242,7 +1592,17 @@ BEGIN
     3884.0,
     '36.0',
     '33.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 37: Ofori Richard
   INSERT INTO deceased_cases (
@@ -1258,7 +1618,7 @@ BEGIN
     'Ofori Richard',
     36,
     'Male',
-    '',
+    'Tweapease',
     '2024-10-13',
     '18:00:00',
     'Normal',
@@ -1276,7 +1636,17 @@ BEGIN
     4742.0,
     '37.0',
     '43.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 38: James Tetteh
   INSERT INTO deceased_cases (
@@ -1292,7 +1662,7 @@ BEGIN
     'James Tetteh',
     80,
     'Male',
-    '',
+    'Tweapease',
     '2024-10-18',
     '06:00:00',
     'VIP',
@@ -1310,7 +1680,17 @@ BEGIN
     6320.0,
     '38.0',
     '42.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 39: Akosua Oforiwaa
   INSERT INTO deceased_cases (
@@ -1326,7 +1706,7 @@ BEGIN
     'Akosua Oforiwaa',
     74,
     'Female',
-    '',
+    'Bomso',
     '2024-10-18',
     '21:00:00',
     'Normal',
@@ -1344,7 +1724,17 @@ BEGIN
     4612.0,
     '39.0',
     '62.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 40: Ransford Asiedu
   INSERT INTO deceased_cases (
@@ -1360,7 +1750,7 @@ BEGIN
     'Ransford Asiedu',
     62,
     'Male',
-    '',
+    'Asuom',
     '2024-10-21',
     '16:00:00',
     'Normal',
@@ -1378,7 +1768,17 @@ BEGIN
     6172.0,
     '40.0',
     '96.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 41: Kofi Okyere
   INSERT INTO deceased_cases (
@@ -1394,7 +1794,7 @@ BEGIN
     'Kofi Okyere',
     80,
     'Male',
-    '',
+    'Bomso',
     '2024-10-22',
     '14:50:00',
     'Normal',
@@ -1412,7 +1812,17 @@ BEGIN
     4508.0,
     '41.0',
     '55.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 42: Samuel Mintah
   INSERT INTO deceased_cases (
@@ -1428,7 +1838,7 @@ BEGIN
     'Samuel Mintah',
     71,
     'Male',
-    '',
+    'Tweapease',
     '2024-10-22',
     '18:00:00',
     'Normal',
@@ -1446,7 +1856,17 @@ BEGIN
     3598.0,
     '42.0',
     '31.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 43: Akwasi Tawiah
   INSERT INTO deceased_cases (
@@ -1462,7 +1882,7 @@ BEGIN
     'Akwasi Tawiah',
     55,
     'Male',
-    '',
+    'Tweapease',
     '2024-10-23',
     '16:40:00',
     'Normal',
@@ -1480,7 +1900,17 @@ BEGIN
     6120.0,
     '43.0',
     '90.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 44: Nti Aninkorah
   INSERT INTO deceased_cases (
@@ -1496,7 +1926,7 @@ BEGIN
     'Nti Aninkorah',
     75,
     'Male',
-    '',
+    'Asuom',
     '2024-10-29',
     '10:35:00',
     'Normal',
@@ -1514,7 +1944,17 @@ BEGIN
     5054.0,
     '44.0',
     '81.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 45: Kwao Juliana
   INSERT INTO deceased_cases (
@@ -1530,7 +1970,7 @@ BEGIN
     'Kwao Juliana',
     60,
     'Female',
-    '',
+    'Akawani',
     '2024-11-01',
     '12:00:00',
     'VIP',
@@ -1548,7 +1988,17 @@ BEGIN
     6920.0,
     '45.0',
     '97.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 46: S. A. Adu
   INSERT INTO deceased_cases (
@@ -1564,7 +2014,7 @@ BEGIN
     'S. A. Adu',
     85,
     'Male',
-    '',
+    'Tweapease',
     '2024-11-06',
     '05:00:00',
     'VIP',
@@ -1582,7 +2032,17 @@ BEGIN
     7240.0,
     '46.0',
     '78.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 47: Rose Ayimaah
   INSERT INTO deceased_cases (
@@ -1598,7 +2058,7 @@ BEGIN
     'Rose Ayimaah',
     56,
     'Female',
-    '',
+    'Bomso',
     '2024-11-08',
     '05:30:00',
     'Normal',
@@ -1616,7 +2076,17 @@ BEGIN
     2610.0,
     '47.0',
     '27.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 48: Comfort M. Treku
   INSERT INTO deceased_cases (
@@ -1632,7 +2102,7 @@ BEGIN
     'Comfort M. Treku',
     79,
     'Female',
-    '',
+    'Atobiriso',
     '2024-11-08',
     '13:00:00',
     'Normal',
@@ -1650,7 +2120,17 @@ BEGIN
     3429.0,
     '48.0',
     '30.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 49: Hayford Nyarko
   INSERT INTO deceased_cases (
@@ -1666,7 +2146,7 @@ BEGIN
     'Hayford Nyarko',
     73,
     'Male',
-    '',
+    'Asuom',
     '2024-11-16',
     '12:00:00',
     'Normal',
@@ -1684,7 +2164,17 @@ BEGIN
     3858.0,
     '49.0',
     '64.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 50: Yaw Asiedu
   INSERT INTO deceased_cases (
@@ -1700,7 +2190,7 @@ BEGIN
     'Yaw Asiedu',
     82,
     'Male',
-    '',
+    'Bomso',
     '2024-11-16',
     '17:30:00',
     'VIP',
@@ -1718,7 +2208,17 @@ BEGIN
     3480.0,
     '50.0',
     '28.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 51: Gifty Apochie
   INSERT INTO deceased_cases (
@@ -1734,7 +2234,7 @@ BEGIN
     'Gifty Apochie',
     40,
     'Female',
-    '',
+    'Akenkase',
     '2024-11-18',
     '12:00:00',
     'Normal',
@@ -1752,7 +2252,17 @@ BEGIN
     3568.0,
     '51.0',
     '34.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 52: Mercy Nyarkowaa
   INSERT INTO deceased_cases (
@@ -1768,7 +2278,7 @@ BEGIN
     'Mercy Nyarkowaa',
     70,
     'Female',
-    '',
+    'Asuom',
     '2024-11-22',
     '06:00:00',
     'VIP',
@@ -1786,7 +2296,17 @@ BEGIN
     8000.0,
     '52.0',
     '91.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 53: Janet Awal
   INSERT INTO deceased_cases (
@@ -1802,7 +2322,7 @@ BEGIN
     'Janet Awal',
     42,
     'Female',
-    '',
+    'Asuom',
     '2024-11-25',
     '06:00:00',
     'Normal',
@@ -1820,7 +2340,17 @@ BEGIN
     2714.0,
     '53.0',
     '36.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 54: Kojo Brako
   INSERT INTO deceased_cases (
@@ -1836,7 +2366,7 @@ BEGIN
     'Kojo Brako',
     56,
     'Male',
-    '',
+    'Asuom',
     '2024-11-23',
     '18:30:00',
     'VIP',
@@ -1854,7 +2384,17 @@ BEGIN
     5440.0,
     '54.0',
     '68.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 55: Grace Ankamaah
   INSERT INTO deceased_cases (
@@ -1870,7 +2410,7 @@ BEGIN
     'Grace Ankamaah',
     87,
     'Female',
-    '',
+    'Asuom',
     '2024-11-28',
     '12:32:00',
     'Normal',
@@ -1888,7 +2428,17 @@ BEGIN
     3546.0,
     '55.0',
     '48.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 56: Afia Takyiwaa
   INSERT INTO deceased_cases (
@@ -1904,7 +2454,7 @@ BEGIN
     'Afia Takyiwaa',
     80,
     'Female',
-    '',
+    'Asuom',
     '2024-11-29',
     '12:42:00',
     'VIP',
@@ -1922,7 +2472,17 @@ BEGIN
     4360.0,
     '56.0',
     '40.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 57: Desmond D. George
   INSERT INTO deceased_cases (
@@ -1938,7 +2498,7 @@ BEGIN
     'Desmond D. George',
     62,
     'Male',
-    '',
+    'Bomso',
     '2024-12-01',
     '20:00:00',
     'Normal',
@@ -1956,7 +2516,17 @@ BEGIN
     2922.0,
     '57.0',
     '37.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 58: Paul Agyenim B.
   INSERT INTO deceased_cases (
@@ -1972,7 +2542,7 @@ BEGIN
     'Paul Agyenim B.',
     64,
     'Male',
-    '',
+    'Asuom',
     '2024-12-02',
     '14:43:00',
     'Normal',
@@ -1990,7 +2560,17 @@ BEGIN
     3442.0,
     '58.0',
     '69.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 59: Yaw A.
   INSERT INTO deceased_cases (
@@ -2006,7 +2586,7 @@ BEGIN
     'Yaw A.',
     43,
     'Male',
-    '',
+    'Asuom',
     '2024-11-30',
     '19:00:00',
     'Normal',
@@ -2024,7 +2604,17 @@ BEGIN
     816.0,
     '59.0',
     '26.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 60: Kwaku Samuel
   INSERT INTO deceased_cases (
@@ -2040,7 +2630,7 @@ BEGIN
     'Kwaku Samuel',
     60,
     'Male',
-    '',
+    'Atobiriso',
     '2024-12-13',
     '07:00:00',
     'VIP',
@@ -2058,7 +2648,17 @@ BEGIN
     4360.0,
     '60.0',
     '51.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 61: Teye Amayo
   INSERT INTO deceased_cases (
@@ -2074,7 +2674,7 @@ BEGIN
     'Teye Amayo',
     65,
     'Male',
-    '',
+    'Atobiriso',
     '2024-12-15',
     '19:30:00',
     'Normal',
@@ -2092,7 +2692,17 @@ BEGIN
     2922.0,
     '61.0',
     '49.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 62: Patrick Ankomani
   INSERT INTO deceased_cases (
@@ -2108,7 +2718,7 @@ BEGIN
     'Patrick Ankomani',
     64,
     'Male',
-    '',
+    'Bomso',
     '2024-12-17',
     '07:30:00',
     'Normal',
@@ -2126,7 +2736,17 @@ BEGIN
     3052.0,
     '62.0',
     '60.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 63: Augustina Anima
   INSERT INTO deceased_cases (
@@ -2142,7 +2762,7 @@ BEGIN
     'Augustina Anima',
     52,
     'Female',
-    '',
+    'Asuom',
     '2024-12-18',
     '09:30:00',
     'Normal',
@@ -2160,7 +2780,17 @@ BEGIN
     3754.0,
     '63.0',
     '77.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 64: Asimeng
   INSERT INTO deceased_cases (
@@ -2176,7 +2806,7 @@ BEGIN
     'Asimeng',
     41,
     'Male',
-    '',
+    'Asuom',
     '2024-12-23',
     '12:00:00',
     'Normal',
@@ -2194,7 +2824,17 @@ BEGIN
     2896.0,
     '64.0',
     '41.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 65: Vida Kwakyewaa
   INSERT INTO deceased_cases (
@@ -2210,7 +2850,7 @@ BEGIN
     'Vida Kwakyewaa',
     76,
     'Female',
-    '',
+    'Tweapease',
     '2024-12-23',
     '13:10:00',
     'Normal',
@@ -2228,7 +2868,17 @@ BEGIN
     2896.0,
     '65.0',
     '66.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 66: Mary Antwiwaa
   INSERT INTO deceased_cases (
@@ -2244,7 +2894,7 @@ BEGIN
     'Mary Antwiwaa',
     98,
     'Female',
-    '',
+    'Asuom',
     '2024-12-25',
     '17:00:00',
     'Normal',
@@ -2262,7 +2912,17 @@ BEGIN
     5574.0,
     '66.0',
     '171.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 67: Vida Serwaa
   INSERT INTO deceased_cases (
@@ -2278,7 +2938,7 @@ BEGIN
     'Vida Serwaa',
     60,
     'Female',
-    '',
+    'Asuom',
     '2024-12-27',
     '11:30:00',
     'Normal',
@@ -2296,7 +2956,17 @@ BEGIN
     2792.0,
     '67.0',
     '56.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 68: Christina Darkwaa
   INSERT INTO deceased_cases (
@@ -2312,7 +2982,7 @@ BEGIN
     'Christina Darkwaa',
     68,
     'Female',
-    '',
+    'Asuom',
     '2024-12-27',
     '14:00:00',
     'Normal',
@@ -2330,7 +3000,17 @@ BEGIN
     4976.0,
     '68.0',
     '157.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 69: Comfort  Amponsah
   INSERT INTO deceased_cases (
@@ -2346,7 +3026,7 @@ BEGIN
     'Comfort  Amponsah',
     78,
     'Female',
-    '',
+    'Bomso',
     '2024-12-30',
     '12:00:00',
     'Normal',
@@ -2364,7 +3044,17 @@ BEGIN
     4352.0,
     '69.0',
     '99.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 70: Korkor Ernestina
   INSERT INTO deceased_cases (
@@ -2380,7 +3070,7 @@ BEGIN
     'Korkor Ernestina',
     45,
     'Female',
-    '',
+    'Akenkase',
     '2024-12-31',
     '11:30:00',
     'VIP',
@@ -2398,7 +3088,17 @@ BEGIN
     5040.0,
     '70.0',
     '85.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 71: Martha
   INSERT INTO deceased_cases (
@@ -2414,7 +3114,7 @@ BEGIN
     'Martha',
     80,
     'Female',
-    '',
+    'Bomso',
     '2025-01-01',
     '08:00:00',
     'Normal',
@@ -2432,7 +3132,17 @@ BEGIN
     3390.0,
     '71.0',
     '75.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 72: Atta Akwasi
   INSERT INTO deceased_cases (
@@ -2448,7 +3158,7 @@ BEGIN
     'Atta Akwasi',
     68,
     'Male',
-    '',
+    'Tweapease',
     '2025-01-07',
     '17:00:00',
     'VIP',
@@ -2466,7 +3176,17 @@ BEGIN
     4720.0,
     '72.0',
     '83.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 73: Kofi Mensah
   INSERT INTO deceased_cases (
@@ -2482,7 +3202,7 @@ BEGIN
     'Kofi Mensah',
     50,
     'Male',
-    '',
+    'Asuom',
     '2025-01-09',
     '11:30:00',
     'Normal',
@@ -2500,7 +3220,17 @@ BEGIN
     2454.0,
     '73.0',
     '67.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 74: Kwabena Ayivi
   INSERT INTO deceased_cases (
@@ -2516,7 +3246,7 @@ BEGIN
     'Kwabena Ayivi',
     40,
     'Male',
-    '',
+    'Asuom',
     '2025-01-16',
     '08:30:00',
     'Normal',
@@ -2534,7 +3264,17 @@ BEGIN
     2259.0,
     '74.0',
     '46.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 75: Michael Nimo
   INSERT INTO deceased_cases (
@@ -2550,7 +3290,7 @@ BEGIN
     'Michael Nimo',
     30,
     'Male',
-    '',
+    'Akenkase',
     '2025-01-15',
     '16:30:00',
     'Normal',
@@ -2568,7 +3308,17 @@ BEGIN
     1934.0,
     '75.0',
     '45.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 76: Adwoa Beatrice
   INSERT INTO deceased_cases (
@@ -2584,7 +3334,7 @@ BEGIN
     'Adwoa Beatrice',
     65,
     'Female',
-    '',
+    'Asuom',
     '2025-01-19',
     '23:00:00',
     'Normal',
@@ -2602,7 +3352,17 @@ BEGIN
     3832.0,
     '76.0',
     '98.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 77: Akua
   INSERT INTO deceased_cases (
@@ -2618,7 +3378,7 @@ BEGIN
     'Akua',
     49,
     'Female',
-    '',
+    'Asuom',
     '2025-01-18',
     '23:00:00',
     'Normal',
@@ -2636,7 +3396,17 @@ BEGIN
     2948.0,
     '77.0',
     '79.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 78: Ama Nkansah
   INSERT INTO deceased_cases (
@@ -2652,7 +3422,7 @@ BEGIN
     'Ama Nkansah',
     65,
     'Female',
-    '',
+    'Asuom',
     '2025-01-22',
     '12:15:00',
     'Normal',
@@ -2670,7 +3440,17 @@ BEGIN
     2116.0,
     '78.0',
     '58.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 79: Kwaku Adu
   INSERT INTO deceased_cases (
@@ -2686,7 +3466,7 @@ BEGIN
     'Kwaku Adu',
     55,
     'Male',
-    '',
+    'Asuom',
     '2025-01-26',
     '17:15:00',
     'Normal',
@@ -2704,7 +3484,17 @@ BEGIN
     1102.0,
     '79.0',
     '32.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 80: Ebenezer Kojo
   INSERT INTO deceased_cases (
@@ -2720,7 +3510,7 @@ BEGIN
     'Ebenezer Kojo',
     32,
     'Male',
-    '',
+    'Tweapease',
     '2025-01-27',
     '08:50:00',
     'Normal',
@@ -2738,7 +3528,17 @@ BEGIN
     8356.0,
     '80.0',
     '104.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 81: Hannah Asabea
   INSERT INTO deceased_cases (
@@ -2754,7 +3554,7 @@ BEGIN
     'Hannah Asabea',
     30,
     'Female',
-    '',
+    'Subiriso',
     '2025-01-27',
     '05:15:00',
     'Normal',
@@ -2772,7 +3572,17 @@ BEGIN
     4716.0,
     '81.0',
     '169.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 82: Samson Kofi Mintah
   INSERT INTO deceased_cases (
@@ -2788,7 +3598,7 @@ BEGIN
     'Samson Kofi Mintah',
     77,
     'Male',
-    '',
+    'Nyantiase',
     '2025-01-31',
     '11:00:00',
     'Normal',
@@ -2806,7 +3616,17 @@ BEGIN
     3702.0,
     '82.0',
     '156.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 83: Akua
   INSERT INTO deceased_cases (
@@ -2822,7 +3642,7 @@ BEGIN
     'Akua',
     52,
     'Female',
-    '',
+    'Asuom',
     '2025-01-30',
     '15:00:00',
     'Normal',
@@ -2840,7 +3660,17 @@ BEGIN
     1908.0,
     '83.0',
     '63.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 84: George Frimpong
   INSERT INTO deceased_cases (
@@ -2856,7 +3686,7 @@ BEGIN
     'George Frimpong',
     46,
     'Male',
-    '',
+    'Tweapease',
     '2025-02-02',
     '16:00:00',
     'Normal',
@@ -2874,7 +3704,17 @@ BEGIN
     920.0,
     '84.0',
     '35.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 85: Akosua Yeboah
   INSERT INTO deceased_cases (
@@ -2890,7 +3730,7 @@ BEGIN
     'Akosua Yeboah',
     90,
     'Female',
-    '',
+    'Tweapease',
     '2025-02-04',
     '04:00:00',
     'VIP',
@@ -2908,7 +3748,17 @@ BEGIN
     5000.0,
     '85.0',
     '47.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 86: Yvette Asor
   INSERT INTO deceased_cases (
@@ -2924,7 +3774,7 @@ BEGIN
     'Yvette Asor',
     20,
     'Female',
-    '',
+    'Asuom',
     '2025-02-04',
     '07:00:00',
     'Normal',
@@ -2942,7 +3792,17 @@ BEGIN
     4339.0,
     '86.0',
     '89.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 87: William Mensah
   INSERT INTO deceased_cases (
@@ -2958,7 +3818,7 @@ BEGIN
     'William Mensah',
     54,
     'Male',
-    '',
+    'Akenkase',
     '2025-02-04',
     '16:30:00',
     'Normal',
@@ -2976,7 +3836,17 @@ BEGIN
     4690.0,
     '87.0',
     '172.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 88: Charles Odurakwa
   INSERT INTO deceased_cases (
@@ -2992,7 +3862,7 @@ BEGIN
     'Charles Odurakwa',
     66,
     'Male',
-    '',
+    'Asuom',
     '2025-02-04',
     '19:30:00',
     'Normal',
@@ -3010,7 +3880,17 @@ BEGIN
     1778.0,
     '88.0',
     '53.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 89: Alex Prah
   INSERT INTO deceased_cases (
@@ -3026,7 +3906,7 @@ BEGIN
     'Alex Prah',
     49,
     'Male',
-    '',
+    'Asuom',
     '2025-02-06',
     '12:30:00',
     'Normal',
@@ -3044,7 +3924,17 @@ BEGIN
     582.0,
     '89.0',
     '29.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 90: Margaret Ofosua
   INSERT INTO deceased_cases (
@@ -3060,7 +3950,7 @@ BEGIN
     'Margaret Ofosua',
     66,
     'Female',
-    '',
+    'Asuom',
     '2025-02-09',
     '16:30:00',
     'Normal',
@@ -3078,7 +3968,17 @@ BEGIN
     1648.0,
     '90.0',
     '57.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 91: Faustina Sarfoaa
   INSERT INTO deceased_cases (
@@ -3094,7 +3994,7 @@ BEGIN
     'Faustina Sarfoaa',
     80,
     'Female',
-    '',
+    'Asuom',
     '2025-02-07',
     '15:00:00',
     'Normal',
@@ -3112,7 +4012,17 @@ BEGIN
     5704.0,
     '91.0',
     '186.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 92: Stephen Kofi Boateng
   INSERT INTO deceased_cases (
@@ -3128,7 +4038,7 @@ BEGIN
     'Stephen Kofi Boateng',
     65,
     'Male',
-    '',
+    'Asuom',
     '2025-02-11',
     '14:50:00',
     'VIP',
@@ -3146,7 +4056,17 @@ BEGIN
     7280.0,
     '92.0',
     '179.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 93: Anane Kwame
   INSERT INTO deceased_cases (
@@ -3162,7 +4082,7 @@ BEGIN
     'Anane Kwame',
     68,
     'Male',
-    '',
+    'Asuom',
     '2025-02-17',
     '12:30:00',
     'Normal',
@@ -3180,7 +4100,17 @@ BEGIN
     2168.0,
     '93.0',
     '82.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 94: Beatrice Agyeiwaa
   INSERT INTO deceased_cases (
@@ -3196,7 +4126,7 @@ BEGIN
     'Beatrice Agyeiwaa',
     73,
     'Female',
-    '',
+    'Asuom',
     '2025-02-18',
     '16:00:00',
     'Normal',
@@ -3214,7 +4144,17 @@ BEGIN
     3052.0,
     '94.0',
     '153.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 95: Kwabena Ntiamoah
   INSERT INTO deceased_cases (
@@ -3230,7 +4170,7 @@ BEGIN
     'Kwabena Ntiamoah',
     54,
     'Male',
-    '',
+    'Asuom',
     '2025-02-15',
     '14:00:00',
     'Normal',
@@ -3248,7 +4188,17 @@ BEGIN
     3130.0,
     '95.0',
     '151.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 96: Mama Gladys
   INSERT INTO deceased_cases (
@@ -3264,7 +4214,7 @@ BEGIN
     'Mama Gladys',
     57,
     'Female',
-    '',
+    'Asuom',
     '2025-02-20',
     '09:00:00',
     'Normal',
@@ -3282,7 +4232,17 @@ BEGIN
     1362.0,
     '96.0',
     '52.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 97: Regina Odurowaa
   INSERT INTO deceased_cases (
@@ -3298,7 +4258,7 @@ BEGIN
     'Regina Odurowaa',
     52,
     'Female',
-    '',
+    'Asuom',
     '2025-02-21',
     '12:35:00',
     'Normal',
@@ -3316,7 +4276,17 @@ BEGIN
     2922.0,
     '97.0',
     '92.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 98: Christina Antwi
   INSERT INTO deceased_cases (
@@ -3332,7 +4302,7 @@ BEGIN
     'Christina Antwi',
     90,
     'Female',
-    '',
+    'Asuom',
     '2025-02-24',
     '05:30:00',
     'VIP',
@@ -3350,7 +4320,17 @@ BEGIN
     10120.0,
     '98.0',
     '218.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 99: Kwabena Asiamah
   INSERT INTO deceased_cases (
@@ -3366,7 +4346,7 @@ BEGIN
     'Kwabena Asiamah',
     30,
     'Male',
-    '',
+    'Asuom',
     '2025-02-22',
     '21:00:00',
     'Normal',
@@ -3384,7 +4364,17 @@ BEGIN
     1492.0,
     '99.0',
     '70.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 100: Akosua Otiwaa
   INSERT INTO deceased_cases (
@@ -3400,7 +4390,7 @@ BEGIN
     'Akosua Otiwaa',
     70,
     'Female',
-    '',
+    'Asuom',
     '2025-02-24',
     '19:30:00',
     'Normal',
@@ -3418,7 +4408,17 @@ BEGIN
     1986.0,
     '100.0',
     '80.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 101: Dora
   INSERT INTO deceased_cases (
@@ -3434,7 +4434,7 @@ BEGIN
     'Dora',
     33,
     'Female',
-    '',
+    'Bomso',
     '2025-02-25',
     '22:30:00',
     'Normal',
@@ -3452,7 +4452,17 @@ BEGIN
     1960.0,
     '101.0',
     '76.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 102: Antwi Darkwah
   INSERT INTO deceased_cases (
@@ -3468,7 +4478,7 @@ BEGIN
     'Antwi Darkwah',
     75,
     'Male',
-    '',
+    'Bomso',
     '2025-02-28',
     '14:00:00',
     'VIP',
@@ -3486,7 +4496,17 @@ BEGIN
     10760.0,
     '102.0',
     '246.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 103: Ernestina Sarpeh
   INSERT INTO deceased_cases (
@@ -3502,7 +4522,7 @@ BEGIN
     'Ernestina Sarpeh',
     60,
     'Female',
-    '',
+    'Asuom',
     '2025-03-01',
     '21:00:00',
     'Normal',
@@ -3520,7 +4540,17 @@ BEGIN
     2766.0,
     '103.0',
     '94.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 104: Victor Gameh
   INSERT INTO deceased_cases (
@@ -3536,7 +4566,7 @@ BEGIN
     'Victor Gameh',
     50,
     'Male',
-    '',
+    'Tweapease',
     '2025-02-27',
     '12:00:00',
     'Normal',
@@ -3554,7 +4584,17 @@ BEGIN
     5002.0,
     '104.0',
     '182.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 105: Yaa Love
   INSERT INTO deceased_cases (
@@ -3570,7 +4610,7 @@ BEGIN
     'Yaa Love',
     30,
     'Female',
-    '',
+    'Bomso',
     '2025-03-05',
     '06:20:00',
     'Normal',
@@ -3588,7 +4628,17 @@ BEGIN
     1752.0,
     '105.0',
     '88.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 106: Yaw Twum
   INSERT INTO deceased_cases (
@@ -3604,7 +4654,7 @@ BEGIN
     'Yaw Twum',
     76,
     'Male',
-    '',
+    'Asuom',
     '2025-03-07',
     '13:52:00',
     'Normal',
@@ -3622,7 +4672,17 @@ BEGIN
     3702.0,
     '106.0',
     '168.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 107: Akyea Frimpong
   INSERT INTO deceased_cases (
@@ -3638,7 +4698,7 @@ BEGIN
     'Akyea Frimpong',
     67,
     'Male',
-    '',
+    'Asuom',
     '2025-03-08',
     '13:00:00',
     'VIP',
@@ -3656,7 +4716,17 @@ BEGIN
     4600.0,
     '107.0',
     '162.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 108: Asare Antwi
   INSERT INTO deceased_cases (
@@ -3672,7 +4742,7 @@ BEGIN
     'Asare Antwi',
     38,
     'Male',
-    '',
+    'Akwatia',
     '2025-03-10',
     '12:32:00',
     'Normal',
@@ -3690,7 +4760,17 @@ BEGIN
     2532.0,
     '109.0',
     '95.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 109: Ophelia Ama Dede
   INSERT INTO deceased_cases (
@@ -3706,7 +4786,7 @@ BEGIN
     'Ophelia Ama Dede',
     66,
     'Female',
-    '',
+    'Akwatia',
     '2025-03-11',
     '16:10:00',
     'VIP',
@@ -3724,7 +4804,17 @@ BEGIN
     7280.0,
     '111.0',
     '187.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 110: Darko Dickson
   INSERT INTO deceased_cases (
@@ -3740,7 +4830,7 @@ BEGIN
     'Darko Dickson',
     61,
     'Male',
-    '',
+    'Asuom',
     '2025-03-13',
     '13:04:00',
     'Normal',
@@ -3758,7 +4848,17 @@ BEGIN
     3546.0,
     '113.0',
     '170.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 111: Grace Afrah
   INSERT INTO deceased_cases (
@@ -3774,7 +4874,7 @@ BEGIN
     'Grace Afrah',
     77,
     'Female',
-    '',
+    'Asuom',
     '2025-03-17',
     '16:15:00',
     'VIP',
@@ -3792,7 +4892,17 @@ BEGIN
     3386.0,
     '114.0',
     '93.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 112: Simon Kofi Odonkor
   INSERT INTO deceased_cases (
@@ -3808,7 +4918,7 @@ BEGIN
     'Simon Kofi Odonkor',
     64,
     'Male',
-    '',
+    'Akawani',
     '2025-03-27',
     '09:58:00',
     'Normal',
@@ -3826,7 +4936,17 @@ BEGIN
     2818.0,
     '115.0',
     '164.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 113: Afia Nana
   INSERT INTO deceased_cases (
@@ -3842,7 +4962,7 @@ BEGIN
     'Afia Nana',
     68,
     'Female',
-    '',
+    'Tweapease',
     '2025-03-30',
     '17:00:00',
     'VIP',
@@ -3860,7 +4980,17 @@ BEGIN
     1160.0,
     '116.0',
     '71.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 114: Selina Donkor Ofosua
   INSERT INTO deceased_cases (
@@ -3876,7 +5006,7 @@ BEGIN
     'Selina Donkor Ofosua',
     82,
     'Female',
-    '',
+    'Asuom',
     '2025-03-29',
     '14:00:00',
     'Normal',
@@ -3894,7 +5024,17 @@ BEGIN
     6042.0,
     '117.0',
     '222.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 115: Mary Nnisin
   INSERT INTO deceased_cases (
@@ -3910,7 +5050,7 @@ BEGIN
     'Mary Nnisin',
     100,
     'Female',
-    '',
+    'Abenaso',
     '2025-03-31',
     '20:00:00',
     'Normal',
@@ -3928,7 +5068,17 @@ BEGIN
     4152.0,
     '118.0',
     '190.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 116: Alice Abena Korkor
   INSERT INTO deceased_cases (
@@ -3944,7 +5094,7 @@ BEGIN
     'Alice Abena Korkor',
     61,
     'Female',
-    '',
+    'Asuom',
     '2025-04-06',
     '15:00:00',
     'Normal',
@@ -3962,7 +5112,17 @@ BEGIN
     1830.0,
     '119.0',
     '152.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 117: Grace Ampofowaa
   INSERT INTO deceased_cases (
@@ -3978,7 +5138,7 @@ BEGIN
     'Grace Ampofowaa',
     63,
     'Female',
-    '',
+    'Asuom',
     '2025-04-08',
     '11:36:00',
     'VIP',
@@ -3996,7 +5156,17 @@ BEGIN
     5040.0,
     '120.0',
     '176.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 118: Janet Adwapa
   INSERT INTO deceased_cases (
@@ -4012,7 +5182,7 @@ BEGIN
     'Janet Adwapa',
     55,
     'Female',
-    '',
+    'Asuom',
     '2025-04-10',
     '20:00:00',
     'VIP',
@@ -4030,7 +5200,17 @@ BEGIN
     5780.0,
     '121.0',
     '191.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 119: Jennifer Kyeraa
   INSERT INTO deceased_cases (
@@ -4046,7 +5226,7 @@ BEGIN
     'Jennifer Kyeraa',
     26,
     'Female',
-    '',
+    'Asuom',
     '2025-04-10',
     '23:00:00',
     'VIP',
@@ -4064,7 +5244,17 @@ BEGIN
     3560.0,
     '122.0',
     '161.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 120: Abena Bedge
   INSERT INTO deceased_cases (
@@ -4080,7 +5270,7 @@ BEGIN
     'Abena Bedge',
     125,
     'Female',
-    '',
+    'Asuom',
     '2025-04-11',
     '14:43:00',
     'Normal',
@@ -4098,7 +5288,17 @@ BEGIN
     2246.0,
     '123.0',
     '158.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 121: Isaac Kwasi Appiah
   INSERT INTO deceased_cases (
@@ -4114,7 +5314,7 @@ BEGIN
     'Isaac Kwasi Appiah',
     66,
     'Male',
-    '',
+    'Asuom',
     '2025-04-14',
     '09:05:00',
     'Normal',
@@ -4132,7 +5332,17 @@ BEGIN
     452.0,
     '124.0',
     '72.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 122: Alfred Kwaku Gyensah
   INSERT INTO deceased_cases (
@@ -4148,7 +5358,7 @@ BEGIN
     'Alfred Kwaku Gyensah',
     74,
     'Male',
-    '',
+    'Tweapease',
     '2025-04-11',
     '16:00:00',
     'Normal',
@@ -4166,7 +5376,17 @@ BEGIN
     6432.0,
     '125.0',
     '249.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 123: Kwasi George
   INSERT INTO deceased_cases (
@@ -4182,7 +5402,7 @@ BEGIN
     'Kwasi George',
     62,
     'Male',
-    '',
+    'Asuom',
     '2025-04-13',
     '19:00:00',
     'Normal',
@@ -4200,7 +5420,17 @@ BEGIN
     4014.0,
     '126.0',
     '183.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 124: Mercy Acheampomaa
   INSERT INTO deceased_cases (
@@ -4216,7 +5446,7 @@ BEGIN
     'Mercy Acheampomaa',
     60,
     'Female',
-    '',
+    'Asuom',
     '2025-04-14',
     '15:00:00',
     'VIP',
@@ -4234,7 +5464,17 @@ BEGIN
     9360.0,
     '127.0',
     '105.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 125: Mabel Afrah
   INSERT INTO deceased_cases (
@@ -4250,7 +5490,7 @@ BEGIN
     'Mabel Afrah',
     46,
     'Female',
-    '',
+    'Akwatia',
     '2025-04-14',
     '16:00:00',
     'VIP',
@@ -4268,7 +5508,17 @@ BEGIN
     4800.0,
     '128.0',
     '175.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 126: Erica Boakye
   INSERT INTO deceased_cases (
@@ -4284,7 +5534,7 @@ BEGIN
     'Erica Boakye',
     15,
     'Female',
-    '',
+    'Asuom',
     '2025-04-15',
     '14:45:00',
     'Normal',
@@ -4302,7 +5552,17 @@ BEGIN
     660.0,
     '129.0',
     '73.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 127: Mercy Yeboah
   INSERT INTO deceased_cases (
@@ -4318,7 +5578,7 @@ BEGIN
     'Mercy Yeboah',
     54,
     'Female',
-    '',
+    'Accra',
     '2025-04-16',
     '10:05:00',
     'VIP',
@@ -4336,7 +5596,17 @@ BEGIN
     8280.0,
     '130.0',
     '229.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 128: Joseph Bortey Alabi
   INSERT INTO deceased_cases (
@@ -4352,7 +5622,7 @@ BEGIN
     'Joseph Bortey Alabi',
     28,
     'Male',
-    '',
+    'Atobiriso',
     '2025-04-16',
     '14:30:00',
     'Normal',
@@ -4370,7 +5640,17 @@ BEGIN
     1570.0,
     '131.0',
     '154.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 129: Comfort Awo
   INSERT INTO deceased_cases (
@@ -4386,7 +5666,7 @@ BEGIN
     'Comfort Awo',
     75,
     'Female',
-    '',
+    'Mampong',
     '2025-04-16',
     '22:30:00',
     'Normal',
@@ -4404,7 +5684,17 @@ BEGIN
     6020.0,
     '132.0',
     '248.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 130: Kwame Attah
   INSERT INTO deceased_cases (
@@ -4420,7 +5710,7 @@ BEGIN
     'Kwame Attah',
     60,
     'Male',
-    '',
+    'Asuom',
     '2025-04-18',
     '15:30:00',
     'Normal',
@@ -4438,7 +5728,17 @@ BEGIN
     3156.0,
     '133.0',
     '178.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 131: Yaw Nyarko
   INSERT INTO deceased_cases (
@@ -4454,7 +5754,7 @@ BEGIN
     'Yaw Nyarko',
     81,
     'Male',
-    '',
+    'Akropong',
     '2025-04-19',
     '05:30:00',
     'VIP',
@@ -4472,7 +5772,17 @@ BEGIN
     6000.0,
     '134.0',
     '198.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 132: Kwasi Yeboah
   INSERT INTO deceased_cases (
@@ -4488,7 +5798,7 @@ BEGIN
     'Kwasi Yeboah',
     50,
     'Male',
-    '',
+    'Tweapease',
     '2025-04-30',
     '13:30:00',
     'Normal',
@@ -4506,7 +5816,17 @@ BEGIN
     5210.0,
     '135.0',
     '242.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 133: Yaw Mark Adu
   INSERT INTO deceased_cases (
@@ -4522,7 +5842,7 @@ BEGIN
     'Yaw Mark Adu',
     45,
     'Male',
-    '',
+    'Asuom',
     '2025-05-01',
     '09:40:00',
     'Normal',
@@ -4540,7 +5860,17 @@ BEGIN
     2272.0,
     '136.0',
     '165.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 134: Margaret Boatemaa
   INSERT INTO deceased_cases (
@@ -4556,7 +5886,7 @@ BEGIN
     'Margaret Boatemaa',
     78,
     'Female',
-    '',
+    'Asuom',
     '2025-05-02',
     '22:00:00',
     'VIP',
@@ -4574,7 +5904,17 @@ BEGIN
     6600.0,
     '137.0',
     '203.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 135: Emmanuel Amoako G.
   INSERT INTO deceased_cases (
@@ -4590,7 +5930,7 @@ BEGIN
     'Emmanuel Amoako G.',
     81,
     'Male',
-    '',
+    'Senkubenase',
     '2025-05-04',
     '20:00:00',
     'VIP',
@@ -4608,7 +5948,17 @@ BEGIN
     7640.0,
     '138.0',
     '233.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 136: Joyce Oforiwaa
   INSERT INTO deceased_cases (
@@ -4624,7 +5974,7 @@ BEGIN
     'Joyce Oforiwaa',
     63,
     'Female',
-    '',
+    'Asuom',
     '2025-05-09',
     '11:05:00',
     'VIP',
@@ -4642,7 +5992,17 @@ BEGIN
     4920.0,
     '139.0',
     '194.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 137: Florence Kumiwaa
   INSERT INTO deceased_cases (
@@ -4658,7 +6018,7 @@ BEGIN
     'Florence Kumiwaa',
     54,
     'Female',
-    '',
+    'Accra',
     '2025-05-11',
     '15:40:00',
     'Normal',
@@ -4676,7 +6036,17 @@ BEGIN
     3286.0,
     '140.0',
     '189.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 138: Noah Teye
   INSERT INTO deceased_cases (
@@ -4692,7 +6062,7 @@ BEGIN
     'Noah Teye',
     62,
     'Male',
-    '',
+    'Subiriso',
     '2025-05-15',
     '11:30:00',
     'Normal',
@@ -4710,7 +6080,17 @@ BEGIN
     3000.0,
     '142.0',
     '184.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 139: Kwame Agyei
   INSERT INTO deceased_cases (
@@ -4726,7 +6106,7 @@ BEGIN
     'Kwame Agyei',
     42,
     'Male',
-    '',
+    'Asuom',
     '2025-05-20',
     '15:00:00',
     'Normal',
@@ -4744,7 +6124,17 @@ BEGIN
     2324.0,
     '143.0',
     '180.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 140: Afia Martha Frimpomaa
   INSERT INTO deceased_cases (
@@ -4760,7 +6150,7 @@ BEGIN
     'Afia Martha Frimpomaa',
     59,
     'Female',
-    '',
+    'Asuom',
     '2025-05-21',
     '12:00:00',
     'Normal',
@@ -4778,7 +6168,17 @@ BEGIN
     4664.0,
     '144.0',
     '234.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 141: Comfort Appeah
   INSERT INTO deceased_cases (
@@ -4794,7 +6194,7 @@ BEGIN
     'Comfort Appeah',
     60,
     'Female',
-    '',
+    'Kade',
     '2025-05-22',
     '14:00:00',
     'Normal',
@@ -4812,7 +6212,17 @@ BEGIN
     4521.0,
     '145.0',
     '231.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 142: Kwasi Asare
   INSERT INTO deceased_cases (
@@ -4828,7 +6238,7 @@ BEGIN
     'Kwasi Asare',
     61,
     'Male',
-    '',
+    'Asuom',
     '2025-05-23',
     '07:30:00',
     'Normal',
@@ -4846,7 +6256,17 @@ BEGIN
     1700.0,
     '146.0',
     '167.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 143: Samuel Nyarko
   INSERT INTO deceased_cases (
@@ -4862,7 +6282,7 @@ BEGIN
     'Samuel Nyarko',
     65,
     'Male',
-    '',
+    'Asuom',
     '2025-05-25',
     '08:00:00',
     'VIP',
@@ -4880,7 +6300,17 @@ BEGIN
     7720.0,
     '147.0',
     '115.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 144: Yaa Ntiamoah
   INSERT INTO deceased_cases (
@@ -4896,7 +6326,7 @@ BEGIN
     'Yaa Ntiamoah',
     66,
     'Female',
-    '',
+    'Asuom',
     '2025-05-28',
     '07:00:00',
     'VIP',
@@ -4914,7 +6344,17 @@ BEGIN
     3660.0,
     '148.0',
     '196.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 145: Ebenezer Ofosuhene Antwi
   INSERT INTO deceased_cases (
@@ -4930,7 +6370,7 @@ BEGIN
     'Ebenezer Ofosuhene Antwi',
     65,
     'Male',
-    '',
+    'Tema',
     '2025-05-29',
     '17:30:00',
     'Normal',
@@ -4948,7 +6388,17 @@ BEGIN
     2636.0,
     '149.0',
     '185.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 146: Yaw Darko
   INSERT INTO deceased_cases (
@@ -4964,7 +6414,7 @@ BEGIN
     'Yaw Darko',
     63,
     'Male',
-    '',
+    'Asuom',
     '2025-06-01',
     '21:30:00',
     'Normal',
@@ -4982,7 +6432,17 @@ BEGIN
     1466.0,
     '150.0',
     '166.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 147: Comfort Abong
   INSERT INTO deceased_cases (
@@ -4998,7 +6458,7 @@ BEGIN
     'Comfort Abong',
     80,
     'Female',
-    '',
+    'Bomso',
     '2025-05-31',
     '13:30:00',
     'VIP',
@@ -5016,7 +6476,17 @@ BEGIN
     6560.0,
     '151.0',
     '240.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 148: Thomas Peprah
   INSERT INTO deceased_cases (
@@ -5032,7 +6502,7 @@ BEGIN
     'Thomas Peprah',
     70,
     'Male',
-    '',
+    'Asuom',
     '2025-06-03',
     '08:00:00',
     'Normal',
@@ -5050,7 +6520,17 @@ BEGIN
     3598.0,
     '152.0',
     '210.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 149: Mina Asantewaa
   INSERT INTO deceased_cases (
@@ -5066,7 +6546,7 @@ BEGIN
     'Mina Asantewaa',
     100,
     'Female',
-    '',
+    'Asuom',
     '2025-06-04',
     '08:30:00',
     'Normal',
@@ -5084,7 +6564,17 @@ BEGIN
     3186.0,
     '153.0',
     '208.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 150: Regina Konadu
   INSERT INTO deceased_cases (
@@ -5100,7 +6590,7 @@ BEGIN
     'Regina Konadu',
     69,
     'Female',
-    '',
+    'Asuom',
     '2025-06-03',
     '17:00:00',
     'Normal',
@@ -5118,7 +6608,17 @@ BEGIN
     5274.0,
     '154.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 151: Yawson Asante
   INSERT INTO deceased_cases (
@@ -5134,7 +6634,7 @@ BEGIN
     'Yawson Asante',
     58,
     'Male',
-    '',
+    'Accra',
     '2025-06-03',
     '16:00:00',
     'VIP',
@@ -5152,7 +6652,17 @@ BEGIN
     4760.0,
     '155.0',
     '202.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 152: Felix Kwadwo Ampofo
   INSERT INTO deceased_cases (
@@ -5168,7 +6678,7 @@ BEGIN
     'Felix Kwadwo Ampofo',
     80,
     'Male',
-    '',
+    'Asuom',
     '2025-06-05',
     '13:13:00',
     'VIP',
@@ -5186,7 +6696,17 @@ BEGIN
     7280.0,
     '156.0',
     '108.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 153: Yaa Asuma
   INSERT INTO deceased_cases (
@@ -5202,7 +6722,7 @@ BEGIN
     'Yaa Asuma',
     90,
     'Male',
-    '',
+    'Asuom',
     '2025-06-06',
     '10:30:00',
     'Normal',
@@ -5220,7 +6740,17 @@ BEGIN
     3520.0,
     '157.0',
     '207.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 154: Dickson Kwame
   INSERT INTO deceased_cases (
@@ -5236,7 +6766,7 @@ BEGIN
     'Dickson Kwame',
     80,
     'Male',
-    '',
+    'Asuom',
     '2025-06-07',
     '07:00:00',
     'Normal',
@@ -5254,7 +6784,17 @@ BEGIN
     4170.0,
     '158.0',
     '226.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 155: Adwoa Darkwaa
   INSERT INTO deceased_cases (
@@ -5270,7 +6810,7 @@ BEGIN
     'Adwoa Darkwaa',
     41,
     'Female',
-    '',
+    'Bomso',
     '2025-06-09',
     '17:30:00',
     'Normal',
@@ -5288,7 +6828,17 @@ BEGIN
     2532.0,
     '159.0',
     '192.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 156: Nelson Kwasi Nartey
   INSERT INTO deceased_cases (
@@ -5304,7 +6854,7 @@ BEGIN
     'Nelson Kwasi Nartey',
     70,
     'Male',
-    '',
+    'Atobiriso',
     '2025-06-10',
     '00:00:00',
     'Normal',
@@ -5322,7 +6872,17 @@ BEGIN
     3962.0,
     '160.0',
     '225.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 157: Yaw Oppong
   INSERT INTO deceased_cases (
@@ -5338,7 +6898,7 @@ BEGIN
     'Yaw Oppong',
     90,
     'Male',
-    '',
+    'Asuom',
     '2025-06-10',
     '12:45:00',
     'Normal',
@@ -5356,7 +6916,17 @@ BEGIN
     2506.0,
     '161.0',
     '197.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 158: Dora Afrah
   INSERT INTO deceased_cases (
@@ -5372,7 +6942,7 @@ BEGIN
     'Dora Afrah',
     55,
     'Female',
-    '',
+    'Asuom',
     '2025-06-12',
     '19:15:00',
     'Normal',
@@ -5390,7 +6960,17 @@ BEGIN
     4092.0,
     '162.0',
     '243.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 159: Alice Asaah
   INSERT INTO deceased_cases (
@@ -5406,7 +6986,7 @@ BEGIN
     'Alice Asaah',
     87,
     'Female',
-    '',
+    'Asuom',
     '2025-06-14',
     '13:40:00',
     'Normal',
@@ -5424,7 +7004,17 @@ BEGIN
     400.0,
     '163.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 160: Patience Oforiwaa
   INSERT INTO deceased_cases (
@@ -5440,7 +7030,7 @@ BEGIN
     'Patience Oforiwaa',
     50,
     'Female',
-    '',
+    'Asuom',
     '2025-06-16',
     '11:00:00',
     'VIP',
@@ -5458,7 +7048,17 @@ BEGIN
     3400.0,
     '164.0',
     '193.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 161: Man Togo
   INSERT INTO deceased_cases (
@@ -5474,7 +7074,7 @@ BEGIN
     'Man Togo',
     74,
     'Male',
-    '',
+    'Tweapease',
     '2025-06-19',
     '08:30:00',
     'Normal',
@@ -5492,7 +7092,17 @@ BEGIN
     1388.0,
     '165.0',
     '173.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 162: Doris Ohenewaa
   INSERT INTO deceased_cases (
@@ -5508,7 +7118,7 @@ BEGIN
     'Doris Ohenewaa',
     60,
     'Female',
-    '',
+    'Asuom',
     '2025-06-19',
     '10:30:00',
     'Normal',
@@ -5526,7 +7136,17 @@ BEGIN
     3182.0,
     '166.0',
     '205.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 163: Daniel Kwame Marfo
   INSERT INTO deceased_cases (
@@ -5542,7 +7162,7 @@ BEGIN
     'Daniel Kwame Marfo',
     55,
     'Male',
-    '',
+    'Asuom',
     '2025-06-19',
     '12:40:00',
     'Normal',
@@ -5560,7 +7180,17 @@ BEGIN
     556.0,
     '167.0',
     '160.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 164: Sophia Frimpong
   INSERT INTO deceased_cases (
@@ -5576,7 +7206,7 @@ BEGIN
     'Sophia Frimpong',
     42,
     'Female',
-    '',
+    'Bomso',
     '2025-06-19',
     '14:30:00',
     'Normal',
@@ -5594,7 +7224,17 @@ BEGIN
     816.0,
     '168.0',
     '174.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 165: Afi Tagbor
   INSERT INTO deceased_cases (
@@ -5610,7 +7250,7 @@ BEGIN
     'Afi Tagbor',
     72,
     'Female',
-    '',
+    'Kpando',
     '2025-06-22',
     '13:00:00',
     'Normal',
@@ -5628,7 +7268,17 @@ BEGIN
     3728.0,
     '169.0',
     '219.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 166: Rose Animah
   INSERT INTO deceased_cases (
@@ -5644,7 +7294,7 @@ BEGIN
     'Rose Animah',
     58,
     'Female',
-    '',
+    'Asuom',
     '2025-06-24',
     '17:30:00',
     'VIP',
@@ -5662,7 +7312,17 @@ BEGIN
     4480.0,
     '170.0',
     '206.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 167: Sarah Attaa
   INSERT INTO deceased_cases (
@@ -5678,7 +7338,7 @@ BEGIN
     'Sarah Attaa',
     97,
     'Female',
-    '',
+    'Asuom',
     '2025-06-25',
     '11:30:00',
     'Normal',
@@ -5696,7 +7356,17 @@ BEGIN
     3754.0,
     '171.0',
     '241.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 168: Samuel Akuako
   INSERT INTO deceased_cases (
@@ -5712,7 +7382,7 @@ BEGIN
     'Samuel Akuako',
     82,
     'Male',
-    '',
+    'Tweapease',
     '2025-06-25',
     '19:00:00',
     'Normal',
@@ -5730,7 +7400,17 @@ BEGIN
     3728.0,
     '172.0',
     '217.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 169: Daniel Opoku
   INSERT INTO deceased_cases (
@@ -5746,7 +7426,7 @@ BEGIN
     'Daniel Opoku',
     50,
     'Male',
-    '',
+    'Bomso',
     '2025-06-29',
     '16:00:00',
     'Normal',
@@ -5764,7 +7444,17 @@ BEGIN
     2922.0,
     '173.0',
     '211.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 170: Comfort Afrah
   INSERT INTO deceased_cases (
@@ -5780,7 +7470,7 @@ BEGIN
     'Comfort Afrah',
     70,
     'Female',
-    '',
+    'Tweapease',
     '2025-06-28',
     '19:00:00',
     'Normal',
@@ -5798,7 +7488,17 @@ BEGIN
     3676.0,
     '174.0',
     '235.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 171: Esther Serwaa
   INSERT INTO deceased_cases (
@@ -5814,7 +7514,7 @@ BEGIN
     'Esther Serwaa',
     70,
     'Female',
-    '',
+    'Tweapease',
     '2025-06-30',
     '16:30:00',
     'VIP',
@@ -5832,7 +7532,17 @@ BEGIN
     5360.0,
     '175.0',
     '236.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 172: Patrick Tetteh
   INSERT INTO deceased_cases (
@@ -5848,7 +7558,7 @@ BEGIN
     'Patrick Tetteh',
     41,
     'Male',
-    '',
+    'Asuom',
     '2025-07-01',
     '12:00:00',
     'Normal',
@@ -5866,7 +7576,17 @@ BEGIN
     1960.0,
     '176.0',
     '195.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 173: Grace Asiedua
   INSERT INTO deceased_cases (
@@ -5882,7 +7602,7 @@ BEGIN
     'Grace Asiedua',
     90,
     'Female',
-    '',
+    'Asuom',
     '2025-07-09',
     '14:00:00',
     'Normal',
@@ -5900,7 +7620,17 @@ BEGIN
     4018.0,
     '177.0',
     '247.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 174: Alex Antwi Darko
   INSERT INTO deceased_cases (
@@ -5916,7 +7646,7 @@ BEGIN
     'Alex Antwi Darko',
     78,
     'Male',
-    '',
+    'Asuom',
     '2025-07-11',
     '15:00:00',
     'Normal',
@@ -5934,7 +7664,17 @@ BEGIN
     3780.0,
     '178.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 175: Akosua Beatrice
   INSERT INTO deceased_cases (
@@ -5950,7 +7690,7 @@ BEGIN
     'Akosua Beatrice',
     53,
     'Female',
-    '',
+    'Bomso',
     '2025-07-13',
     '14:00:00',
     'Normal',
@@ -5968,7 +7708,17 @@ BEGIN
     2558.0,
     '179.0',
     '212.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 176: Kwadwo Darkwah
   INSERT INTO deceased_cases (
@@ -5984,7 +7734,7 @@ BEGIN
     'Kwadwo Darkwah',
     60,
     'Male',
-    '',
+    'Bomso',
     '2025-07-17',
     '17:16:00',
     'Normal',
@@ -6002,7 +7752,17 @@ BEGIN
     2454.0,
     '180.0',
     '215.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 177: Deborah Otenewaa
   INSERT INTO deceased_cases (
@@ -6018,7 +7778,7 @@ BEGIN
     'Deborah Otenewaa',
     47,
     'Female',
-    '',
+    'Asuom',
     '2025-07-19',
     '08:00:00',
     'VIP',
@@ -6036,7 +7796,17 @@ BEGIN
     3480.0,
     '181.0',
     '214.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 178: Godwin Adamtey
   INSERT INTO deceased_cases (
@@ -6052,7 +7822,7 @@ BEGIN
     'Godwin Adamtey',
     42,
     'Male',
-    '',
+    'Tweapease',
     '2025-07-18',
     '23:20:00',
     'VIP',
@@ -6070,7 +7840,17 @@ BEGIN
     2960.0,
     '182.0',
     '200.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 179: Christopher Addo
   INSERT INTO deceased_cases (
@@ -6086,7 +7866,7 @@ BEGIN
     'Christopher Addo',
     31,
     'Male',
-    '',
+    'Amanfrom',
     '2025-07-20',
     '09:56:00',
     'Normal',
@@ -6104,7 +7884,17 @@ BEGIN
     738.0,
     '183.0',
     '177.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 180: Rita Antwi
   INSERT INTO deceased_cases (
@@ -6120,7 +7910,7 @@ BEGIN
     'Rita Antwi',
     46,
     'Female',
-    '',
+    'Asuom',
     '2025-07-19',
     '18:00:00',
     'Normal',
@@ -6138,7 +7928,17 @@ BEGIN
     3130.0,
     '184.0',
     '230.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 181: Kofi Alhassan
   INSERT INTO deceased_cases (
@@ -6154,7 +7954,7 @@ BEGIN
     'Kofi Alhassan',
     45,
     'Male',
-    '',
+    'Tweapease',
     '2025-07-22',
     '08:17:00',
     'VIP',
@@ -6172,7 +7972,17 @@ BEGIN
     4200.0,
     '185.0',
     '221.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 182: Francis Owusu
   INSERT INTO deceased_cases (
@@ -6188,7 +7998,7 @@ BEGIN
     'Francis Owusu',
     35,
     'Female',
-    '',
+    'Accra',
     '2025-07-23',
     '16:42:00',
     'VIP',
@@ -6206,7 +8016,17 @@ BEGIN
     1920.0,
     '186.0',
     '188.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 183: Joseph Antiri Ofori-Atta
   INSERT INTO deceased_cases (
@@ -6222,7 +8042,7 @@ BEGIN
     'Joseph Antiri Ofori-Atta',
     54,
     'Male',
-    '',
+    'Tweapease',
     '2025-07-29',
     '09:43:00',
     'VIP',
@@ -6240,7 +8060,17 @@ BEGIN
     3920.0,
     '187.0',
     '228.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 184: Ama Adukpo
   INSERT INTO deceased_cases (
@@ -6256,7 +8086,7 @@ BEGIN
     'Ama Adukpo',
     90,
     'Female',
-    '',
+    'Torpraman',
     '2025-07-30',
     '22:30:00',
     'Normal',
@@ -6274,7 +8104,17 @@ BEGIN
     400.0,
     '188.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 185: Emmanuel Essel
   INSERT INTO deceased_cases (
@@ -6290,7 +8130,7 @@ BEGIN
     'Emmanuel Essel',
     25,
     'Male',
-    '',
+    'Asuom',
     '2025-08-04',
     '20:20:00',
     'Normal',
@@ -6308,7 +8148,17 @@ BEGIN
     1440.0,
     '189.0',
     '199.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 186: Dickson Amedzo
   INSERT INTO deceased_cases (
@@ -6324,7 +8174,7 @@ BEGIN
     'Dickson Amedzo',
     51,
     'Male',
-    '',
+    'Asuom',
     '2025-08-05',
     '21:30:00',
     'VIP',
@@ -6342,7 +8192,17 @@ BEGIN
     4840.0,
     '190.0',
     '118.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 187: Alex Kofi Darkwah
   INSERT INTO deceased_cases (
@@ -6358,7 +8218,7 @@ BEGIN
     'Alex Kofi Darkwah',
     69,
     'Male',
-    '',
+    'Asuom',
     '2025-08-06',
     '14:20:00',
     'Normal',
@@ -6376,7 +8236,17 @@ BEGIN
     3290.0,
     '191.0',
     '116.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 188: Alexander Brobbey
   INSERT INTO deceased_cases (
@@ -6392,7 +8262,7 @@ BEGIN
     'Alexander Brobbey',
     78,
     'Male',
-    '',
+    'Asuom',
     '2025-08-08',
     '12:00:00',
     'Normal',
@@ -6410,7 +8280,17 @@ BEGIN
     1882.0,
     '192.0',
     '216.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 189: Dora Darkwaah
   INSERT INTO deceased_cases (
@@ -6426,7 +8306,7 @@ BEGIN
     'Dora Darkwaah',
     46,
     'Female',
-    '',
+    'Asuom',
     '2025-08-09',
     '16:30:00',
     'VIP',
@@ -6444,7 +8324,17 @@ BEGIN
     2920.0,
     '193.0',
     '227.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 190: Kofi Ametekpe
   INSERT INTO deceased_cases (
@@ -6460,7 +8350,7 @@ BEGIN
     'Kofi Ametekpe',
     98,
     'Male',
-    '',
+    'Tweapease',
     '2025-08-13',
     '08:10:00',
     'Normal',
@@ -6478,7 +8368,17 @@ BEGIN
     1388.0,
     '194.0',
     '201.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 191: Margaret Nyankson
   INSERT INTO deceased_cases (
@@ -6494,7 +8394,7 @@ BEGIN
     'Margaret Nyankson',
     65,
     'Female',
-    '',
+    'Tweapease',
     '2025-08-13',
     '22:00:00',
     'Normal',
@@ -6512,7 +8412,17 @@ BEGIN
     2987.0,
     '195.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 192: Kwasi Nimako
   INSERT INTO deceased_cases (
@@ -6528,7 +8438,7 @@ BEGIN
     'Kwasi Nimako',
     69,
     'Male',
-    '',
+    'Asuom',
     '2025-08-14',
     '01:30:00',
     'VIP',
@@ -6546,7 +8456,17 @@ BEGIN
     4580.0,
     '196.0',
     '101.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 193: Matilda Obenewaa
   INSERT INTO deceased_cases (
@@ -6562,7 +8482,7 @@ BEGIN
     'Matilda Obenewaa',
     58,
     'Female',
-    '',
+    'Asuom',
     '2025-08-15',
     '09:00:00',
     'VIP',
@@ -6580,7 +8500,17 @@ BEGIN
     5340.0,
     '197.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 194: Kwame Yeboah
   INSERT INTO deceased_cases (
@@ -6596,7 +8526,7 @@ BEGIN
     'Kwame Yeboah',
     80,
     'Male',
-    '',
+    'Asuom',
     '2025-08-18',
     '21:00:00',
     'VIP',
@@ -6614,7 +8544,17 @@ BEGIN
     3400.0,
     '198.0',
     '238.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 195: Isaac Kwabena Bosompem
   INSERT INTO deceased_cases (
@@ -6630,7 +8570,7 @@ BEGIN
     'Isaac Kwabena Bosompem',
     55,
     'Male',
-    '',
+    'Asuom',
     '2025-08-23',
     '14:30:00',
     'Normal',
@@ -6648,7 +8588,17 @@ BEGIN
     1492.0,
     '199.0',
     '213.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 196: Beatrice Akosua Antwiwaa
   INSERT INTO deceased_cases (
@@ -6664,7 +8614,7 @@ BEGIN
     'Beatrice Akosua Antwiwaa',
     32,
     'Female',
-    '',
+    'Senkubenase',
     '2025-08-24',
     '22:00:00',
     'Normal',
@@ -6682,7 +8632,17 @@ BEGIN
     2822.0,
     '200.0',
     '107.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 197: Kofi Darkwah
   INSERT INTO deceased_cases (
@@ -6698,7 +8658,7 @@ BEGIN
     'Kofi Darkwah',
     67,
     'Male',
-    '',
+    'Bomso',
     '2025-08-26',
     '10:50:00',
     'Normal',
@@ -6716,7 +8676,17 @@ BEGIN
     400.0,
     '201.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 198: Adwoa Kwakyewaa
   INSERT INTO deceased_cases (
@@ -6732,7 +8702,7 @@ BEGIN
     'Adwoa Kwakyewaa',
     73,
     'Female',
-    '',
+    'Asuom',
     '2025-08-26',
     '10:50:00',
     'Normal',
@@ -6750,7 +8720,17 @@ BEGIN
     400.0,
     '202.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 199: Attah Ahorku
   INSERT INTO deceased_cases (
@@ -6766,7 +8746,7 @@ BEGIN
     'Attah Ahorku',
     69,
     'Male',
-    '',
+    'Asuom',
     '2025-08-28',
     '20:30:00',
     'Normal',
@@ -6784,7 +8764,17 @@ BEGIN
     2718.0,
     '203.0',
     '113.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 200: Comfort Inkum
   INSERT INTO deceased_cases (
@@ -6800,7 +8790,7 @@ BEGIN
     'Comfort Inkum',
     87,
     'Female',
-    '',
+    'Asuom',
     '2025-08-30',
     '00:00:00',
     'VIP',
@@ -6818,7 +8808,17 @@ BEGIN
     400.0,
     '205.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 201: Kennedy Ampaw
   INSERT INTO deceased_cases (
@@ -6834,7 +8834,7 @@ BEGIN
     'Kennedy Ampaw',
     78,
     'Male',
-    '',
+    'Asuom',
     '2025-09-01',
     '14:30:00',
     'VIP',
@@ -6852,7 +8852,17 @@ BEGIN
     3860.0,
     '206.0',
     '103.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 202: Emmanuel Tsati
   INSERT INTO deceased_cases (
@@ -6868,7 +8878,7 @@ BEGIN
     'Emmanuel Tsati',
     57,
     'Male',
-    '',
+    'Tweapease',
     '2025-09-02',
     '10:45:00',
     'Normal',
@@ -6886,7 +8896,17 @@ BEGIN
     2688.0,
     '207.0',
     '250.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 203: Alex Twumasi
   INSERT INTO deceased_cases (
@@ -6902,7 +8922,7 @@ BEGIN
     'Alex Twumasi',
     60,
     'Male',
-    '',
+    'Kumasi',
     '2025-09-03',
     '04:25:00 AM',
     'Normal',
@@ -6920,7 +8940,17 @@ BEGIN
     1752.0,
     '208.0',
     '220.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 204: Amos Martey
   INSERT INTO deceased_cases (
@@ -6936,7 +8966,7 @@ BEGIN
     'Amos Martey',
     87,
     'Male',
-    '',
+    'Akawani',
     '2025-09-04',
     '05:12:00 AM',
     'Normal',
@@ -6954,7 +8984,17 @@ BEGIN
     400.0,
     '209.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 205: Comfort Bruwaa
   INSERT INTO deceased_cases (
@@ -6970,7 +9010,7 @@ BEGIN
     'Comfort Bruwaa',
     87,
     'Female',
-    '',
+    'Asuom',
     '2025-09-05',
     '08:00:00 PM',
     'VIP',
@@ -6988,7 +9028,17 @@ BEGIN
     7480.0,
     '210.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 206: Kofi Oduro
   INSERT INTO deceased_cases (
@@ -7004,7 +9054,7 @@ BEGIN
     'Kofi Oduro',
     47,
     'Male',
-    '',
+    'Asuom',
     '2025-09-08',
     '17:47:00',
     'Normal',
@@ -7022,7 +9072,17 @@ BEGIN
     1076.0,
     '211.0',
     '209.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 207: Dede Nartey
   INSERT INTO deceased_cases (
@@ -7038,7 +9098,7 @@ BEGIN
     'Dede Nartey',
     64,
     'Female',
-    '',
+    'Atobiriso',
     '2025-09-10',
     '12:30:00 PM',
     'Normal',
@@ -7056,7 +9116,17 @@ BEGIN
     2480.0,
     '212.0',
     '106.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 208: Hayford Mensah
   INSERT INTO deceased_cases (
@@ -7072,7 +9142,7 @@ BEGIN
     'Hayford Mensah',
     59,
     'Male',
-    '',
+    'Asuom',
     '2025-09-11',
     '12:45:00 PM',
     'Normal',
@@ -7090,7 +9160,17 @@ BEGIN
     1726.0,
     '213.0',
     '239.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 209: William Addo
   INSERT INTO deceased_cases (
@@ -7106,7 +9186,7 @@ BEGIN
     'William Addo',
     54,
     'Male',
-    '',
+    'Asuom',
     '2025-09-12',
     '09:10:00 AM',
     'Normal',
@@ -7124,7 +9204,17 @@ BEGIN
     2428.0,
     '214.0',
     '117.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 210: Ali Tetteh
   INSERT INTO deceased_cases (
@@ -7140,7 +9230,7 @@ BEGIN
     'Ali Tetteh',
     40,
     'Male',
-    '',
+    'Atobiriso',
     '2025-09-14',
     '05:00:00 AM',
     'Normal',
@@ -7158,7 +9248,17 @@ BEGIN
     2376.0,
     '215.0',
     '112.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 211: Adama Sagno
   INSERT INTO deceased_cases (
@@ -7174,7 +9274,7 @@ BEGIN
     'Adama Sagno',
     27,
     'Male',
-    '',
+    'Senkubenase',
     '2025-09-15',
     '10:20:00',
     'VIP',
@@ -7192,7 +9292,17 @@ BEGIN
     640.0,
     '216.0',
     '204.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 212: Tetteh Wayoe
   INSERT INTO deceased_cases (
@@ -7208,7 +9318,7 @@ BEGIN
     'Tetteh Wayoe',
     93,
     'Male',
-    '',
+    'Tweapease',
     '2025-09-23',
     '06:30:00 PM',
     'Normal',
@@ -7226,7 +9336,17 @@ BEGIN
     400.0,
     '217.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 213: William Ofori
   INSERT INTO deceased_cases (
@@ -7242,7 +9362,7 @@ BEGIN
     'William Ofori',
     43,
     'Male',
-    '',
+    'Bomso',
     '2025-09-25',
     '09:10:00 AM',
     'Normal',
@@ -7260,7 +9380,17 @@ BEGIN
     1362.0,
     '218.0',
     '244.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 214: Enock Brafo
   INSERT INTO deceased_cases (
@@ -7276,7 +9406,7 @@ BEGIN
     'Enock Brafo',
     38,
     'Male',
-    '',
+    'Asuom',
     '2025-09-25',
     '01:20:00 PM',
     'Normal',
@@ -7294,7 +9424,17 @@ BEGIN
     2324.0,
     '219.0',
     '120.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 215: Yaw Peprah
   INSERT INTO deceased_cases (
@@ -7310,7 +9450,7 @@ BEGIN
     'Yaw Peprah',
     75,
     'Male',
-    '',
+    'Asuom',
     '2025-09-27',
     '08:00:00 AM',
     'Normal',
@@ -7328,7 +9468,17 @@ BEGIN
     2766.0,
     '220.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 216: Paul Brako
   INSERT INTO deceased_cases (
@@ -7344,7 +9494,7 @@ BEGIN
     'Paul Brako',
     57,
     'Male',
-    '',
+    'Bomso',
     '2025-10-02',
     '12:40:00 PM',
     'Normal',
@@ -7362,7 +9512,17 @@ BEGIN
     400.0,
     '221.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 217: Comfort Apenteng
   INSERT INTO deceased_cases (
@@ -7378,7 +9538,7 @@ BEGIN
     'Comfort Apenteng',
     70,
     'Female',
-    '',
+    'Asuom',
     '2025-10-05',
     '04:00:00 PM',
     'VIP',
@@ -7396,7 +9556,17 @@ BEGIN
     4440.0,
     '222.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 218: Georgina Korang
   INSERT INTO deceased_cases (
@@ -7412,7 +9582,7 @@ BEGIN
     'Georgina Korang',
     55,
     'Female',
-    '',
+    'Asuom',
     '2025-10-03',
     '19:42:00',
     'Normal',
@@ -7430,7 +9600,17 @@ BEGIN
     1154.0,
     '223.0',
     '232.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 219: Juliana Odurowaa
   INSERT INTO deceased_cases (
@@ -7446,7 +9626,7 @@ BEGIN
     'Juliana Odurowaa',
     70,
     'Female',
-    '',
+    'Asuom',
     '2025-10-07',
     '08:30:00 AM',
     'VIP',
@@ -7464,7 +9644,17 @@ BEGIN
     3840.0,
     '224.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 220: Adwoa Owusua
   INSERT INTO deceased_cases (
@@ -7480,7 +9670,7 @@ BEGIN
     'Adwoa Owusua',
     30,
     'Female',
-    '',
+    'Tweapease',
     '2025-10-10',
     '06:24:00 PM',
     'Normal',
@@ -7498,7 +9688,17 @@ BEGIN
     400.0,
     '225.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 221: Philipa Aryeetey
   INSERT INTO deceased_cases (
@@ -7514,7 +9714,7 @@ BEGIN
     'Philipa Aryeetey',
     17,
     'Female',
-    '',
+    'Atobiriso',
     '2025-10-12',
     '01:00:00 AM',
     'VIP',
@@ -7532,7 +9732,17 @@ BEGIN
     400.0,
     '226.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 222: Emmanuel Osei
   INSERT INTO deceased_cases (
@@ -7548,7 +9758,7 @@ BEGIN
     'Emmanuel Osei',
     68,
     'Male',
-    '',
+    'Asuom',
     '2025-10-15',
     '02:50:00 AM',
     'Normal',
@@ -7566,7 +9776,17 @@ BEGIN
     4332.0,
     '227.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 223: Ama Cynthia
   INSERT INTO deceased_cases (
@@ -7582,7 +9802,7 @@ BEGIN
     'Ama Cynthia',
     42,
     'Female',
-    '',
+    'Asuom',
     '2025-10-14',
     '07:30:00 PM',
     'Normal',
@@ -7600,7 +9820,17 @@ BEGIN
     1596.0,
     '228.0',
     '101.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 224: Nicholas Kwadwo Yeboah
   INSERT INTO deceased_cases (
@@ -7616,7 +9846,7 @@ BEGIN
     'Nicholas Kwadwo Yeboah',
     77,
     'Male',
-    '',
+    'Tweapease',
     '2025-10-15',
     '18:30:00',
     'Normal',
@@ -7634,7 +9864,17 @@ BEGIN
     2168.0,
     '229.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 225: Samuel Kikisi
   INSERT INTO deceased_cases (
@@ -7650,7 +9890,7 @@ BEGIN
     'Samuel Kikisi',
     78,
     'Male',
-    '',
+    'Asuom',
     '2025-10-17',
     '12:00:00 PM',
     'Normal',
@@ -7668,7 +9908,17 @@ BEGIN
     2506.0,
     '230.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 226: Godfred K. Ampabeng
   INSERT INTO deceased_cases (
@@ -7684,7 +9934,7 @@ BEGIN
     'Godfred K. Ampabeng',
     62,
     'Male',
-    '',
+    'Asuom',
     '2025-10-18',
     '04:30:00 PM',
     'Normal',
@@ -7702,7 +9952,17 @@ BEGIN
     1492.0,
     '231.0',
     '102.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 227: Boadi Darkwah
   INSERT INTO deceased_cases (
@@ -7718,7 +9978,7 @@ BEGIN
     'Boadi Darkwah',
     35,
     'Male',
-    '',
+    'Bomso',
     '2025-10-17',
     '02:00:00 PM',
     'Normal',
@@ -7736,7 +9996,17 @@ BEGIN
     400.0,
     '232.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 228: Esther Boaduaa
   INSERT INTO deceased_cases (
@@ -7752,7 +10022,7 @@ BEGIN
     'Esther Boaduaa',
     60,
     'Female',
-    '',
+    'Asuom',
     '2025-10-20',
     '09:30:00 AM',
     'VIP',
@@ -7770,7 +10040,17 @@ BEGIN
     400.0,
     '233.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 229: Kwaku Peprah Mireku
   INSERT INTO deceased_cases (
@@ -7786,7 +10066,7 @@ BEGIN
     'Kwaku Peprah Mireku',
     77,
     'Male',
-    '',
+    'Tweapease',
     '2025-10-20',
     '07:15:00 PM',
     'Normal',
@@ -7804,7 +10084,17 @@ BEGIN
     2467.0,
     '234.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 230: Akua Botwe
   INSERT INTO deceased_cases (
@@ -7820,7 +10110,7 @@ BEGIN
     'Akua Botwe',
     123,
     'Female',
-    '',
+    'Asuom',
     '2025-10-18',
     '16:30:00',
     'VIP',
@@ -7838,7 +10128,17 @@ BEGIN
     880.0,
     '235.0',
     '237.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 231: Kwabena Appiah
   INSERT INTO deceased_cases (
@@ -7854,7 +10154,7 @@ BEGIN
     'Kwabena Appiah',
     48,
     'Male',
-    '',
+    'Asuom',
     '2025-10-21',
     '02:15:00 PM',
     'Normal',
@@ -7872,7 +10172,17 @@ BEGIN
     504.0,
     '236.0',
     '223.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 232: Abdul Razak Sulemana
   INSERT INTO deceased_cases (
@@ -7888,7 +10198,7 @@ BEGIN
     'Abdul Razak Sulemana',
     46,
     'Male',
-    '',
+    'Tweapease',
     '2025-10-22',
     '09:00:00 PM',
     'VIP',
@@ -7906,7 +10216,17 @@ BEGIN
     460.0,
     '237.0',
     '224.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 233: Bernard Asamoah
   INSERT INTO deceased_cases (
@@ -7922,7 +10242,7 @@ BEGIN
     'Bernard Asamoah',
     39,
     'Male',
-    '',
+    'Asuom',
     '2025-10-23',
     '02:00:00 PM',
     'Normal',
@@ -7940,7 +10260,17 @@ BEGIN
     1362.0,
     '238.0',
     '114.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 234: Ama Obenewaa
   INSERT INTO deceased_cases (
@@ -7956,7 +10286,7 @@ BEGIN
     'Ama Obenewaa',
     67,
     'Female',
-    '',
+    'Bomso',
     '2025-10-27',
     '12:45:00 PM',
     'Normal',
@@ -7974,7 +10304,17 @@ BEGIN
     400.0,
     '239.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 235: Janet Aboagyewaa
   INSERT INTO deceased_cases (
@@ -7990,7 +10330,7 @@ BEGIN
     'Janet Aboagyewaa',
     90,
     'Female',
-    '',
+    'Kukubi',
     '2025-10-29',
     '08:00:00 PM',
     'Normal',
@@ -8008,7 +10348,17 @@ BEGIN
     2350.0,
     '240.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 236: Ernestina Asieduaa
   INSERT INTO deceased_cases (
@@ -8024,7 +10374,7 @@ BEGIN
     'Ernestina Asieduaa',
     64,
     'Female',
-    '',
+    'Asuom',
     '2025-10-30',
     '03:30:00 PM',
     'Normal',
@@ -8042,7 +10392,17 @@ BEGIN
     2837.0,
     '241.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 237: Goyen Appam
   INSERT INTO deceased_cases (
@@ -8058,7 +10418,7 @@ BEGIN
     'Goyen Appam',
     52,
     'Female',
-    '',
+    'Atobiriso',
     '2025-10-30',
     '04:30:00 PM',
     'Normal',
@@ -8076,7 +10436,17 @@ BEGIN
     1180.0,
     '242.0',
     '109.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 238: Kwadwo Addo
   INSERT INTO deceased_cases (
@@ -8092,7 +10462,7 @@ BEGIN
     'Kwadwo Addo',
     78,
     'Male',
-    '',
+    'Tweapease',
     '2025-11-01',
     '06:45:00 AM',
     'Normal',
@@ -8110,7 +10480,17 @@ BEGIN
     400.0,
     '243.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 239: Akosua Nyamekye
   INSERT INTO deceased_cases (
@@ -8126,7 +10506,7 @@ BEGIN
     'Akosua Nyamekye',
     80,
     'Female',
-    '',
+    'Asuom',
     '2025-11-03',
     '08:00:00 AM',
     'Normal',
@@ -8144,7 +10524,17 @@ BEGIN
     2285.0,
     '244.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 240: Emmanuel Kuma Tagbor
   INSERT INTO deceased_cases (
@@ -8160,7 +10550,7 @@ BEGIN
     'Emmanuel Kuma Tagbor',
     90,
     'Male',
-    '',
+    'Asuom',
     '2025-11-03',
     '01:00:00 PM',
     'VIP',
@@ -8178,7 +10568,17 @@ BEGIN
     400.0,
     '245.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 241: Solo Gadzi Atikpoe
   INSERT INTO deceased_cases (
@@ -8194,7 +10594,7 @@ BEGIN
     'Solo Gadzi Atikpoe',
     51,
     'Male',
-    '',
+    'Atobiriso',
     '2025-11-02',
     '08:00:00 AM',
     'Normal',
@@ -8212,7 +10612,17 @@ BEGIN
     1128.0,
     '246.0',
     '111.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 242: Isaac Kwadwo Agyei
   INSERT INTO deceased_cases (
@@ -8228,7 +10638,7 @@ BEGIN
     'Isaac Kwadwo Agyei',
     29,
     'Male',
-    '',
+    'Tweapease',
     '2025-11-03',
     '04:10:00 PM',
     'Normal',
@@ -8246,7 +10656,17 @@ BEGIN
     1232.0,
     '247.0',
     '119.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 243: Dina Appiah
   INSERT INTO deceased_cases (
@@ -8262,7 +10682,7 @@ BEGIN
     'Dina Appiah',
     68,
     'Female',
-    '',
+    'Senkubenase',
     '2025-11-03',
     '05:15:00 PM',
     'Normal',
@@ -8280,7 +10700,17 @@ BEGIN
     400.0,
     '248.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 244: Solomon Nuadeke
   INSERT INTO deceased_cases (
@@ -8296,7 +10726,7 @@ BEGIN
     'Solomon Nuadeke',
     62,
     'Male',
-    '',
+    'Akawani',
     '2025-11-07',
     '07:00:00 PM',
     'VIP',
@@ -8314,7 +10744,17 @@ BEGIN
     2660.0,
     '249.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 245: Rosemond Amoako
   INSERT INTO deceased_cases (
@@ -8330,7 +10770,7 @@ BEGIN
     'Rosemond Amoako',
     63,
     'Female',
-    '',
+    'Bomso',
     '2025-11-10',
     '12:30:00 PM',
     'Normal',
@@ -8348,7 +10788,17 @@ BEGIN
     400.0,
     '250.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 246: Doris
   INSERT INTO deceased_cases (
@@ -8364,7 +10814,7 @@ BEGIN
     'Doris',
     54,
     'Female',
-    '',
+    'Akyem Krobo',
     '2025-11-10',
     '16:10:00',
     'Normal',
@@ -8382,7 +10832,17 @@ BEGIN
     582.0,
     '251.0',
     '245.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 247: Richmond Asamoah
   INSERT INTO deceased_cases (
@@ -8398,7 +10858,7 @@ BEGIN
     'Richmond Asamoah',
     62,
     'Male',
-    '',
+    'Asuom',
     '2025-11-11',
     '07:30:00 PM',
     'Normal',
@@ -8416,7 +10876,17 @@ BEGIN
     400.0,
     '252.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 248: Naomi Nuadeke
   INSERT INTO deceased_cases (
@@ -8432,7 +10902,7 @@ BEGIN
     'Naomi Nuadeke',
     52,
     'Female',
-    '',
+    'Akawani',
     '2025-11-11',
     '03:00:00 PM',
     'Normal',
@@ -8450,7 +10920,17 @@ BEGIN
     1817.0,
     '253.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 249: Samuel Akwasi Acheampong
   INSERT INTO deceased_cases (
@@ -8466,7 +10946,7 @@ BEGIN
     'Samuel Akwasi Acheampong',
     77,
     'Male',
-    '',
+    'Asuom',
     '2025-11-12',
     '09:30:00 PM',
     'Normal',
@@ -8484,7 +10964,17 @@ BEGIN
     2168.0,
     '254.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 250: Kwabena Marfo
   INSERT INTO deceased_cases (
@@ -8500,7 +10990,7 @@ BEGIN
     'Kwabena Marfo',
     63,
     'Male',
-    '',
+    'Asuom',
     '2025-11-13',
     '02:50:00 PM',
     'VIP',
@@ -8518,7 +11008,17 @@ BEGIN
     3100.0,
     '255.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 251: Gifty Ampofo
   INSERT INTO deceased_cases (
@@ -8534,7 +11034,7 @@ BEGIN
     'Gifty Ampofo',
     38,
     'Female',
-    '',
+    'Asuom',
     '2025-11-13',
     '07:00:00 PM',
     'Normal',
@@ -8552,7 +11052,17 @@ BEGIN
     400.0,
     '256.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 252: Regina Serwaa Ampofo
   INSERT INTO deceased_cases (
@@ -8568,7 +11078,7 @@ BEGIN
     'Regina Serwaa Ampofo',
     65,
     'Female',
-    '',
+    'Asuom',
     '2025-11-15',
     '12:30:00 PM',
     'Normal',
@@ -8586,7 +11096,17 @@ BEGIN
     3767.0,
     '257.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 253: Aku Ankrah
   INSERT INTO deceased_cases (
@@ -8602,7 +11122,7 @@ BEGIN
     'Aku Ankrah',
     92,
     'Female',
-    '',
+    'Akawani',
     '2025-11-15',
     '09:00:00 AM',
     'Normal',
@@ -8620,7 +11140,17 @@ BEGIN
     400.0,
     '258.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 254: Adu Kofi
   INSERT INTO deceased_cases (
@@ -8636,7 +11166,7 @@ BEGIN
     'Adu Kofi',
     65,
     'Male',
-    '',
+    'Akyem Krobo',
     '2025-11-17',
     '09:30:00 PM',
     'Normal',
@@ -8654,7 +11184,17 @@ BEGIN
     2376.0,
     '259.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 255: Louis Yaw Doku
   INSERT INTO deceased_cases (
@@ -8670,7 +11210,7 @@ BEGIN
     'Louis Yaw Doku',
     65,
     'Male',
-    '',
+    'Asuom',
     '2025-11-20',
     '07:30:00 PM',
     'Normal',
@@ -8688,7 +11228,17 @@ BEGIN
     400.0,
     '260.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 256: Comfort Odentaa
   INSERT INTO deceased_cases (
@@ -8704,7 +11254,7 @@ BEGIN
     'Comfort Odentaa',
     80,
     'Female',
-    '',
+    'Asuom',
     '2025-11-25',
     '19:30:00',
     'Normal',
@@ -8722,7 +11272,17 @@ BEGIN
     400.0,
     '261.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 257: Veronica Aku Amedi
   INSERT INTO deceased_cases (
@@ -8738,7 +11298,7 @@ BEGIN
     'Veronica Aku Amedi',
     101,
     'Female',
-    '',
+    'Asuom',
     '2025-11-26',
     '10:00:00 AM',
     'Normal',
@@ -8756,7 +11316,17 @@ BEGIN
     400.0,
     '262.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 258: Emmanuel Asante
   INSERT INTO deceased_cases (
@@ -8772,7 +11342,7 @@ BEGIN
     'Emmanuel Asante',
     52,
     'Male',
-    '',
+    'Tweapease',
     '2025-11-26',
     '11:22:00 AM',
     'Normal',
@@ -8790,7 +11360,17 @@ BEGIN
     400.0,
     '263.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 259: Emmanuel Tettey
   INSERT INTO deceased_cases (
@@ -8806,7 +11386,7 @@ BEGIN
     'Emmanuel Tettey',
     52,
     'Male',
-    '',
+    'Subiriso',
     '2025-11-26',
     '11:30:00 PM',
     'Normal',
@@ -8824,7 +11404,17 @@ BEGIN
     400.0,
     '264.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 260: Christina Affum
   INSERT INTO deceased_cases (
@@ -8840,7 +11430,7 @@ BEGIN
     'Christina Affum',
     85,
     'Female',
-    '',
+    'Subiriso',
     '2025-11-27',
     '11:30:00 PM',
     'Normal',
@@ -8858,7 +11448,17 @@ BEGIN
     400.0,
     '265.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 261: Yaw Antwi
   INSERT INTO deceased_cases (
@@ -8874,7 +11474,7 @@ BEGIN
     'Yaw Antwi',
     60,
     'Male',
-    '',
+    'Nkurakan',
     '2025-11-27',
     '07:40:00 PM',
     'Normal',
@@ -8892,7 +11492,17 @@ BEGIN
     400.0,
     '266.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 262: Kwabena Abrokwah
   INSERT INTO deceased_cases (
@@ -8908,7 +11518,7 @@ BEGIN
     'Kwabena Abrokwah',
     80,
     'Male',
-    '',
+    'Asuom',
     '2025-12-02',
     '12:50:00 PM',
     'Normal',
@@ -8926,7 +11536,17 @@ BEGIN
     400.0,
     '267.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 263: Janet Ampofowaa Amponsah
   INSERT INTO deceased_cases (
@@ -8942,7 +11562,7 @@ BEGIN
     'Janet Ampofowaa Amponsah',
     67,
     'Female',
-    '',
+    'Asuom',
     '2025-12-03',
     '01:45:00 PM',
     'VIP',
@@ -8960,7 +11580,17 @@ BEGIN
     400.0,
     '268.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 264: Priana Odame
   INSERT INTO deceased_cases (
@@ -8976,7 +11606,7 @@ BEGIN
     'Priana Odame',
     6,
     'Female',
-    '',
+    'Bomso',
     '2025-12-03',
     '20:30:00',
     'Normal',
@@ -8994,7 +11624,17 @@ BEGIN
     504.0,
     '269.0',
     '121.0'
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 265: Celestial Awuku Nyarko
   INSERT INTO deceased_cases (
@@ -9010,7 +11650,7 @@ BEGIN
     'Celestial Awuku Nyarko',
     70,
     'Female',
-    '',
+    'Asuom',
     '2025-12-05',
     '09:30:00',
     'Normal',
@@ -9028,7 +11668,17 @@ BEGIN
     400.0,
     '270.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 266: Regina Brakoaa
   INSERT INTO deceased_cases (
@@ -9044,7 +11694,7 @@ BEGIN
     'Regina Brakoaa',
     65,
     'Female',
-    '',
+    'Asuom',
     '2025-12-05',
     '10:00:00',
     'Normal',
@@ -9062,7 +11712,17 @@ BEGIN
     400.0,
     '271.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 267: Maxwell Owusu
   INSERT INTO deceased_cases (
@@ -9078,7 +11738,7 @@ BEGIN
     'Maxwell Owusu',
     39,
     'Male',
-    '',
+    'Kukubi',
     '2025-12-08',
     '08:20:00',
     'VIP',
@@ -9096,7 +11756,17 @@ BEGIN
     400.0,
     '272.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 268: Kwabena Sakyiama
   INSERT INTO deceased_cases (
@@ -9112,7 +11782,7 @@ BEGIN
     'Kwabena Sakyiama',
     45,
     'Male',
-    '',
+    'Senkubenase',
     '2025-12-06',
     '06:30:00',
     'Normal',
@@ -9130,7 +11800,17 @@ BEGIN
     400.0,
     '273.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 269: Akua Oforiwaa Anane
   INSERT INTO deceased_cases (
@@ -9146,7 +11826,7 @@ BEGIN
     'Akua Oforiwaa Anane',
     35,
     'Female',
-    '',
+    'Asuom',
     '2025-12-08',
     '10:00:00',
     'Normal',
@@ -9164,7 +11844,17 @@ BEGIN
     400.0,
     '274.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 270: Esi Agyarkwaa
   INSERT INTO deceased_cases (
@@ -9180,7 +11870,7 @@ BEGIN
     'Esi Agyarkwaa',
     62,
     'Female',
-    '',
+    'Asuom',
     '2025-12-11',
     '19:30:00',
     'Normal',
@@ -9198,7 +11888,17 @@ BEGIN
     400.0,
     '275.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 271: Mary Afia Akakpo
   INSERT INTO deceased_cases (
@@ -9214,7 +11914,7 @@ BEGIN
     'Mary Afia Akakpo',
     36,
     'Female',
-    '',
+    'Asuom',
     '2025-12-13',
     '03:00:00',
     'Normal',
@@ -9232,7 +11932,17 @@ BEGIN
     400.0,
     '276.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 272: Nana Larjder Kabutey
   INSERT INTO deceased_cases (
@@ -9248,7 +11958,7 @@ BEGIN
     'Nana Larjder Kabutey',
     75,
     'Female',
-    '',
+    'Asuom',
     '2025-12-15',
     '11:10:00',
     'Normal',
@@ -9266,7 +11976,17 @@ BEGIN
     400.0,
     '277.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 273: Thomas Frimpong
   INSERT INTO deceased_cases (
@@ -9282,7 +12002,7 @@ BEGIN
     'Thomas Frimpong',
     64,
     'Male',
-    '',
+    'Abaam',
     '2025-12-19',
     '19:30:00',
     'Normal',
@@ -9300,7 +12020,17 @@ BEGIN
     400.0,
     '278.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   -- Record 274: Tetteh Kwabena
   INSERT INTO deceased_cases (
@@ -9316,7 +12046,7 @@ BEGIN
     'Tetteh Kwabena',
     52,
     'Male',
-    '',
+    'Nyantease',
     '2025-12-24',
     '19:30:00',
     'Normal',
@@ -9334,7 +12064,17 @@ BEGIN
     400.0,
     '279.0',
     ''
-  );
+  )
+  ON CONFLICT (branch_id, tag_no) DO UPDATE SET
+    place = EXCLUDED.place,
+    name_of_deceased = EXCLUDED.name_of_deceased,
+    age = EXCLUDED.age,
+    gender = EXCLUDED.gender,
+    admission_date = EXCLUDED.admission_date,
+    admission_time = EXCLUDED.admission_time,
+    discharge_date = EXCLUDED.discharge_date,
+    status = EXCLUDED.status,
+    updated_at = NOW();
 
   RAISE NOTICE 'Import complete! Inserted % records.', 274;
 END $$;

@@ -10,7 +10,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table'
-import { Users, Plus, Phone, UserCheck, UserX, Edit, Eye, MoreHorizontal, Mail, Briefcase } from 'lucide-react'
+import { Users, Plus, Phone, UserCheck, UserX, Edit, Eye, MoreHorizontal, Briefcase, Wallet, CalendarCheck, Clock, ArrowRight, TrendingUp } from 'lucide-react'
 import Link from 'next/link'
 import {
     DropdownMenu,
@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { resolveBranch } from '@/lib/branch-resolver'
 import { notFound } from 'next/navigation'
+import { format } from 'date-fns'
 
 export default async function HRStaffPage({ params }: { params: Promise<{ branchId: string }> }) {
     const { branchId } = await params
@@ -28,6 +29,10 @@ export default async function HRStaffPage({ params }: { params: Promise<{ branch
     // Resolve branch from code or UUID
     const branch = await resolveBranch(branchId)
     if (!branch) notFound()
+
+    const today = format(new Date(), 'yyyy-MM-dd')
+    const currentMonth = new Date().getMonth() + 1
+    const currentYear = new Date().getFullYear()
 
     // Fetch staff assigned to this branch with employee profiles
     const { data: assignments } = await supabase
@@ -53,6 +58,27 @@ export default async function HRStaffPage({ params }: { params: Promise<{ branch
         `)
         .eq('branch_id', branch.id)
 
+    // Fetch today's attendance
+    const { data: todayAttendance } = await supabase
+        .from('attendance')
+        .select('employee_id, status')
+        .eq('branch_id', branch.id)
+        .eq('date', today)
+
+    // Fetch current month's payroll run
+    const { data: currentPayroll } = await supabase
+        .from('payroll_runs')
+        .select('*')
+        .eq('branch_id', branch.id)
+        .eq('month', currentMonth)
+        .eq('year', currentYear)
+        .single()
+
+    // Fetch total employee salaries
+    const { data: salaryData } = await supabase
+        .from('employee_profiles')
+        .select('base_salary, user_id')
+
     const staff = assignments?.map((a: any) => ({
         ...a.profile,
         employee_profile: a.profile?.employee_profile?.[0] || null,
@@ -61,6 +87,17 @@ export default async function HRStaffPage({ params }: { params: Promise<{ branch
 
     const activeStaff = staff.filter((s: any) => s.is_active).length
     const totalStaff = staff.length
+
+    // Calculate attendance stats for today
+    const presentToday = todayAttendance?.filter((a: any) => a.status === 'PRESENT' || a.status === 'LATE').length || 0
+    const absentToday = todayAttendance?.filter((a: any) => a.status === 'ABSENT').length || 0
+    const attendanceRate = activeStaff > 0 ? Math.round((presentToday / activeStaff) * 100) : 0
+
+    // Calculate monthly payroll estimate
+    const staffUserIds = staff.map((s: any) => s.id)
+    const totalMonthlySalary = salaryData
+        ?.filter((s: any) => staffUserIds.includes(s.user_id))
+        ?.reduce((sum: number, s: any) => sum + (s.base_salary || 0), 0) || 0
 
     return (
         <div className="space-y-6">
@@ -111,6 +148,109 @@ export default async function HRStaffPage({ params }: { params: Promise<{ branch
                         <p className="text-xs opacity-75 mt-1">Unique departments</p>
                     </CardContent>
                 </Card>
+            </div>
+
+            {/* Attendance & Payroll Stats */}
+            <div className="grid gap-4 md:grid-cols-4">
+                <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white border-0">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium opacity-90">Present Today</CardTitle>
+                        <CalendarCheck className="h-5 w-5 opacity-80" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-3xl font-bold">{presentToday}</div>
+                        <p className="text-xs opacity-75 mt-1">Out of {activeStaff} active staff</p>
+                    </CardContent>
+                </Card>
+
+                <Card className="bg-gradient-to-br from-amber-500 to-amber-600 text-white border-0">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium opacity-90">Attendance Rate</CardTitle>
+                        <TrendingUp className="h-5 w-5 opacity-80" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-3xl font-bold">{attendanceRate}%</div>
+                        <p className="text-xs opacity-75 mt-1">Today&apos;s attendance</p>
+                    </CardContent>
+                </Card>
+
+                <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white border-0">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium opacity-90">Monthly Salaries</CardTitle>
+                        <Wallet className="h-5 w-5 opacity-80" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-3xl font-bold">GH₵ {totalMonthlySalary.toLocaleString()}</div>
+                        <p className="text-xs opacity-75 mt-1">Total base salaries</p>
+                    </CardContent>
+                </Card>
+
+                <Card className="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white border-0">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium opacity-90">Payroll Status</CardTitle>
+                        <Clock className="h-5 w-5 opacity-80" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-xl font-bold">
+                            {currentPayroll ? (
+                                <Badge className={currentPayroll.status === 'PAID' ? 'bg-green-400' : 'bg-yellow-400 text-black'}>
+                                    {currentPayroll.status}
+                                </Badge>
+                            ) : (
+                                <Badge className="bg-red-400">Not Run</Badge>
+                            )}
+                        </div>
+                        <p className="text-xs opacity-75 mt-1">{format(new Date(), 'MMMM yyyy')}</p>
+                    </CardContent>
+                </Card>
+            </div>
+
+            {/* Quick Navigation Cards */}
+            <div className="grid gap-4 md:grid-cols-3">
+                <Link href={`/dashboard/${branch.code}/hr/attendance`}>
+                    <Card className="hover:shadow-lg transition-all cursor-pointer border-l-4 border-l-green-500 hover:border-l-green-600">
+                        <CardHeader className="flex flex-row items-center justify-between">
+                            <div>
+                                <CardTitle className="text-lg">Attendance</CardTitle>
+                                <CardDescription>Track daily attendance</CardDescription>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <CalendarCheck className="h-8 w-8 text-green-500" />
+                                <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                            </div>
+                        </CardHeader>
+                    </Card>
+                </Link>
+
+                <Link href={`/dashboard/${branch.code}/hr/payroll`}>
+                    <Card className="hover:shadow-lg transition-all cursor-pointer border-l-4 border-l-purple-500 hover:border-l-purple-600">
+                        <CardHeader className="flex flex-row items-center justify-between">
+                            <div>
+                                <CardTitle className="text-lg">Payroll</CardTitle>
+                                <CardDescription>Manage salaries & payments</CardDescription>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Wallet className="h-8 w-8 text-purple-500" />
+                                <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                            </div>
+                        </CardHeader>
+                    </Card>
+                </Link>
+
+                <Link href={`/dashboard/${branch.code}/hr/leaves`}>
+                    <Card className="hover:shadow-lg transition-all cursor-pointer border-l-4 border-l-amber-500 hover:border-l-amber-600">
+                        <CardHeader className="flex flex-row items-center justify-between">
+                            <div>
+                                <CardTitle className="text-lg">Leave Requests</CardTitle>
+                                <CardDescription>Approve & manage leaves</CardDescription>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Clock className="h-8 w-8 text-amber-500" />
+                                <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                            </div>
+                        </CardHeader>
+                    </Card>
+                </Link>
             </div>
 
             {/* Actions Bar */}

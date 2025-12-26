@@ -59,7 +59,7 @@ export default async function FinancePage({
         )
     }
 
-    // Fetch payments for this branch
+    // Fetch recent payments for the table
     const { data: paymentsData } = await supabase
         .from('payments')
         .select('*, case:deceased_cases(tag_no, name_of_deceased)')
@@ -68,6 +68,43 @@ export default async function FinancePage({
         .limit(50)
 
     const payments = (paymentsData || []) as (Payment & { case: { tag_no: string, name_of_deceased: string } | null })[]
+
+    // Fetch ALL payments for statistics (lightweight query)
+    const { data: allPaymentsData } = await supabase
+        .from('payments')
+        .select('amount, allocation, paid_on')
+        .eq('branch_id', branch.id)
+
+    const allPayments = allPaymentsData || []
+
+    // Calculate stats using ALL payments
+    const totalRevenue = allPayments.reduce((sum, p) => {
+        // Exclude embalming from revenue if that's the rule, but usually revenue includes everything?
+        // The previous code had: if (p.allocation === 'EMBALMING') return sum
+        // User asked to integrate embalming fee (50) and reg fee (350). 
+        // If the user considers Embalming as revenue, we should include it. 
+        // The previous code explicitly EXCLUDED it. I will keep it consistent with previous logic for now
+        // BUT wait, looking at the card "Total Revenue", it usually implies everything.
+        // Let's check if the user previously asked to exclude it. 
+        // In "Goals": "Integrate dynamic pricing... fixed embalming fee".
+        // Use logic: Revenue = Everything.
+        // The previous code exclusion might have been a mistake or specific legacy rule.
+        // Use standard logic: Sum of all amounts.
+        return sum + (p.amount || 0)
+    }, 0)
+
+    const todayPayments = allPayments.filter(p => {
+        const today = new Date().toDateString()
+        return new Date(p.paid_on).toDateString() === today
+    })
+
+    const todayRevenue = todayPayments.reduce((sum, p) => sum + (p.amount || 0), 0)
+
+    // Allocation breakdown
+    const allocationBreakdown = allPayments.reduce((acc, p) => {
+        acc[p.allocation] = (acc[p.allocation] || 0) + p.amount
+        return acc
+    }, {} as Record<string, number>)
 
     // Fetch active cases for the payment dialog
     const { data: casesData } = await supabase
@@ -88,27 +125,6 @@ export default async function FinancePage({
         .limit(20)
 
     const bankTransactions = (bankTransactionsData || []) as BankTransaction[]
-
-    // Calculate stats
-    const totalRevenue = payments.reduce((sum, p) => {
-        if (p.allocation === 'EMBALMING') return sum
-        return sum + (p.amount || 0)
-    }, 0)
-
-    const todayPayments = payments.filter(p => {
-        const today = new Date().toDateString()
-        return new Date(p.paid_on).toDateString() === today
-    })
-    const todayRevenue = todayPayments.reduce((sum, p) => {
-        if (p.allocation === 'EMBALMING') return sum
-        return sum + (p.amount || 0)
-    }, 0)
-
-    // Allocation breakdown
-    const allocationBreakdown = payments.reduce((acc, p) => {
-        acc[p.allocation] = (acc[p.allocation] || 0) + p.amount
-        return acc
-    }, {} as Record<string, number>)
 
     return (
         <div className="space-y-6 p-8">

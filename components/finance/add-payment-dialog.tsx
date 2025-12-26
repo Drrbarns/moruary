@@ -24,9 +24,10 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
-import { Loader2, Plus, DollarSign, CheckCircle } from 'lucide-react'
+import { Loader2, Plus, DollarSign, CheckCircle, RefreshCcw } from 'lucide-react'
 import { toast } from 'sonner'
 import type { DeceasedCase, Branch } from '@/lib/types'
+import { calculateProjectedBill } from '@/lib/pricing'
 
 interface AddPaymentDialogProps {
     branch: Branch
@@ -38,6 +39,7 @@ interface AddPaymentDialogProps {
 export function AddPaymentDialog({ branch, cases, preselectedCaseId, onSuccess }: AddPaymentDialogProps) {
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [fetchingBalances, setFetchingBalances] = useState(false)
     const supabase = createClient()
 
     const [formData, setFormData] = useState({
@@ -47,7 +49,106 @@ export function AddPaymentDialog({ branch, cases, preselectedCaseId, onSuccess }
         allocation: 'GENERAL',
     })
 
+    const [paymentStats, setPaymentStats] = useState<{
+        registrationPaid: number;
+        embalmingPaid: number;
+        coldroomPaid: number;
+        totalPaid: number;
+    }>({
+        registrationPaid: 0,
+        embalmingPaid: 0,
+        coldroomPaid: 0,
+        totalPaid: 0,
+    })
+
     const selectedCase = cases.find(c => c.id === formData.case_id)
+
+    // Calculate display balance with projection for active cases
+    let displayBalance = 0
+    let isEstimated = false
+    let allocationLabel = 'Outstanding Balance'
+
+    if (selectedCase) {
+        // Default Totals
+        let regFee = selectedCase.registration_fee || 350
+        let embFee = selectedCase.embalming_fee || 50
+        let coldFee = 0
+        let totalVal = selectedCase.total_bill
+
+        if (selectedCase.status === 'IN_CUSTODY') {
+            const proj = calculateProjectedBill(
+                selectedCase.admission_date || selectedCase.created_at,
+                (selectedCase.type as 'Normal' | 'VIP') || 'Normal',
+                {
+                    registration: selectedCase.registration_fee,
+                    embalming: selectedCase.embalming_fee
+                }
+            )
+            regFee = proj.registrationFee
+            embFee = proj.embalmingFee
+            coldFee = proj.coldRoomFee
+            totalVal = proj.total
+            isEstimated = true
+        } else {
+            // For Discharged:
+            // Reg/Emb are fixed, Coldroom is total - (Reg+Emb)
+            coldFee = (selectedCase.coldroom_fee || 0) + (selectedCase.storage_fee || 0) // Should match total_bill breakdown
+        }
+
+        // Determine Balance display based on Allocation
+        switch (formData.allocation) {
+            case 'REGISTRATION':
+                displayBalance = Math.max(0, regFee - paymentStats.registrationPaid)
+                allocationLabel = 'Registration Balance'
+                break
+            case 'EMBALMING':
+                displayBalance = Math.max(0, embFee - paymentStats.embalmingPaid)
+                allocationLabel = 'Embalming Balance'
+                break
+            case 'COLDROOM':
+                // Coldroom balance = Cold Fee - (Total Paid for Coldroom)
+                // Note: Sometimes general payments might technically cover coldroom, but we'll stick to specific allocation if tracked
+                // If we want strict "What is left for Coldroom", we subtract coldroomPaid.
+                displayBalance = Math.max(0, coldFee - paymentStats.coldroomPaid)
+                allocationLabel = 'Coldroom Balance' + (isEstimated ? ' (Est)' : '')
+                break
+            case 'GENERAL':
+            default:
+                // General balance is Total Bill - Total Paid (all allocations)
+                displayBalance = totalVal - (paymentStats.totalPaid > 0 ? paymentStats.totalPaid : (selectedCase.total_paid || 0))
+                // If we successfully fetched payments, use updated totalPaid, else fallback to case.total_paid
+                break
+        }
+    }
+
+    // Fetch payments when case is selected
+    useEffect(() => {
+        const fetchPayments = async () => {
+            if (!formData.case_id) return
+
+            setFetchingBalances(true)
+            const { data: payments } = await supabase
+                .from('payments')
+                .select('amount, allocation')
+                .eq('case_id', formData.case_id)
+
+            if (payments) {
+                const stats = payments.reduce((acc, p) => {
+                    const amt = p.amount || 0
+                    acc.totalPaid += amt
+                    if (p.allocation === 'REGISTRATION') acc.registrationPaid += amt
+                    else if (p.allocation === 'EMBALMING') acc.embalmingPaid += amt
+                    else if (p.allocation === 'COLDROOM') acc.coldroomPaid += amt
+                    return acc
+                }, { registrationPaid: 0, embalmingPaid: 0, coldroomPaid: 0, totalPaid: 0 })
+
+                setPaymentStats(stats)
+            }
+            setFetchingBalances(false)
+        }
+
+        fetchPayments()
+    }, [formData.case_id])
 
     useEffect(() => {
         if (preselectedCaseId) {
@@ -84,14 +185,17 @@ export function AddPaymentDialog({ branch, cases, preselectedCaseId, onSuccess }
                     amount: paymentAmount,
                     method: formData.method,
                     allocation: formData.allocation,
-                    receipt_no: `PMT-${Date.now()}`, // Temporary; should use proper sequence
+                    receipt_no: `PMT-${Date.now()}`,
                     paid_on: new Date().toISOString(),
                 })
 
             if (paymentError) throw paymentError
 
             // Update case totals
-            const newTotalPaid = targetCase.total_paid + paymentAmount
+            const newTotalPaid = (targetCase.total_paid || 0) + paymentAmount
+            // Note: We use the existing logic for balance update. 
+            // If the user pays specifically for "Registration", it still reduces the overall balance on the case record.
+            // The case record 'balance' is always Total Bill - Total Paid.
             const newBalance = targetCase.total_bill - newTotalPaid
 
             const { error: updateError } = await supabase
@@ -160,13 +264,22 @@ export function AddPaymentDialog({ branch, cases, preselectedCaseId, onSuccess }
 
                     {/* Show case balance */}
                     {selectedCase && (
-                        <div className="bg-slate-50 dark:bg-slate-800 rounded-lg p-3 text-sm">
-                            <div className="flex justify-between">
-                                <span className="text-muted-foreground">Outstanding Balance:</span>
-                                <span className={`font-bold ${selectedCase.balance > 0 ? 'text-red-600' : 'text-green-600'}`}>
-                                    GHS {selectedCase.balance.toFixed(2)}
+                        <div className="bg-slate-50 dark:bg-slate-800 rounded-lg p-3 text-sm transition-all">
+                            <div className="flex justify-between items-center">
+                                <span className="text-muted-foreground flex items-center gap-1">
+                                    {allocationLabel}:
+                                    {isEstimated && formData.allocation === 'GENERAL' && <span className="text-[10px] bg-blue-100 text-blue-700 px-1 rounded-sm">EST</span>}
+                                    {fetchingBalances && <RefreshCcw className="h-3 w-3 animate-spin ml-2" />}
+                                </span>
+                                <span className={`font-bold ${displayBalance > 0 ? 'text-red-600' : 'text-green-600'}`}>
+                                    GHS {displayBalance.toFixed(2)}
                                 </span>
                             </div>
+                            {isEstimated && formData.allocation !== 'REGISTRATION' && formData.allocation !== 'EMBALMING' && (
+                                <p className="text-xs text-muted-foreground mt-1 text-right">
+                                    Includes accrued daily charges
+                                </p>
+                            )}
                         </div>
                     )}
 

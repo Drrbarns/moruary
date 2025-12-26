@@ -18,6 +18,7 @@ import { toast } from "sonner"
 import { createClient } from "@/utils/supabase/client"
 import { useRouter } from "next/navigation"
 import { differenceInCalendarDays } from "date-fns"
+import { PRICING } from '@/lib/pricing'
 
 interface DischargeDialogProps {
     caseId: string
@@ -49,18 +50,18 @@ export function DischargeDialog({
     const start = new Date(admissionDate)
     const end = new Date(dischargeDate)
 
+    const supabase = createClient()
+    const router = useRouter()
+
     // Ensure at least 1 day counts
     const days = Math.max(1, differenceInCalendarDays(end, start))
 
-    const rate = caseType === 'VIP' ? 20 : 13
+    const rate = caseType === 'VIP' ? PRICING.COLD_ROOM_DAILY_RATE.VIP : PRICING.COLD_ROOM_DAILY_RATE.NORMAL
     const storageFee = days * rate
 
     // Note: currentTotalBill includes Reg + Emb (calculated at admission)
     const newTotalBill = currentTotalBill + storageFee
     const outstanding = newTotalBill - totalPaid
-
-    const supabase = createClient()
-    const router = useRouter()
 
     const handleDischarge = async () => {
         setLoading(true)
@@ -92,7 +93,7 @@ export function DischargeDialog({
     const handlePrint = () => {
         const receiptWindow = window.open('', '_blank', 'width=800,height=800')
         if (receiptWindow) {
-            receiptWindow.document.write(`
+            const htmlContent = `
                 <html>
                 <head>
                     <title>Discharge Receipt - ${tagNo}</title>
@@ -172,7 +173,8 @@ export function DischargeDialog({
                     </script>
                 </body>
                 </html>
-            `)
+            `
+            receiptWindow.document.write(htmlContent)
             receiptWindow.document.close()
         }
     }

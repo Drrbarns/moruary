@@ -1,11 +1,12 @@
-import Link from 'next/link'
-import { notFound } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
+import { notFound, redirect } from 'next/navigation'
+import Link from 'next/link'
+import { resolveBranch } from '@/lib/branch-resolver'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { ArrowLeft, Calendar, FileText, MapPin, Store, User, Phone, Clock, DollarSign, Plus, CreditCard, Receipt, Edit, Printer } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
     Table,
     TableBody,
@@ -14,133 +15,118 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table'
-import {
-    ArrowLeft,
-    Edit,
-    FileText,
-    User,
-    Phone,
-    Calendar,
-    MapPin,
-    DollarSign,
-    CreditCard,
-    Clock,
-    CheckCircle,
-    AlertTriangle,
-    Plus,
-} from 'lucide-react'
-import type { DeceasedCase, CaseStatus, Payment } from '@/lib/types'
-import { resolveBranch } from '@/lib/branch-resolver'
-import { DischargeDialog } from '@/components/cases/discharge-dialog'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { calculateProjectedBill } from '@/lib/pricing'
+import { DischargeDialog } from "@/components/cases/discharge-dialog"
 
-const statusColors: Record<CaseStatus, string> = {
-    IN_CUSTODY: 'bg-blue-100 text-blue-800 border-blue-200',
-    DISCHARGED: 'bg-green-100 text-green-800 border-green-200',
-    CANCELLED: 'bg-red-100 text-red-800 border-red-200',
-    ARCHIVED: 'bg-gray-100 text-gray-800 border-gray-200',
+interface PageProps {
+    params: Promise<{
+        branchId: string
+        caseId: string
+    }>
 }
 
-const statusLabels: Record<CaseStatus, string> = {
-    IN_CUSTODY: 'In Custody',
-    DISCHARGED: 'Discharged',
-    CANCELLED: 'Cancelled',
-    ARCHIVED: 'Archived',
-}
-
-export default async function CaseDetailsPage({
-    params,
-}: {
-    params: Promise<{ branchId: string; caseId: string }>
-}) {
+export default async function CaseDetailsPage({ params }: PageProps) {
     const { branchId, caseId } = await params
     const supabase = await createClient()
 
-    // Resolve branch from code or UUID
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) redirect('/auth/login')
+
     const branch = await resolveBranch(branchId)
     if (!branch) notFound()
 
-    // Fetch case
-    const { data: caseData, error } = await supabase
+    // Fetch Case Details
+    const { data: deceased, error } = await supabase
         .from('deceased_cases')
         .select('*')
         .eq('id', caseId)
         .eq('branch_id', branch.id)
         .single()
 
-    if (error || !caseData) {
+    if (error || !deceased) {
         notFound()
     }
 
-    const deceased = caseData as DeceasedCase
-
-    // Fetch payments for this case
-    const { data: paymentsData } = await supabase
+    // Fetch Payments
+    const { data: payments } = await supabase
         .from('payments')
         .select('*')
         .eq('case_id', caseId)
         .order('paid_on', { ascending: false })
 
-    const payments = (paymentsData || []) as Payment[]
+    // Fetch Charges (Mock or Implement if table exists)
+    // Assuming a simple charges table or just empty for now if not fully implemented
+    const charges: any[] = []
 
-    // Fetch additional charges
-    const { data: chargesData } = await supabase
-        .from('case_charges')
-        .select('*')
-        .eq('case_id', caseId)
-        .order('applied_on', { ascending: false })
-
-    const charges = chargesData || []
-
-    // Calculate storage days
+    // Calculate Projected Bill Logic
     const admissionDate = deceased.admission_date ? new Date(deceased.admission_date) : new Date(deceased.created_at)
+    // If discharged, use discharge date. If active, use NOW() for projection
     const endDate = deceased.discharge_date ? new Date(deceased.discharge_date) : new Date()
-    const storageDays = Math.ceil((endDate.getTime() - admissionDate.getTime()) / (1000 * 60 * 60 * 24))
+
+    // Difference in time
+    const diffTime = Math.abs(endDate.getTime() - admissionDate.getTime())
+    const storageDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+    const projected = calculateProjectedBill(
+        admissionDate,
+        (deceased.type as 'Normal' | 'VIP') || 'Normal',
+        {
+            registration: deceased.registration_fee || 0,
+            embalming: deceased.embalming_fee || 0
+        }
+    )
+
+    // For active cases, we show the projected running total
+    // For discharged, we show the finalized total from DB
+    const displayTotalBill = deceased.status === 'IN_CUSTODY' ? projected.total : (deceased.total_bill || 0)
+
+    // Payments sum
+    const totalPaymentsDerived = payments?.reduce((sum, p) => sum + (p.amount || 0), 0) || 0
+    // Use DB total_paid if reliable, otherwise derived. Let's trust DB 'total_paid' if it's being updated, 
+    // but for display let's use the derived one if we want to be sure based on payment records, 
+    // OR just use deceased.total_paid. Let's use deceased.total_paid as primary.
+    const paidAmount = deceased.total_paid || 0
+
+    const displayBalance = displayTotalBill - paidAmount
 
     return (
         <div className="space-y-6 p-8">
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                <div className="flex items-start gap-4">
-                    <Link href={`/dashboard/${branch.code}/cases`}>
-                        <Button variant="ghost" size="icon">
-                            <ArrowLeft className="h-5 w-5" />
-                        </Button>
-                    </Link>
-                    <div>
-                        <div className="flex items-center gap-3 mb-1">
-                            <h1 className="text-3xl font-bold tracking-tight">{deceased.name_of_deceased}</h1>
-                            <Badge className={statusColors[deceased.status]}>
-                                {statusLabels[deceased.status]}
-                            </Badge>
-                        </div>
-                        <p className="text-muted-foreground font-mono">{deceased.tag_no}</p>
+                <div>
+                    <div className="flex items-center gap-2 text-muted-foreground mb-2">
+                        <Link href={`/dashboard/${branchId}/cases`} className="hover:text-foreground transition-colors flex items-center gap-1">
+                            <ArrowLeft className="h-4 w-4" />
+                            Back to Cases
+                        </Link>
+                        <span>/</span>
+                        <span className="font-mono">{deceased.tag_no}</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                        <h1 className="text-3xl font-bold tracking-tight">{deceased.name_of_deceased}</h1>
+                        <Badge variant={deceased.status === 'IN_CUSTODY' ? 'default' : 'secondary'} className="capitalize">
+                            {deceased.status.replace('_', ' ')}
+                        </Badge>
                     </div>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex items-center gap-2">
                     {deceased.status === 'IN_CUSTODY' && (
-                        <>
-                            <Link href={`/dashboard/${branch.code}/finance?case=${caseId}`}>
-                                <Button variant="outline">
-                                    <Plus className="mr-2 h-4 w-4" />
-                                    Add Payment
-                                </Button>
-                            </Link>
-                            <DischargeDialog
-                                caseId={caseId}
-                                admissionDate={deceased.admission_date || new Date().toISOString()} // Fallback just in case
-                                caseType={deceased.type || 'Normal'}
-                                currentTotalBill={deceased.total_bill || 0}
-                                totalPaid={deceased.total_paid || 0}
-                                branchId={branch.id}
-                                tagNo={deceased.tag_no}
-                                name={deceased.name_of_deceased}
-                            />
-                        </>
+                        <DischargeDialog
+                            caseId={deceased.id}
+                            admissionDate={deceased.admission_date}
+                            caseType={deceased.type}
+                            currentTotalBill={projected.baseTotal} // This sends the fixed fees (Reg+Emb)
+                            totalPaid={paidAmount}
+                            branchId={branch.id}
+                            tagNo={deceased.tag_no}
+                            name={deceased.name_of_deceased}
+                        />
                     )}
-                    <Link href={`/dashboard/${branch.code}/cases/${caseId}/edit`}>
+                    <Link href={`/dashboard/${branchId}/cases/${caseId}/edit`}>
                         <Button variant="outline">
                             <Edit className="mr-2 h-4 w-4" />
-                            Edit
+                            Edit Details
                         </Button>
                     </Link>
                 </div>
@@ -150,28 +136,34 @@ export default async function CaseDetailsPage({
             <div className="grid gap-4 md:grid-cols-4">
                 <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border-blue-200">
                     <CardContent className="pt-6">
-                        <div className="text-sm text-blue-600 font-medium">Total Bill</div>
-                        <div className="text-2xl font-bold text-blue-700">GHS {deceased.total_bill.toFixed(2)}</div>
+                        <div className="text-sm text-blue-600 font-medium flex items-center gap-1">
+                            Total Bill
+                            {deceased.status === 'IN_CUSTODY' && <span className="text-[10px] bg-blue-200 px-1 rounded-full text-blue-800">EST</span>}
+                        </div>
+                        <div className="text-2xl font-bold text-blue-700">GHS {displayTotalBill.toFixed(2)}</div>
                     </CardContent>
                 </Card>
                 <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 border-green-200">
                     <CardContent className="pt-6">
                         <div className="text-sm text-green-600 font-medium">Total Paid</div>
-                        <div className="text-2xl font-bold text-green-700">GHS {deceased.total_paid.toFixed(2)}</div>
+                        <div className="text-2xl font-bold text-green-700">GHS {paidAmount.toFixed(2)}</div>
                     </CardContent>
                 </Card>
-                <Card className={`bg-gradient-to-br ${deceased.balance > 0 ? 'from-red-50 to-red-100 border-red-200' : 'from-gray-50 to-gray-100 border-gray-200'}`}>
+                <Card className={`bg-gradient-to-br ${displayBalance > 0 ? 'from-red-50 to-red-100 border-red-200' : 'from-gray-50 to-gray-100 border-gray-200'}`}>
                     <CardContent className="pt-6">
-                        <div className={`text-sm font-medium ${deceased.balance > 0 ? 'text-red-600' : 'text-gray-600'}`}>Balance</div>
-                        <div className={`text-2xl font-bold ${deceased.balance > 0 ? 'text-red-700' : 'text-gray-700'}`}>
-                            {deceased.balance > 0 ? `GHS ${deceased.balance.toFixed(2)}` : 'Cleared'}
+                        <div className={`text-sm font-medium ${displayBalance > 0 ? 'text-red-600' : 'text-gray-600'}`}>
+                            Balance
+                            {deceased.status === 'IN_CUSTODY' && <span className="ml-1 text-[10px] bg-red-200 px-1 rounded-full text-red-800">EST</span>}
+                        </div>
+                        <div className={`text-2xl font-bold ${displayBalance > 0 ? 'text-red-700' : 'text-gray-700'}`}>
+                            {displayBalance > 0 ? `GHS ${displayBalance.toFixed(2)}` : 'Cleared'}
                         </div>
                     </CardContent>
                 </Card>
                 <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 border-purple-200">
                     <CardContent className="pt-6">
                         <div className="text-sm text-purple-600 font-medium">Storage Days</div>
-                        <div className="text-2xl font-bold text-purple-700">{storageDays} days</div>
+                        <div className="text-2xl font-bold text-purple-700">{Math.max(1, storageDays)} days</div>
                     </CardContent>
                 </Card>
             </div>
@@ -180,7 +172,7 @@ export default async function CaseDetailsPage({
             <Tabs defaultValue="details" className="space-y-4">
                 <TabsList>
                     <TabsTrigger value="details">Details</TabsTrigger>
-                    <TabsTrigger value="payments">Payments ({payments.length})</TabsTrigger>
+                    <TabsTrigger value="payments">Payments ({payments?.length || 0})</TabsTrigger>
                     <TabsTrigger value="charges">Charges ({charges.length})</TabsTrigger>
                 </TabsList>
 
@@ -237,6 +229,7 @@ export default async function CaseDetailsPage({
                                     <div>
                                         <p className="text-sm text-muted-foreground">Discharge Date</p>
                                         <p className="font-medium">{deceased.discharge_date}</p>
+                                        <p className="text-xs text-muted-foreground mt-1">Discharged on {new Date(deceased.discharge_date).toLocaleDateString()}</p>
                                     </div>
                                 )}
                             </CardContent>
@@ -298,17 +291,25 @@ export default async function CaseDetailsPage({
                                         <TableRow>
                                             <TableCell>Embalming Fee</TableCell>
                                             <TableCell className="font-mono text-sm">{deceased.embalming_receipt_no || '-'}</TableCell>
-                                            <TableCell className="text-right">{deceased.embalming_fee.toFixed(2)}</TableCell>
+                                            <TableCell className="text-right">{(deceased.embalming_fee || 0).toFixed(2)}</TableCell>
                                         </TableRow>
                                         <TableRow>
-                                            <TableCell>Coldroom Fee</TableCell>
+                                            <TableCell>Coldroom Fee
+                                                <span className="text-xs text-muted-foreground ml-2">
+                                                    ({deceased.status === 'IN_CUSTODY' ? 'Estimated' : 'Final'})
+                                                </span>
+                                            </TableCell>
                                             <TableCell className="font-mono text-sm">{deceased.coldroom_receipt_no || '-'}</TableCell>
-                                            <TableCell className="text-right">{deceased.coldroom_fee.toFixed(2)}</TableCell>
+                                            <TableCell className="text-right">
+                                                {deceased.status === 'IN_CUSTODY'
+                                                    ? (projected.storageFee || 0).toFixed(2)
+                                                    : (deceased.coldroom_fee || 0).toFixed(2)}
+                                            </TableCell>
                                         </TableRow>
                                         <TableRow className="font-bold bg-slate-50 dark:bg-slate-800">
-                                            <TableCell>Total</TableCell>
+                                            <TableCell>Total Bill</TableCell>
                                             <TableCell></TableCell>
-                                            <TableCell className="text-right">{deceased.total_bill.toFixed(2)}</TableCell>
+                                            <TableCell className="text-right">{displayTotalBill.toFixed(2)}</TableCell>
                                         </TableRow>
                                     </TableBody>
                                 </Table>
@@ -335,7 +336,7 @@ export default async function CaseDetailsPage({
                         <CardHeader className="flex flex-row items-center justify-between">
                             <CardTitle>Payment History</CardTitle>
                             {deceased.status === 'IN_CUSTODY' && (
-                                <Link href={`/dashboard/${branch.code}/finance?case=${caseId}`}>
+                                <Link href={`/dashboard/${branchId}/finance?case=${caseId}`}>
                                     <Button size="sm">
                                         <Plus className="mr-2 h-4 w-4" />
                                         Add Payment
@@ -344,7 +345,7 @@ export default async function CaseDetailsPage({
                             )}
                         </CardHeader>
                         <CardContent>
-                            {payments.length === 0 ? (
+                            {!payments || payments.length === 0 ? (
                                 <div className="text-center py-8 text-muted-foreground">
                                     <CreditCard className="h-8 w-8 mx-auto mb-2 opacity-50" />
                                     <p>No payments recorded yet</p>

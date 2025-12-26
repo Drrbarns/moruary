@@ -22,6 +22,7 @@ import { Input } from '@/components/ui/input'
 import type { DeceasedCase, CaseStatus } from '@/lib/types'
 import { resolveBranch } from '@/lib/branch-resolver'
 import { notFound } from 'next/navigation'
+import { CaseActions } from '@/components/cases/case-actions'
 
 const statusColors: Record<CaseStatus, string> = {
     IN_CUSTODY: 'bg-blue-100 text-blue-800 border-blue-200',
@@ -196,27 +197,11 @@ export default async function CasesPage({ params }: { params: Promise<{ branchId
                                             {caseItem.balance > 0 ? caseItem.balance.toFixed(2) : 'Cleared'}
                                         </TableCell>
                                         <TableCell>
-                                            <DropdownMenu>
-                                                <DropdownMenuTrigger asChild>
-                                                    <Button variant="ghost" size="icon" className="h-8 w-8">
-                                                        <MoreHorizontal className="h-4 w-4" />
-                                                    </Button>
-                                                </DropdownMenuTrigger>
-                                                <DropdownMenuContent align="end">
-                                                    <DropdownMenuItem asChild>
-                                                        <Link href={`/dashboard/${branch.code}/cases/${caseItem.id}`}>
-                                                            <Eye className="mr-2 h-4 w-4" />
-                                                            View Details
-                                                        </Link>
-                                                    </DropdownMenuItem>
-                                                    <DropdownMenuItem asChild>
-                                                        <Link href={`/dashboard/${branch.code}/cases/${caseItem.id}/edit`}>
-                                                            <Edit className="mr-2 h-4 w-4" />
-                                                            Edit Case
-                                                        </Link>
-                                                    </DropdownMenuItem>
-                                                </DropdownMenuContent>
-                                            </DropdownMenu>
+                                            <CaseActions
+                                                caseItem={caseItem}
+                                                branchCode={branch.code}
+                                                branchId={branch.id}
+                                            />
                                         </TableCell>
                                     </TableRow>
                                 ))
