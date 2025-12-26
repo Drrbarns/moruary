@@ -53,7 +53,7 @@ export default async function DashboardPage({ params }: { params: Promise<{ bran
         // Revenue this month (Mask for staff)
         !isStaff ? supabase
             .from('payments')
-            .select('amount')
+            .select('amount, allocation')
             .eq('branch_id', branchId)
             .gte('paid_on', startOfMonth) : Promise.resolve({ data: [] }),
 
@@ -65,7 +65,10 @@ export default async function DashboardPage({ params }: { params: Promise<{ bran
             .eq('status', 'IN_CUSTODY')
     ])
 
-    const totalRevenue = revenueData?.reduce((sum, payment) => sum + (payment.amount || 0), 0) || 0
+    const totalRevenue = revenueData?.reduce((sum, payment) => {
+        if (payment.allocation === 'EMBALMING') return sum
+        return sum + (payment.amount || 0)
+    }, 0) || 0
 
     // Process Chart Data
     const genderStats = { Male: 0, Female: 0, Other: 0 }

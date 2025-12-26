@@ -2,7 +2,7 @@ export type CaseStatus = 'IN_CUSTODY' | 'DISCHARGED' | 'CANCELLED' | 'ARCHIVED'
 export type CaseType = 'Normal' | 'VIP'
 export type Gender = 'Male' | 'Female' | 'Other/Unknown'
 export type PaymentMethod = 'CASH' | 'MOMO' | 'BANK' | 'CARD'
-export type PaymentAllocation = 'EMBALMING' | 'COLDROOM' | 'GENERAL'
+export type PaymentAllocation = 'EMBALMING' | 'COLDROOM' | 'GENERAL' | 'REGISTRATION'
 
 export interface Branch {
     id: string
@@ -110,4 +110,17 @@ export interface SalaryStructure {
     apply_paye: boolean
     created_at: string
     updated_at: string
+}
+
+export interface BankTransaction {
+    id: string
+    branch_id: string
+    type: 'DEPOSIT' | 'WITHDRAWAL'
+    amount: number
+    description: string
+    performed_by: string
+    transaction_date: string
+    created_at: string
+    // Joined data
+    performer?: Profile
 }

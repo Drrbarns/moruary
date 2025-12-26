@@ -50,12 +50,21 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
     const totalCollected = payments.reduce((sum, p) => sum + (p.amount || 0), 0)
     const totalOutstanding = cases.reduce((sum, c) => sum + (c.balance || 0), 0)
 
+    // Average Coldroom Fee
+    const casesWithColdroom = cases.filter(c => (c.coldroom_fee || 0) > 0)
+    const avgColdroomFee = casesWithColdroom.length > 0
+        ? casesWithColdroom.reduce((sum, c) => sum + (c.coldroom_fee || 0), 0) / casesWithColdroom.length
+        : 0
+
     // This month's payments
     const monthPayments = payments.filter(p => {
         const paidDate = new Date(p.paid_on)
         return paidDate >= new Date(startOfMonth) && paidDate <= new Date(endOfMonth)
     })
-    const monthRevenue = monthPayments.reduce((sum, p) => sum + (p.amount || 0), 0)
+    const monthRevenue = monthPayments.reduce((sum, p) => {
+        if (p.allocation === 'EMBALMING') return sum
+        return sum + (p.amount || 0)
+    }, 0)
 
     // Payment method breakdown
     const methodBreakdown = payments.reduce((acc, p) => {
@@ -109,12 +118,12 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
 
                 <Card className="bg-gradient-to-br from-red-50 to-red-100 border-red-200">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium text-red-700">Deposit</CardTitle>
+                        <CardTitle className="text-sm font-medium text-red-700">Avg Coldroom Fee</CardTitle>
                         <DollarSign className="h-4 w-4 text-red-600" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold text-red-800">GHS {totalOutstanding.toFixed(2)}</div>
-                        <p className="text-xs text-red-600">Unpaid balances</p>
+                        <div className="text-2xl font-bold text-red-800">GHS {avgColdroomFee.toFixed(2)}</div>
+                        <p className="text-xs text-red-600">Per case</p>
                     </CardContent>
                 </Card>
 

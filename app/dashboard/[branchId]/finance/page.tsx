@@ -12,9 +12,10 @@ import {
     TableRow,
 } from '@/components/ui/table'
 import { Input } from '@/components/ui/input'
-import { Wallet, TrendingUp, CreditCard, Search, Filter, DollarSign, Calendar } from 'lucide-react'
-import type { Payment, DeceasedCase } from '@/lib/types'
+import { Wallet, TrendingUp, CreditCard, Search, Filter, DollarSign, Calendar, FileText, Snowflake } from 'lucide-react'
+import type { Payment, DeceasedCase, BankTransaction } from '@/lib/types'
 import { AddPaymentDialog } from '@/components/finance/add-payment-dialog'
+import { AddBankTransactionDialog } from '@/components/finance/add-bank-transaction-dialog'
 import { Toaster } from '@/components/ui/sonner'
 import { resolveBranch } from '@/lib/branch-resolver'
 import { notFound } from 'next/navigation'
@@ -41,6 +42,23 @@ export default async function FinancePage({
     const branch = await resolveBranch(branchId)
     if (!branch) notFound()
 
+    // Check Role
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return notFound() // Should be handled by middleware but just in case
+
+    const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+    if (profile?.role === 'staff') {
+        // Redirect staff to cases or show 403
+        // Since we want to restrict them, redirecting to their main view (cases) is friendly
+        // But Next.js redirect needs to be imported
+        return (
+            <div className="p-8">
+                <h1 className="text-2xl font-bold text-red-600">Access Denied</h1>
+                <p>You do not have permission to view this page.</p>
+            </div>
+        )
+    }
+
     // Fetch payments for this branch
     const { data: paymentsData } = await supabase
         .from('payments')
@@ -61,17 +79,34 @@ export default async function FinancePage({
 
     const cases = (casesData || []) as DeceasedCase[]
 
+    // Fetch bank transactions
+    const { data: bankTransactionsData } = await supabase
+        .from('bank_transactions')
+        .select('*, performer:profiles(full_name)')
+        .eq('branch_id', branch.id)
+        .order('transaction_date', { ascending: false })
+        .limit(20)
+
+    const bankTransactions = (bankTransactionsData || []) as BankTransaction[]
+
     // Calculate stats
-    const totalRevenue = payments.reduce((sum, p) => sum + (p.amount || 0), 0)
+    const totalRevenue = payments.reduce((sum, p) => {
+        if (p.allocation === 'EMBALMING') return sum
+        return sum + (p.amount || 0)
+    }, 0)
+
     const todayPayments = payments.filter(p => {
         const today = new Date().toDateString()
         return new Date(p.paid_on).toDateString() === today
     })
-    const todayRevenue = todayPayments.reduce((sum, p) => sum + (p.amount || 0), 0)
+    const todayRevenue = todayPayments.reduce((sum, p) => {
+        if (p.allocation === 'EMBALMING') return sum
+        return sum + (p.amount || 0)
+    }, 0)
 
-    // Payment method breakdown
-    const methodBreakdown = payments.reduce((acc, p) => {
-        acc[p.method] = (acc[p.method] || 0) + p.amount
+    // Allocation breakdown
+    const allocationBreakdown = payments.reduce((acc, p) => {
+        acc[p.allocation] = (acc[p.allocation] || 0) + p.amount
         return acc
     }, {} as Record<string, number>)
 
@@ -83,7 +118,10 @@ export default async function FinancePage({
                     <h1 className="text-3xl font-bold tracking-tight">Finance & Payments</h1>
                     <p className="text-muted-foreground">Record and track all payments</p>
                 </div>
-                <AddPaymentDialog branch={branch} cases={cases} preselectedCaseId={preselectedCaseId} />
+                <div className="flex gap-2">
+                    <AddBankTransactionDialog branch={branch} />
+                    <AddPaymentDialog branch={branch} cases={cases} preselectedCaseId={preselectedCaseId} />
+                </div>
             </div>
 
             {/* Stats Cards */}
@@ -114,26 +152,26 @@ export default async function FinancePage({
                 </Card>
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Cash Payments</CardTitle>
-                        <div className="h-8 w-8 rounded-full bg-emerald-100 flex items-center justify-center">
-                            <Wallet className="h-4 w-4 text-emerald-600" />
+                        <CardTitle className="text-sm font-medium">Total Registration</CardTitle>
+                        <div className="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center">
+                            <FileText className="h-4 w-4 text-purple-600" />
                         </div>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">GHS {(methodBreakdown.CASH || 0).toFixed(2)}</div>
-                        <p className="text-xs text-muted-foreground">Cash received</p>
+                        <div className="text-2xl font-bold">GHS {(allocationBreakdown.REGISTRATION || 0).toFixed(2)}</div>
+                        <p className="text-xs text-muted-foreground">Registration fees</p>
                     </CardContent>
                 </Card>
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Mobile Money</CardTitle>
-                        <div className="h-8 w-8 rounded-full bg-yellow-100 flex items-center justify-center">
-                            <CreditCard className="h-4 w-4 text-yellow-600" />
+                        <CardTitle className="text-sm font-medium">Total Coldroom</CardTitle>
+                        <div className="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                            <Snowflake className="h-4 w-4 text-indigo-600" />
                         </div>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">GHS {(methodBreakdown.MOMO || 0).toFixed(2)}</div>
-                        <p className="text-xs text-muted-foreground">MoMo received</p>
+                        <div className="text-2xl font-bold">GHS {(allocationBreakdown.COLDROOM || 0).toFixed(2)}</div>
+                        <p className="text-xs text-muted-foreground">Coldroom fees</p>
                     </CardContent>
                 </Card>
             </div>
@@ -197,6 +235,62 @@ export default async function FinancePage({
                                         </TableCell>
                                         <TableCell className="text-right font-medium text-green-600">
                                             +{payment.amount.toFixed(2)}
+                                        </TableCell>
+                                    </TableRow>
+                                ))
+                            )}
+                        </TableBody>
+                    </Table>
+                </CardContent>
+            </Card>
+
+            {/* Bank Transactions Table */}
+            <Card>
+                <CardHeader className="pb-3">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <CardTitle>Bank Transactions</CardTitle>
+                            <p className="text-sm text-muted-foreground mt-1">Recent deposits and withdrawals</p>
+                        </div>
+                    </div>
+                </CardHeader>
+                <CardContent className="p-0">
+                    <Table>
+                        <TableHeader>
+                            <TableRow className="bg-slate-50 dark:bg-slate-800">
+                                <TableHead className="font-semibold">Date & Time</TableHead>
+                                <TableHead className="font-semibold">Type</TableHead>
+                                <TableHead className="font-semibold">Description</TableHead>
+                                <TableHead className="font-semibold">Performed By</TableHead>
+                                <TableHead className="font-semibold text-right">Amount (GHS)</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {bankTransactions.length === 0 ? (
+                                <TableRow>
+                                    <TableCell colSpan={5} className="h-32 text-center text-muted-foreground">
+                                        No bank transactions recorded locally
+                                    </TableCell>
+                                </TableRow>
+                            ) : (
+                                bankTransactions.map((tx) => (
+                                    <TableRow key={tx.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                                        <TableCell>
+                                            <div className="flex flex-col">
+                                                <span className="font-medium">{new Date(tx.transaction_date).toLocaleDateString()}</span>
+                                                <span className="text-xs text-muted-foreground">{new Date(tx.transaction_date).toLocaleTimeString()}</span>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell>
+                                            <Badge variant={tx.type === 'DEPOSIT' ? 'default' : 'destructive'}
+                                                className={tx.type === 'DEPOSIT' ? 'bg-green-100 text-green-800 hover:bg-green-200' : 'bg-red-100 text-red-800 hover:bg-red-200'}>
+                                                {tx.type}
+                                            </Badge>
+                                        </TableCell>
+                                        <TableCell>{tx.description || '-'}</TableCell>
+                                        <TableCell className="text-sm text-slate-600">{tx.performer?.full_name || 'System'}</TableCell>
+                                        <TableCell className={`text-right font-bold ${tx.type === 'DEPOSIT' ? 'text-green-600' : 'text-red-600'}`}>
+                                            {tx.type === 'DEPOSIT' ? '+' : '-'}{tx.amount.toFixed(2)}
                                         </TableCell>
                                     </TableRow>
                                 ))
