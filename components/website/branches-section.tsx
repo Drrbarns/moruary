@@ -1,6 +1,9 @@
+'use client'
+
 import Image from 'next/image'
-import { MapPin, Phone, Clock, ArrowRight } from 'lucide-react'
+import { MapPin, ArrowRight, Clock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { motion } from 'framer-motion'
 
 export function BranchesSection() {
     return (
@@ -12,18 +15,30 @@ export function BranchesSection() {
             </div>
 
             <div className="container mx-auto px-4 relative z-10">
-                <div className="text-center max-w-3xl mx-auto mb-16">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="text-center max-w-3xl mx-auto mb-16"
+                >
                     <h2 className="text-blue-600 font-semibold tracking-wide uppercase text-sm mb-3">Our Locations</h2>
-                    <h3 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6">World-Class Facilities</h3>
+                    <h3 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6 font-serif">World-Class Facilities</h3>
                     <p className="text-lg text-slate-600">
                         We operate superior mortuary facilities designed to provide comfort, dignity, and peace of mind.
                         Visit our branches in Asanteman and Asuom.
                     </p>
-                </div>
+                </motion.div>
 
                 <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
                     {/* Asanteman Branch Card */}
-                    <div className="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 flex flex-col">
+                    <motion.div
+                        initial={{ opacity: 0, x: -50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                        className="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 flex flex-col"
+                    >
                         <div className="relative h-64 md:h-80 w-full overflow-hidden">
                             <Image
                                 src="/images/asanteman-branch.jpg"
@@ -36,7 +51,7 @@ export function BranchesSection() {
                                 <span className="inline-block px-3 py-1 bg-blue-600 text-white text-xs font-bold uppercase tracking-wider rounded-full mb-2">
                                     Main Branch
                                 </span>
-                                <h4 className="text-white text-2xl font-bold">Asanteman Branch</h4>
+                                <h4 className="text-white text-2xl font-bold font-serif">Asanteman Branch</h4>
                             </div>
                         </div>
 
@@ -67,10 +82,16 @@ export function BranchesSection() {
                                 Get Directions <ArrowRight className="w-4 h-4" />
                             </Button>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Asuom Branch Card */}
-                    <div className="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 flex flex-col">
+                    <motion.div
+                        initial={{ opacity: 0, x: 50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                        className="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 flex flex-col"
+                    >
                         <div className="relative h-64 md:h-80 w-full overflow-hidden">
                             <Image
                                 src="/images/asuom-branch.jpg"
@@ -83,7 +104,7 @@ export function BranchesSection() {
                                 <span className="inline-block px-3 py-1 bg-green-600 text-white text-xs font-bold uppercase tracking-wider rounded-full mb-2">
                                     Garden Facility
                                 </span>
-                                <h4 className="text-white text-2xl font-bold">Asuom Branch</h4>
+                                <h4 className="text-white text-2xl font-bold font-serif">Asuom Branch</h4>
                             </div>
                         </div>
 
@@ -114,7 +135,7 @@ export function BranchesSection() {
                                 Get Directions <ArrowRight className="w-4 h-4" />
                             </Button>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </section>

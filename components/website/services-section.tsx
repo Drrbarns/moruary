@@ -1,5 +1,8 @@
+'use client'
+
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Snowflake, User, Truck, Flower2, ShieldCheck, Clock } from "lucide-react"
+import { motion } from "framer-motion"
 
 const services = [
     {
@@ -46,35 +49,70 @@ const services = [
     }
 ]
 
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1
+        }
+    }
+}
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.5
+        }
+    }
+}
+
 export function ServicesSection() {
     return (
         <section id="services" className="py-24 bg-white">
             <div className="container mx-auto px-4">
-                <div className="text-center max-w-3xl mx-auto mb-16">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="text-center max-w-3xl mx-auto mb-16"
+                >
                     <h2 className="text-blue-600 font-semibold tracking-wide uppercase text-sm mb-2">Our Services</h2>
-                    <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Comprehensive Care Solutions</h3>
+                    <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 font-serif">Comprehensive Care Solutions</h3>
                     <p className="text-lg text-slate-600">
                         We offer a full range of mortuary services tailored to meet the cultural and personal needs of every family we serve.
                     </p>
-                </div>
+                </motion.div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+                >
                     {services.map((service, index) => (
-                        <Card key={index} className="border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                            <CardHeader>
-                                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${service.bg}`}>
-                                    <service.icon className={`h-6 w-6 ${service.color}`} />
-                                </div>
-                                <CardTitle className="text-xl">{service.title}</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <CardDescription className="text-base text-slate-600 leading-relaxed">
-                                    {service.description}
-                                </CardDescription>
-                            </CardContent>
-                        </Card>
+                        <motion.div key={index} variants={itemVariants}>
+                            <Card className="border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
+                                <CardHeader>
+                                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${service.bg} group-hover:scale-110 transition-transform duration-300`}>
+                                        <service.icon className={`h-6 w-6 ${service.color}`} />
+                                    </div>
+                                    <CardTitle className="text-xl font-serif">{service.title}</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <CardDescription className="text-base text-slate-600 leading-relaxed">
+                                        {service.description}
+                                    </CardDescription>
+                                </CardContent>
+                            </Card>
+                        </motion.div>
                     ))}
-                </div>
+                </motion.div>
             </div>
         </section>
     )
