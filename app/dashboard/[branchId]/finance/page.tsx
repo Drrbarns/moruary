@@ -19,6 +19,7 @@ import { AddBankTransactionDialog } from '@/components/finance/add-bank-transact
 import { Toaster } from '@/components/ui/sonner'
 import { resolveBranch } from '@/lib/branch-resolver'
 import { notFound } from 'next/navigation'
+import { PRICING } from '@/lib/pricing'
 
 const methodColors: Record<string, string> = {
     CASH: 'bg-green-100 text-green-800',
@@ -44,13 +45,10 @@ export default async function FinancePage({
 
     // Check Role
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return notFound() // Should be handled by middleware but just in case
+    if (!user) return notFound()
 
     const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
     if (profile?.role === 'staff') {
-        // Redirect staff to cases or show 403
-        // Since we want to restrict them, redirecting to their main view (cases) is friendly
-        // But Next.js redirect needs to be imported
         return (
             <div className="p-8">
                 <h1 className="text-2xl font-bold text-red-600">Access Denied</h1>
@@ -69,7 +67,7 @@ export default async function FinancePage({
 
     const payments = (paymentsData || []) as (Payment & { case: { tag_no: string, name_of_deceased: string } | null })[]
 
-    // Fetch ALL payments for statistics (lightweight query)
+    // Fetch ALL payments for statistics (Today's revenue needs valid cash flow check)
     const { data: allPaymentsData } = await supabase
         .from('payments')
         .select('amount, allocation, paid_on')
@@ -77,12 +75,16 @@ export default async function FinancePage({
 
     const allPayments = allPaymentsData || []
 
-    // Calculate stats using ALL payments
-    const totalRevenue = allPayments.reduce((sum, p) => {
-        if (p.allocation === 'EMBALMING') return sum
-        return sum + (p.amount || 0)
-    }, 0)
+    // Fetch All Cases for Total Billed stats
+    const { data: allCasesData } = await supabase
+        .from('deceased_cases')
+        .select('id, total_bill, coldroom_fee, status')
+        .eq('branch_id', branch.id)
 
+    const allCases = (allCasesData || [])
+
+    // Calculate Stats
+    // Today's Revenue (Cash flow based)
     const todayPayments = allPayments.filter(p => {
         const today = new Date().toDateString()
         return new Date(p.paid_on).toDateString() === today
@@ -93,11 +95,15 @@ export default async function FinancePage({
         return sum + (p.amount || 0)
     }, 0)
 
-    // Allocation breakdown
-    const allocationBreakdown = allPayments.reduce((acc, p) => {
-        acc[p.allocation] = (acc[p.allocation] || 0) + p.amount
-        return acc
-    }, {} as Record<string, number>)
+    // Total Registration = All Cases * 350
+    // Logic: Every case implies a registration fee, paid or not.
+    const totalRegistration = allCases.length * PRICING.REGISTRATION_FEE
+
+    // Total Coldroom = Sum of coldroom_fee from all cases
+    const totalColdroom = allCases.reduce((sum, c) => sum + (c.coldroom_fee || 0), 0)
+
+    // Total Revenue = Sum of Total Bills (Expected/Billed Revenue)
+    const totalRevenueBilled = allCases.reduce((sum, c) => sum + (c.total_bill || 0), 0)
 
     // Fetch active cases for the payment dialog
     const { data: casesData } = await supabase
@@ -107,7 +113,7 @@ export default async function FinancePage({
         .eq('status', 'IN_CUSTODY')
         .order('created_at', { ascending: false })
 
-    const cases = (casesData || []) as DeceasedCase[]
+    const activeCases = (casesData || []) as DeceasedCase[]
 
     // Fetch bank transactions
     const { data: bankTransactionsData } = await supabase
@@ -129,7 +135,7 @@ export default async function FinancePage({
                 </div>
                 <div className="flex gap-2">
                     <AddBankTransactionDialog branch={branch} />
-                    <AddPaymentDialog branch={branch} cases={cases} preselectedCaseId={preselectedCaseId} />
+                    <AddPaymentDialog branch={branch} cases={activeCases} preselectedCaseId={preselectedCaseId} />
                 </div>
             </div>
 
@@ -149,14 +155,14 @@ export default async function FinancePage({
                 </Card>
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+                        <CardTitle className="text-sm font-medium">Total Billed</CardTitle>
                         <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
                             <TrendingUp className="h-4 w-4 text-blue-600" />
                         </div>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">GHS {totalRevenue.toFixed(2)}</div>
-                        <p className="text-xs text-muted-foreground">All time</p>
+                        <div className="text-2xl font-bold">GHS {totalRevenueBilled.toFixed(2)}</div>
+                        <p className="text-xs text-muted-foreground">Total Expected Revenue</p>
                     </CardContent>
                 </Card>
                 <Card>
@@ -167,8 +173,8 @@ export default async function FinancePage({
                         </div>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">GHS {(allocationBreakdown.REGISTRATION || 0).toFixed(2)}</div>
-                        <p className="text-xs text-muted-foreground">Registration fees</p>
+                        <div className="text-2xl font-bold">GHS {totalRegistration.toFixed(2)}</div>
+                        <p className="text-xs text-muted-foreground">Based on case count</p>
                     </CardContent>
                 </Card>
                 <Card>
@@ -179,8 +185,8 @@ export default async function FinancePage({
                         </div>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">GHS {(allocationBreakdown.COLDROOM || 0).toFixed(2)}</div>
-                        <p className="text-xs text-muted-foreground">Coldroom fees</p>
+                        <div className="text-2xl font-bold">GHS {totalColdroom.toFixed(2)}</div>
+                        <p className="text-xs text-muted-foreground">Accrued fees</p>
                     </CardContent>
                 </Card>
             </div>
