@@ -79,17 +79,7 @@ export default async function FinancePage({
 
     // Calculate stats using ALL payments
     const totalRevenue = allPayments.reduce((sum, p) => {
-        // Exclude embalming from revenue if that's the rule, but usually revenue includes everything?
-        // The previous code had: if (p.allocation === 'EMBALMING') return sum
-        // User asked to integrate embalming fee (50) and reg fee (350). 
-        // If the user considers Embalming as revenue, we should include it. 
-        // The previous code explicitly EXCLUDED it. I will keep it consistent with previous logic for now
-        // BUT wait, looking at the card "Total Revenue", it usually implies everything.
-        // Let's check if the user previously asked to exclude it. 
-        // In "Goals": "Integrate dynamic pricing... fixed embalming fee".
-        // Use logic: Revenue = Everything.
-        // The previous code exclusion might have been a mistake or specific legacy rule.
-        // Use standard logic: Sum of all amounts.
+        if (p.allocation === 'EMBALMING') return sum
         return sum + (p.amount || 0)
     }, 0)
 
@@ -98,7 +88,10 @@ export default async function FinancePage({
         return new Date(p.paid_on).toDateString() === today
     })
 
-    const todayRevenue = todayPayments.reduce((sum, p) => sum + (p.amount || 0), 0)
+    const todayRevenue = todayPayments.reduce((sum, p) => {
+        if (p.allocation === 'EMBALMING') return sum
+        return sum + (p.amount || 0)
+    }, 0)
 
     // Allocation breakdown
     const allocationBreakdown = allPayments.reduce((acc, p) => {

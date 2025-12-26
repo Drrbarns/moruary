@@ -51,12 +51,10 @@ export function AddPaymentDialog({ branch, cases, preselectedCaseId, onSuccess }
 
     const [paymentStats, setPaymentStats] = useState<{
         registrationPaid: number;
-        embalmingPaid: number;
         coldroomPaid: number;
         totalPaid: number;
     }>({
         registrationPaid: 0,
-        embalmingPaid: 0,
         coldroomPaid: 0,
         totalPaid: 0,
     })
@@ -101,10 +99,6 @@ export function AddPaymentDialog({ branch, cases, preselectedCaseId, onSuccess }
                 displayBalance = Math.max(0, regFee - paymentStats.registrationPaid)
                 allocationLabel = 'Registration Balance'
                 break
-            case 'EMBALMING':
-                displayBalance = Math.max(0, embFee - paymentStats.embalmingPaid)
-                allocationLabel = 'Embalming Balance'
-                break
             case 'COLDROOM':
                 // Coldroom balance = Cold Fee - (Total Paid for Coldroom)
                 // Note: Sometimes general payments might technically cover coldroom, but we'll stick to specific allocation if tracked
@@ -135,12 +129,12 @@ export function AddPaymentDialog({ branch, cases, preselectedCaseId, onSuccess }
             if (payments) {
                 const stats = payments.reduce((acc, p) => {
                     const amt = p.amount || 0
+                    if (p.allocation === 'EMBALMING') return acc // Skip embalming payments for total calc to match bill
                     acc.totalPaid += amt
                     if (p.allocation === 'REGISTRATION') acc.registrationPaid += amt
-                    else if (p.allocation === 'EMBALMING') acc.embalmingPaid += amt
                     else if (p.allocation === 'COLDROOM') acc.coldroomPaid += amt
                     return acc
-                }, { registrationPaid: 0, embalmingPaid: 0, coldroomPaid: 0, totalPaid: 0 })
+                }, { registrationPaid: 0, coldroomPaid: 0, totalPaid: 0 })
 
                 setPaymentStats(stats)
             }
@@ -275,7 +269,7 @@ export function AddPaymentDialog({ branch, cases, preselectedCaseId, onSuccess }
                                     GHS {displayBalance.toFixed(2)}
                                 </span>
                             </div>
-                            {isEstimated && formData.allocation !== 'REGISTRATION' && formData.allocation !== 'EMBALMING' && (
+                            {isEstimated && formData.allocation !== 'REGISTRATION' && (
                                 <p className="text-xs text-muted-foreground mt-1 text-right">
                                     Includes accrued daily charges
                                 </p>
@@ -321,7 +315,6 @@ export function AddPaymentDialog({ branch, cases, preselectedCaseId, onSuccess }
                                 <SelectContent>
                                     <SelectItem value="GENERAL">General</SelectItem>
                                     <SelectItem value="REGISTRATION">Registration</SelectItem>
-                                    <SelectItem value="EMBALMING">Embalming</SelectItem>
                                     <SelectItem value="COLDROOM">Coldroom</SelectItem>
                                 </SelectContent>
                             </Select>

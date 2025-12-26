@@ -230,7 +230,7 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
                 </CardHeader>
                 <CardContent>
                     <div className="grid gap-4 md:grid-cols-3">
-                        {['EMBALMING', 'COLDROOM', 'GENERAL'].map((allocation) => (
+                        {['REGISTRATION', 'COLDROOM', 'GENERAL'].map((allocation) => (
                             <div key={allocation} className="text-center p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
                                 <p className="text-sm text-muted-foreground">{allocation}</p>
                                 <p className="text-xl font-bold mt-1">GHS {(allocationBreakdown[allocation] || 0).toFixed(2)}</p>

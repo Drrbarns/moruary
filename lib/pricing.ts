@@ -1,7 +1,7 @@
 
 export const PRICING = {
     REGISTRATION_FEE: 350,
-    EMBALMING_FEE: 50,
+    EMBALMING_FEE: 0,
     COLD_ROOM_DAILY_RATE: {
         NORMAL: 13,
         VIP: 20
@@ -29,7 +29,7 @@ export function calculateProjectedBill(
 
     const coldRoomFee = days * dailyRate;
     const registrationFee = existingFees.registration ?? PRICING.REGISTRATION_FEE;
-    const embalmingFee = existingFees.embalming ?? PRICING.EMBALMING_FEE;
+    const embalmingFee = 0; // Forced to 0 as per request to remove it system-wide
 
     return {
         days,
