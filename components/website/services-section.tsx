@@ -9,8 +9,8 @@ const services = [
         title: "Cold Storage",
         description: "State-of-the-art refrigeration units ensuring optimal preservation in a hygienic environment.",
         icon: Snowflake,
-        color: "text-blue-500",
-        bg: "bg-blue-50"
+        color: "text-red-500",
+        bg: "bg-red-50"
     },
     {
         title: "Professional Embalming",
@@ -81,7 +81,7 @@ export function ServicesSection() {
                     transition={{ duration: 0.6 }}
                     className="text-center max-w-3xl mx-auto mb-16"
                 >
-                    <h2 className="text-blue-600 font-semibold tracking-wide uppercase text-sm mb-2">Our Services</h2>
+                    <h2 className="text-red-600 font-semibold tracking-wide uppercase text-sm mb-2">Our Services</h2>
                     <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 font-serif">Comprehensive Care Solutions</h3>
                     <p className="text-lg text-slate-600">
                         We offer a full range of mortuary services tailored to meet the cultural and personal needs of every family we serve.

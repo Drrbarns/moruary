@@ -95,6 +95,7 @@ BEGIN
     0.0,
     1193.0,
     '2.0',
+    
     '2.0'
   )
   ON CONFLICT (branch_id, tag_no) DO UPDATE SET

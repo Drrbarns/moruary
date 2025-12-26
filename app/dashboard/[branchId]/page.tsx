@@ -5,10 +5,18 @@ import { Badge } from "@/components/ui/badge";
 import Link from 'next/link';
 import { resolveBranch } from "@/lib/branch-resolver";
 import { notFound } from "next/navigation";
+import { DashboardDateFilter } from "@/components/dashboard/date-filter";
 
-
-export default async function DashboardPage({ params }: { params: Promise<{ branchId: string }> }) {
+export default async function DashboardPage({
+    params,
+    searchParams
+}: {
+    params: Promise<{ branchId: string }>
+    searchParams: Promise<{ period?: string }>
+}) {
     const { branchId: rawBranchId } = await params
+    const { period: rawPeriod } = await searchParams
+    const period = rawPeriod || 'month'
     const branch = await resolveBranch(rawBranchId)
 
     if (!branch) {
@@ -17,13 +25,6 @@ export default async function DashboardPage({ params }: { params: Promise<{ bran
 
     const branchId = branch.id // Use the UUID for database queries
     const supabase = await createClient()
-
-
-    // Get start of current month and last month
-    const now = new Date()
-    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0]
-    const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1).toISOString().split('T')[0]
-    const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0).toISOString().split('T')[0]
 
     // Check Role
     const { data: { user } } = await supabase.auth.getUser()
@@ -35,60 +36,99 @@ export default async function DashboardPage({ params }: { params: Promise<{ bran
         }
     }
 
+    // Date Logic
+    const now = new Date()
+    let rangeStart: string | undefined
+    let rangeLabel = 'Month'
+    let comparisonStart: string | undefined
+    let comparisonEnd: string | undefined
+
+    if (period === 'year') {
+        rangeStart = new Date(now.getFullYear(), 0, 1).toISOString().split('T')[0]
+        rangeLabel = 'Year'
+        comparisonStart = new Date(now.getFullYear() - 1, 0, 1).toISOString().split('T')[0]
+        comparisonEnd = new Date(now.getFullYear() - 1, 11, 31).toISOString().split('T')[0]
+    } else if (period === 'all') {
+        rangeStart = undefined // No lower bound
+        rangeLabel = 'All Time'
+    } else {
+        // Month (Default)
+        rangeStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0]
+        rangeLabel = 'Month'
+        comparisonStart = new Date(now.getFullYear(), now.getMonth() - 1, 1).toISOString().split('T')[0]
+        comparisonEnd = new Date(now.getFullYear(), now.getMonth(), 0).toISOString().split('T')[0]
+    }
+
+    // Prepare Queries
+    let qDischarges = supabase
+        .from('deceased_cases')
+        .select('*', { count: 'exact', head: true })
+        .eq('branch_id', branchId)
+        .eq('status', 'DISCHARGED')
+
+    if (rangeStart) {
+        qDischarges = qDischarges.gte('discharge_date', rangeStart)
+    }
+
+    // Active Cases (Always current snapshot)
+    const qActive = supabase
+        .from('deceased_cases')
+        .select('*', { count: 'exact', head: true })
+        .eq('branch_id', branchId)
+        .eq('status', 'IN_CUSTODY')
+
+    let qAdmissions = supabase
+        .from('deceased_cases')
+        .select('*', { count: 'exact', head: true })
+        .eq('branch_id', branchId)
+
+    // For admissions, we want total admissions in the period
+    if (rangeStart) {
+        qAdmissions = qAdmissions.gte('admission_date', rangeStart)
+    }
+
+    // Revenue
+    let qRevenue = !isStaff ? supabase
+        .from('payments')
+        .select('amount, allocation')
+        .eq('branch_id', branchId) : null
+
+    if (qRevenue && rangeStart) {
+        qRevenue = qRevenue.gte('paid_on', rangeStart)
+    }
+
+    // Previous Revenue (for comparison)
+    const qPrevRevenue = (!isStaff && comparisonStart && comparisonEnd)
+        ? supabase
+            .from('payments')
+            .select('amount, allocation')
+            .eq('branch_id', branchId)
+            .gte('paid_on', comparisonStart)
+            .lte('paid_on', comparisonEnd)
+        : Promise.resolve({ data: [] })
+
+    // Execute Queries
     const [
         { count: dischargeCount },
         { count: activeCasesCount },
         { count: newAdmissionsCount },
         { data: revenueData },
-        { data: lastMonthRevenueData },
+        { data: previousRevenueData },
         { data: activeCasesData },
         { data: recentAdmissions }
     ] = await Promise.all([
-        // Discharges this month
-        supabase
-            .from('deceased_cases')
-            .select('*', { count: 'exact', head: true })
-            .eq('branch_id', branchId)
-            .eq('status', 'DISCHARGED')
-            .gte('discharge_date', startOfMonth),
-
-        // Active Cases (In Custody)
-        supabase
-            .from('deceased_cases')
-            .select('*', { count: 'exact', head: true })
-            .eq('branch_id', branchId)
-            .eq('status', 'IN_CUSTODY'),
-
-        // New Admissions this month
-        supabase
-            .from('deceased_cases')
-            .select('*', { count: 'exact', head: true })
-            .eq('branch_id', branchId)
-            .gte('admission_date', startOfMonth),
-
-        // Revenue this month (Mask for staff)
-        !isStaff ? supabase
-            .from('payments')
-            .select('amount, allocation')
-            .eq('branch_id', branchId)
-            .gte('paid_on', startOfMonth) : Promise.resolve({ data: [] }),
-
-        // Revenue last month (for comparison)
-        !isStaff ? supabase
-            .from('payments')
-            .select('amount, allocation')
-            .eq('branch_id', branchId)
-            .gte('paid_on', startOfLastMonth)
-            .lte('paid_on', endOfLastMonth) : Promise.resolve({ data: [] }),
-
-        // Active Cases Data for Charts (Gender, Age, Type, Place)
+        qDischarges,
+        qActive,
+        qAdmissions,
+        qRevenue ? qRevenue : Promise.resolve({ data: [] }),
+        qPrevRevenue,
+        // Active Cases Data for Charts (Current Snapshot)
         supabase
             .from('deceased_cases')
             .select('gender, age, type, place')
             .eq('branch_id', branchId)
             .eq('status', 'IN_CUSTODY'),
-
-        // Recent Admissions (last 5)
+        // Recent Admissions (Last 5)
         supabase
             .from('deceased_cases')
             .select('id, tag_no, name_of_deceased, age, gender, admission_date, status, place')
@@ -102,15 +142,18 @@ export default async function DashboardPage({ params }: { params: Promise<{ bran
         return sum + (payment.amount || 0)
     }, 0) || 0
 
-    const lastMonthRevenue = lastMonthRevenueData?.reduce((sum, payment) => {
+    const previousRevenue = previousRevenueData?.reduce((sum, payment) => {
         if (payment.allocation === 'EMBALMING') return sum
         return sum + (payment.amount || 0)
     }, 0) || 0
 
     // Calculate percentage change
-    const revenueChange = lastMonthRevenue > 0
-        ? Math.round(((totalRevenue - lastMonthRevenue) / lastMonthRevenue) * 100)
-        : (totalRevenue > 0 ? 100 : 0)
+    let revenueChange = 0
+    if (period !== 'all' && previousRevenue > 0) {
+        revenueChange = Math.round(((totalRevenue - previousRevenue) / previousRevenue) * 100)
+    } else if (period !== 'all' && totalRevenue > 0 && previousRevenue === 0) {
+        revenueChange = 100
+    }
 
     // Process Chart Data
     const genderStats = { Male: 0, Female: 0, Other: 0 }
@@ -162,7 +205,8 @@ export default async function DashboardPage({ params }: { params: Promise<{ bran
         <div className="space-y-6 p-8">
             <div className="flex items-center justify-between">
                 <h1 className="text-3xl font-bold tracking-tight">Dashboard Overview</h1>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-4">
+                    <DashboardDateFilter />
                     <span className="text-sm text-gray-500">Last updated: Just now</span>
                 </div>
             </div>
@@ -170,13 +214,15 @@ export default async function DashboardPage({ params }: { params: Promise<{ bran
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 {!isStaff && (
                     <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
-                        <h3 className="text-sm font-medium text-muted-foreground">Total Revenue (Month)</h3>
+                        <h3 className="text-sm font-medium text-muted-foreground">Total Revenue ({rangeLabel})</h3>
                         <div className="text-2xl font-bold mt-2 text-gray-900 dark:text-white">
                             GHS {totalRevenue.toLocaleString('en-GH', { minimumFractionDigits: 2 })}
                         </div>
-                        <p className={`text-xs mt-1 ${revenueChange >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                            {revenueChange >= 0 ? '+' : ''}{revenueChange}% from last month
-                        </p>
+                        {period !== 'all' && (
+                            <p className={`text-xs mt-1 ${revenueChange >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                {revenueChange >= 0 ? '+' : ''}{revenueChange}% from last {period === 'year' ? 'year' : 'month'}
+                            </p>
+                        )}
                     </div>
                 )}
                 <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
@@ -187,12 +233,16 @@ export default async function DashboardPage({ params }: { params: Promise<{ bran
                 <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
                     <h3 className="text-sm font-medium text-muted-foreground">New Admissions</h3>
                     <div className="text-2xl font-bold mt-2 text-gray-900 dark:text-white">{newAdmissionsCount || 0}</div>
-                    <p className="text-xs text-muted-foreground mt-1">This month</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                        {period === 'month' ? 'This month' : period === 'year' ? 'This year' : 'All time'}
+                    </p>
                 </div>
                 <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
-                    <h3 className="text-sm font-medium text-muted-foreground">Discharges for the month</h3>
+                    <h3 className="text-sm font-medium text-muted-foreground">Discharges</h3>
                     <div className="text-2xl font-bold mt-2 text-gray-900 dark:text-white">{dischargeCount || 0}</div>
-                    <p className="text-xs text-muted-foreground mt-1">Processed this month</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                        {period === 'month' ? 'Processed this month' : period === 'year' ? 'Processed this year' : 'All time'}
+                    </p>
                 </div>
             </div>
 
