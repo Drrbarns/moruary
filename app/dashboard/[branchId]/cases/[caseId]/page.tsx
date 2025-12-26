@@ -95,11 +95,13 @@ export default async function CaseDetailsPage({ params }: PageProps) {
     // OR just use deceased.total_paid. Let's use deceased.total_paid as primary.
     const paidAmount = deceased.total_paid || 0
 
-    // Balance = Outstanding (Coldroom only) - Paid
-    // Note: paidAmount might include registration payments from historical data
-    // We only care about payments towards coldroom for the balance
-    const coldroomPayments = payments?.filter(p => p.allocation === 'COLDROOM' || p.allocation === 'GENERAL').reduce((sum, p) => sum + (p.amount || 0), 0) || 0
-    const displayBalance = Math.max(0, outstandingBillAmount - coldroomPayments)
+    // Balance = Outstanding (Coldroom only) - Paid towards Coldroom
+    // We assume the first portion of total payments covers the Registration Fee
+    const totalPaymentsReceived = payments?.reduce((sum, p) => sum + (p.amount || 0), 0) || 0
+    const regFee = deceased.registration_fee || 350
+    const paidTowardsColdroom = Math.max(0, totalPaymentsReceived - regFee)
+
+    const displayBalance = Math.max(0, outstandingBillAmount - paidTowardsColdroom)
 
     return (
         <div className="space-y-6 p-8">
