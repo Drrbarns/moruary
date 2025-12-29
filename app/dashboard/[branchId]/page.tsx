@@ -98,41 +98,31 @@ export default async function DashboardPage({
         qDemographics = qDemographics.gte('admission_date', rangeStart)
     }
 
-    // Revenue
-    let qRevenue = !isStaff ? supabase
-        .from('payments')
-        .select('amount, allocation')
-        .eq('branch_id', branchId) : null
+    // Revenue: Fetch all cases to calculate Registration + Coldroom fees
+    // Registration fees = from ALL cases (paid at admission)
+    // Coldroom fees = only from DISCHARGED cases (finalized storage)
+    let qAllCases = supabase
+        .from('deceased_cases')
+        .select('registration_fee, coldroom_fee, status, admission_date, discharge_date')
+        .eq('branch_id', branchId)
 
-    if (qRevenue && rangeStart) {
-        qRevenue = qRevenue.gte('paid_on', rangeStart)
-    }
-
-    // Previous Revenue (for comparison)
-    const qPrevRevenue = (!isStaff && comparisonStart && comparisonEnd)
-        ? supabase
-            .from('payments')
-            .select('amount, allocation')
-            .eq('branch_id', branchId)
-            .gte('paid_on', comparisonStart)
-            .lte('paid_on', comparisonEnd)
-        : Promise.resolve({ data: [] })
+    // Apply date filter for admissions (registration fees)
+    // and for discharges (coldroom fees)
+    // We'll filter in JS for more flexibility
 
     // Execute Queries
     const [
         { count: dischargeCount },
         { count: activeCasesCount },
         { count: newAdmissionsCount },
-        { data: revenueData },
-        { data: previousRevenueData },
+        { data: allCasesData },
         { data: demographicsData },
         { data: recentAdmissions }
     ] = await Promise.all([
         qDischarges,
         qActive,
         qAdmissions,
-        qRevenue ? qRevenue : Promise.resolve({ data: [] }),
-        qPrevRevenue,
+        qAllCases,
         qDemographics,
         // Recent Admissions (Last 5)
         supabase
@@ -143,15 +133,42 @@ export default async function DashboardPage({
             .limit(5)
     ])
 
-    const totalRevenue = revenueData?.reduce((sum, payment) => {
-        if (payment.allocation === 'EMBALMING') return sum
-        return sum + (payment.amount || 0)
-    }, 0) || 0
+    // Calculate Total Revenue = Registration Fees (all cases) + Coldroom Fees (discharged only)
+    let totalRevenue = 0
+    let previousRevenue = 0
 
-    const previousRevenue = previousRevenueData?.reduce((sum, payment) => {
-        if (payment.allocation === 'EMBALMING') return sum
-        return sum + (payment.amount || 0)
-    }, 0) || 0
+    allCasesData?.forEach(c => {
+        const admissionDate = c.admission_date ? new Date(c.admission_date) : null
+        const dischargeDate = c.discharge_date ? new Date(c.discharge_date) : null
+        const rangeStartDate = rangeStart ? new Date(rangeStart) : null
+        const comparisonStartDate = comparisonStart ? new Date(comparisonStart) : null
+        const comparisonEndDate = comparisonEnd ? new Date(comparisonEnd) : null
+
+        // Registration Fee: Count if admission is in the period (or all time if no filter)
+        if (!rangeStartDate || (admissionDate && admissionDate >= rangeStartDate)) {
+            totalRevenue += (c.registration_fee || 350)
+        }
+
+        // Coldroom Fee: Only for DISCHARGED cases, if discharge is in period
+        if (c.status === 'DISCHARGED') {
+            if (!rangeStartDate || (dischargeDate && dischargeDate >= rangeStartDate)) {
+                totalRevenue += (c.coldroom_fee || 0)
+            }
+        }
+
+        // Previous period comparison (for month/year views)
+        if (comparisonStartDate && comparisonEndDate) {
+            // Registration in previous period
+            if (admissionDate && admissionDate >= comparisonStartDate && admissionDate <= comparisonEndDate) {
+                previousRevenue += (c.registration_fee || 350)
+            }
+            // Coldroom in previous period (discharged cases only)
+            if (c.status === 'DISCHARGED' && dischargeDate &&
+                dischargeDate >= comparisonStartDate && dischargeDate <= comparisonEndDate) {
+                previousRevenue += (c.coldroom_fee || 0)
+            }
+        }
+    })
 
     // Calculate percentage change
     let revenueChange = 0
