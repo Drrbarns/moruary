@@ -29,7 +29,17 @@ const navItems = [
     { href: '/settings', icon: Settings, label: 'Settings', roles: ['super_admin', 'branch_admin'] },
 ]
 
-export function Sidebar({ branch, userRole, className }: { branch: Branch, userRole?: string, className?: string }) {
+export function Sidebar({
+    branch,
+    userRole,
+    className,
+    onNavigate
+}: {
+    branch: Branch,
+    userRole?: string,
+    className?: string,
+    onNavigate?: () => void
+}) {
     const pathname = usePathname()
     const router = useRouter()
     const supabase = createClient()
@@ -62,6 +72,7 @@ export function Sidebar({ branch, userRole, className }: { branch: Branch, userR
                         <Link
                             key={item.href}
                             href={`/dashboard/${branch.code}${item.href}`}
+                            onClick={onNavigate}
                             className={cn(
                                 "flex items-center gap-3 px-6 py-3 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-white",
                                 active && "bg-blue-600/10 text-blue-400 border-r-4 border-blue-500"
@@ -75,7 +86,7 @@ export function Sidebar({ branch, userRole, className }: { branch: Branch, userR
             </div>
 
             <div className="p-4 border-t border-slate-800 space-y-2">
-                <Link href="/select-branch?switch=true">
+                <Link href="/select-branch?switch=true" onClick={onNavigate}>
                     <Button variant="ghost" className="w-full justify-start text-slate-400 hover:text-white hover:bg-slate-800">
                         <Building2 className="mr-2 h-4 w-4" />
                         Switch Branch

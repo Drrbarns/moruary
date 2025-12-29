@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { Sidebar } from '@/components/dashboard/sidebar'
+import { DashboardLayoutClient } from '@/components/dashboard/dashboard-layout-client'
 import { createClient } from '@/utils/supabase/server'
 import { redirect, notFound } from 'next/navigation'
 import { resolveBranch } from '@/lib/branch-resolver'
@@ -52,15 +52,8 @@ export default async function DashboardLayout({
     }
 
     return (
-        <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900">
-            <div className="hidden md:flex flex-col w-64 fixed inset-y-0 z-50">
-                <Sidebar branch={branch} userRole={profile?.role || 'staff'} />
-            </div>
-            <main className="flex-1 md:pl-64 transition-all duration-300">
-                <div className="h-full">
-                    {children}
-                </div>
-            </main>
-        </div>
+        <DashboardLayoutClient branch={branch} userRole={profile?.role || 'staff'}>
+            {children}
+        </DashboardLayoutClient>
     )
 }

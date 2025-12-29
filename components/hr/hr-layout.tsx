@@ -40,18 +40,18 @@ export default function HRLayout({
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
             {/* HR Header */}
             <div className="bg-white dark:bg-gray-800 border-b">
-                <div className="px-8 py-6">
-                    <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+                <div className="px-4 md:px-8 py-6">
+                    <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
                         HR & Staff Management
                     </h1>
-                    <p className="text-muted-foreground mt-1">
+                    <p className="text-muted-foreground mt-1 text-sm md:text-base">
                         Manage employees, attendance, payroll, and leave requests
                     </p>
                 </div>
 
                 {/* HR Navigation Tabs */}
-                <div className="px-8">
-                    <nav className="flex gap-1 overflow-x-auto pb-px">
+                <div className="px-4 md:px-8">
+                    <nav className="flex gap-1 overflow-x-auto pb-px no-scrollbar">
                         {hrNavItems.map((item) => {
                             const active = isActive(item.href)
                             return (
@@ -75,7 +75,7 @@ export default function HRLayout({
             </div>
 
             {/* Content */}
-            <div className="p-8">
+            <div className="p-4 md:p-8">
                 {children}
             </div>
         </div>

@@ -263,16 +263,16 @@ export default async function DashboardPage({
     }
 
     return (
-        <div className="space-y-6 p-8">
-            <div className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold tracking-tight">Dashboard Overview</h1>
+        <div className="space-y-6 p-4 md:p-8">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Dashboard Overview</h1>
                 <div className="flex items-center space-x-4">
                     <DashboardDateFilter />
                     <span className="text-sm text-gray-500">Last updated: Just now</span>
                 </div>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
                 {!isStaff && (
                     <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
                         <h3 className="text-sm font-medium text-muted-foreground">Total Revenue ({rangeLabel})</h3>
@@ -309,8 +309,8 @@ export default async function DashboardPage({
 
             <DemographicsCharts data={chartData} />
 
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-                <div className="col-span-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm border p-6">
+            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-7">
+                <div className="md:col-span-2 lg:col-span-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm border p-6">
                     <h3 className="font-semibold mb-4">Recent Admissions</h3>
                     {recentAdmissions && recentAdmissions.length > 0 ? (
                         <div className="space-y-3">
@@ -351,7 +351,7 @@ export default async function DashboardPage({
                         </div>
                     )}
                 </div>
-                <div className="col-span-3">
+                <div className="md:col-span-2 lg:col-span-3">
                     <PlacesStats data={placesData} />
                 </div>
             </div>
