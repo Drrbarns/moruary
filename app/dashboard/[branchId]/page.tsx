@@ -39,11 +39,29 @@ export default async function DashboardPage({
     // Date Logic
     const now = new Date()
     let rangeStart: string | undefined
+    let rangeEnd: string | undefined
     let rangeLabel = 'Month'
     let comparisonStart: string | undefined
     let comparisonEnd: string | undefined
 
-    if (period === 'year') {
+    // Check if period is a specific month (YYYY-MM format)
+    const monthMatch = period.match(/^(\d{4})-(\d{2})$/)
+
+    if (monthMatch) {
+        // Specific month selected (e.g., "2025-01" for January 2025)
+        const year = parseInt(monthMatch[1])
+        const month = parseInt(monthMatch[2]) - 1 // 0-indexed for Date
+
+        rangeStart = new Date(year, month, 1).toISOString().split('T')[0]
+        rangeEnd = new Date(year, month + 1, 0).toISOString().split('T')[0] // Last day of month
+
+        const monthName = new Date(year, month, 1).toLocaleString('default', { month: 'long' })
+        rangeLabel = `${monthName} ${year}`
+
+        // Previous month comparison
+        comparisonStart = new Date(year, month - 1, 1).toISOString().split('T')[0]
+        comparisonEnd = new Date(year, month, 0).toISOString().split('T')[0]
+    } else if (period === 'year') {
         rangeStart = new Date(now.getFullYear(), 0, 1).toISOString().split('T')[0]
         rangeLabel = 'Year'
         comparisonStart = new Date(now.getFullYear() - 1, 0, 1).toISOString().split('T')[0]
@@ -52,7 +70,7 @@ export default async function DashboardPage({
         rangeStart = undefined // No lower bound
         rangeLabel = 'All Time'
     } else {
-        // Month (Default)
+        // Month (Default - current month)
         rangeStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0]
         rangeLabel = 'Month'
         comparisonStart = new Date(now.getFullYear(), now.getMonth() - 1, 1).toISOString().split('T')[0]
@@ -68,6 +86,9 @@ export default async function DashboardPage({
 
     if (rangeStart) {
         qDischarges = qDischarges.gte('discharge_date', rangeStart)
+    }
+    if (rangeEnd) {
+        qDischarges = qDischarges.lte('discharge_date', rangeEnd)
     }
 
     // Active Cases (Always current snapshot)
@@ -86,6 +107,9 @@ export default async function DashboardPage({
     if (rangeStart) {
         qAdmissions = qAdmissions.gte('admission_date', rangeStart)
     }
+    if (rangeEnd) {
+        qAdmissions = qAdmissions.lte('admission_date', rangeEnd)
+    }
 
     // Demographics Data (Gender, Age, Type, Place)
     // Uses the same time filter as admissions to reflect the period's data
@@ -96,6 +120,9 @@ export default async function DashboardPage({
 
     if (rangeStart) {
         qDemographics = qDemographics.gte('admission_date', rangeStart)
+    }
+    if (rangeEnd) {
+        qDemographics = qDemographics.lte('admission_date', rangeEnd)
     }
 
     // Revenue: Fetch all cases to calculate Registration + Coldroom fees
@@ -141,17 +168,28 @@ export default async function DashboardPage({
         const admissionDate = c.admission_date ? new Date(c.admission_date) : null
         const dischargeDate = c.discharge_date ? new Date(c.discharge_date) : null
         const rangeStartDate = rangeStart ? new Date(rangeStart) : null
+        const rangeEndDate = rangeEnd ? new Date(rangeEnd) : null
         const comparisonStartDate = comparisonStart ? new Date(comparisonStart) : null
         const comparisonEndDate = comparisonEnd ? new Date(comparisonEnd) : null
 
         // Registration Fee: Count if admission is in the period (or all time if no filter)
-        if (!rangeStartDate || (admissionDate && admissionDate >= rangeStartDate)) {
+        const admissionInRange = !rangeStartDate || (
+            admissionDate &&
+            admissionDate >= rangeStartDate &&
+            (!rangeEndDate || admissionDate <= rangeEndDate)
+        )
+        if (admissionInRange) {
             totalRevenue += (c.registration_fee || 350)
         }
 
         // Coldroom Fee: Only for DISCHARGED cases, if discharge is in period
         if (c.status === 'DISCHARGED') {
-            if (!rangeStartDate || (dischargeDate && dischargeDate >= rangeStartDate)) {
+            const dischargeInRange = !rangeStartDate || (
+                dischargeDate &&
+                dischargeDate >= rangeStartDate &&
+                (!rangeEndDate || dischargeDate <= rangeEndDate)
+            )
+            if (dischargeInRange) {
                 totalRevenue += (c.coldroom_fee || 0)
             }
         }
@@ -257,14 +295,14 @@ export default async function DashboardPage({
                     <h3 className="text-sm font-medium text-muted-foreground">New Admissions</h3>
                     <div className="text-2xl font-bold mt-2 text-gray-900 dark:text-white">{newAdmissionsCount || 0}</div>
                     <p className="text-xs text-muted-foreground mt-1">
-                        {period === 'month' ? 'This month' : period === 'year' ? 'This year' : 'All time'}
+                        {rangeLabel === 'Month' ? 'This month' : rangeLabel === 'Year' ? 'This year' : rangeLabel === 'All Time' ? 'All time' : rangeLabel}
                     </p>
                 </div>
                 <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
                     <h3 className="text-sm font-medium text-muted-foreground">Discharges</h3>
                     <div className="text-2xl font-bold mt-2 text-gray-900 dark:text-white">{dischargeCount || 0}</div>
                     <p className="text-xs text-muted-foreground mt-1">
-                        {period === 'month' ? 'Processed this month' : period === 'year' ? 'Processed this year' : 'All time'}
+                        {rangeLabel === 'Month' ? 'Processed this month' : rangeLabel === 'Year' ? 'Processed this year' : rangeLabel === 'All Time' ? 'All time' : `Processed in ${rangeLabel}`}
                     </p>
                 </div>
             </div>
