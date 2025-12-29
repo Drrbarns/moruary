@@ -68,12 +68,20 @@ export default async function CasesPage({
     const dischargedCases = casesData.filter(c => c.status === 'DISCHARGED').length
 
     // Calculate Total Deposits from PAYMENTS table (Source of Truth for Cash)
+    // Only count system-created payments (from New Admission form or Add Payment button)
+    // These have receipt numbers starting with 'RCT-' or 'PMT-'
+    // This excludes legacy/imported data
     const { data: paymentsData } = await supabase
         .from('payments')
-        .select('amount')
+        .select('amount, receipt_no')
         .eq('branch_id', branch.id)
 
-    const totalDeposits = paymentsData?.reduce((sum, p) => sum + (p.amount || 0), 0) || 0
+    // Filter for system-created payments only
+    const systemPayments = (paymentsData || []).filter(p =>
+        p.receipt_no?.startsWith('RCT-') || p.receipt_no?.startsWith('PMT-')
+    )
+
+    const totalDeposits = systemPayments.reduce((sum, p) => sum + (p.amount || 0), 0)
 
     return (
         <div className="space-y-6 p-8">
