@@ -12,10 +12,11 @@ import {
     TableRow,
 } from '@/components/ui/table'
 import { Input } from '@/components/ui/input'
-import { Wallet, TrendingUp, CreditCard, Search, Filter, DollarSign, Calendar, FileText, Snowflake } from 'lucide-react'
-import type { Payment, DeceasedCase, BankTransaction } from '@/lib/types'
+import { Wallet, TrendingUp, CreditCard, Search, Filter, DollarSign, Calendar, FileText, Snowflake, MinusCircle } from 'lucide-react'
+import type { Payment, DeceasedCase, BankTransaction, Expense } from '@/lib/types'
 import { AddPaymentDialog } from '@/components/finance/add-payment-dialog'
 import { AddBankTransactionDialog } from '@/components/finance/add-bank-transaction-dialog'
+import { AddExpenseDialog } from '@/components/finance/add-expense-dialog'
 import { Toaster } from '@/components/ui/sonner'
 import { resolveBranch } from '@/lib/branch-resolver'
 import { notFound } from 'next/navigation'
@@ -26,6 +27,16 @@ const methodColors: Record<string, string> = {
     MOMO: 'bg-yellow-100 text-yellow-800',
     BANK: 'bg-blue-100 text-blue-800',
     CARD: 'bg-purple-100 text-purple-800',
+}
+
+const expenseCategoryColors: Record<string, string> = {
+    UTILITIES: 'bg-blue-100 text-blue-800',
+    SUPPLIES: 'bg-purple-100 text-purple-800',
+    MAINTENANCE: 'bg-orange-100 text-orange-800',
+    SALARY: 'bg-green-100 text-green-800',
+    TRANSPORT: 'bg-yellow-100 text-yellow-800',
+    FUEL: 'bg-red-100 text-red-800',
+    OTHER: 'bg-gray-100 text-gray-800',
 }
 
 export default async function FinancePage({
@@ -125,22 +136,41 @@ export default async function FinancePage({
 
     const bankTransactions = (bankTransactionsData || []) as BankTransaction[]
 
+    // Fetch expenses
+    const { data: expensesData } = await supabase
+        .from('expenses')
+        .select('*, recorder:profiles(full_name)')
+        .eq('branch_id', branch.id)
+        .order('expense_date', { ascending: false })
+        .limit(20)
+
+    const expenses = (expensesData || []) as (Expense & { recorder: { full_name: string } | null })[]
+
+    // Calculate total expenses
+    const { data: allExpensesData } = await supabase
+        .from('expenses')
+        .select('amount')
+        .eq('branch_id', branch.id)
+
+    const totalExpenses = (allExpensesData || []).reduce((sum, e) => sum + (e.amount || 0), 0)
+
     return (
         <div className="space-y-6 p-8">
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight">Finance & Payments</h1>
-                    <p className="text-muted-foreground">Record and track all payments</p>
+                    <p className="text-muted-foreground">Record and track all payments and expenses</p>
                 </div>
                 <div className="flex gap-2">
+                    <AddExpenseDialog branch={branch} />
                     <AddBankTransactionDialog branch={branch} />
                     <AddPaymentDialog branch={branch} cases={activeCases} preselectedCaseId={preselectedCaseId} />
                 </div>
             </div>
 
             {/* Stats Cards */}
-            <div className="grid gap-4 md:grid-cols-4">
+            <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-5">
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">Today&apos;s Revenue</CardTitle>
@@ -187,6 +217,18 @@ export default async function FinancePage({
                     <CardContent>
                         <div className="text-2xl font-bold">GHS {totalColdroom.toFixed(2)}</div>
                         <p className="text-xs text-muted-foreground">Accrued fees</p>
+                    </CardContent>
+                </Card>
+                <Card className="border-red-200 bg-red-50/50">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium text-red-700">Total Expenses</CardTitle>
+                        <div className="h-8 w-8 rounded-full bg-red-100 flex items-center justify-center">
+                            <MinusCircle className="h-4 w-4 text-red-600" />
+                        </div>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-2xl font-bold text-red-600">GHS {totalExpenses.toFixed(2)}</div>
+                        <p className="text-xs text-muted-foreground">All recorded expenses</p>
                     </CardContent>
                 </Card>
             </div>
@@ -306,6 +348,66 @@ export default async function FinancePage({
                                         <TableCell className="text-sm text-slate-600">{tx.performer?.full_name || 'System'}</TableCell>
                                         <TableCell className={`text-right font-bold ${tx.type === 'DEPOSIT' ? 'text-green-600' : 'text-red-600'}`}>
                                             {tx.type === 'DEPOSIT' ? '+' : '-'}{tx.amount.toFixed(2)}
+                                        </TableCell>
+                                    </TableRow>
+                                ))
+                            )}
+                        </TableBody>
+                    </Table>
+                </CardContent>
+            </Card>
+
+            {/* Expenses Table */}
+            <Card>
+                <CardHeader className="pb-3">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <CardTitle className="flex items-center gap-2">
+                                <MinusCircle className="h-5 w-5 text-red-600" />
+                                Recent Expenses
+                            </CardTitle>
+                            <p className="text-sm text-muted-foreground mt-1">Track all business expenses</p>
+                        </div>
+                    </div>
+                </CardHeader>
+                <CardContent className="p-0">
+                    <Table>
+                        <TableHeader>
+                            <TableRow className="bg-slate-50 dark:bg-slate-800">
+                                <TableHead className="font-semibold">Date</TableHead>
+                                <TableHead className="font-semibold">Category</TableHead>
+                                <TableHead className="font-semibold">Description</TableHead>
+                                <TableHead className="font-semibold">Recorded By</TableHead>
+                                <TableHead className="font-semibold text-right">Amount (GHS)</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {expenses.length === 0 ? (
+                                <TableRow>
+                                    <TableCell colSpan={5} className="h-32 text-center text-muted-foreground">
+                                        <div className="flex flex-col items-center justify-center">
+                                            <MinusCircle className="h-8 w-8 mb-2 opacity-50" />
+                                            <p>No expenses recorded yet</p>
+                                        </div>
+                                    </TableCell>
+                                </TableRow>
+                            ) : (
+                                expenses.map((expense) => (
+                                    <TableRow key={expense.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                                        <TableCell>
+                                            {new Date(expense.expense_date).toLocaleDateString()}
+                                        </TableCell>
+                                        <TableCell>
+                                            <Badge className={expenseCategoryColors[expense.category]}>
+                                                {expense.category}
+                                            </Badge>
+                                        </TableCell>
+                                        <TableCell className="max-w-xs truncate">{expense.description}</TableCell>
+                                        <TableCell className="text-sm text-slate-600">
+                                            {expense.recorder?.full_name || 'Unknown'}
+                                        </TableCell>
+                                        <TableCell className="text-right font-bold text-red-600">
+                                            -{expense.amount.toFixed(2)}
                                         </TableCell>
                                     </TableRow>
                                 ))

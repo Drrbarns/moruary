@@ -124,3 +124,18 @@ export interface BankTransaction {
     // Joined data
     performer?: Profile
 }
+
+export type ExpenseCategory = 'UTILITIES' | 'SUPPLIES' | 'MAINTENANCE' | 'SALARY' | 'TRANSPORT' | 'FUEL' | 'OTHER'
+
+export interface Expense {
+    id: string
+    branch_id: string
+    category: ExpenseCategory
+    description: string
+    amount: number
+    expense_date: string
+    recorded_by: string
+    created_at: string
+    // Joined data
+    recorder?: Profile
+}
