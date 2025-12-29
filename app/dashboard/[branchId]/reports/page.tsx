@@ -117,6 +117,9 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
         return acc
     }, {} as Record<string, number>)
 
+    // Total payments (sum of all payment records)
+    const totalPayments = payments.reduce((sum, p) => sum + p.amount, 0)
+
     // Allocation breakdown - calculated from cases, not payments
     // REGISTRATION = sum of registration fees (all cases)
     // COLDROOM = sum of coldroom fees (discharged cases only) - matches Total Billed
@@ -216,12 +219,6 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
                                 <span className="text-muted-foreground">Total Billed</span>
                                 <span className="font-bold">GHS {totalBilled.toFixed(2)}</span>
                             </div>
-                            <div className="flex justify-between items-center">
-                                <span className="text-muted-foreground">Collection Rate</span>
-                                <span className="font-bold">
-                                    {totalBilled > 0 ? ((totalCollected / totalBilled) * 100).toFixed(1) : 0}%
-                                </span>
-                            </div>
                         </div>
                     </CardContent>
                 </Card>
@@ -249,7 +246,7 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
                                         <TableCell className="font-medium">{method}</TableCell>
                                         <TableCell className="text-right">{amount.toFixed(2)}</TableCell>
                                         <TableCell className="text-right text-muted-foreground">
-                                            {totalCollected > 0 ? ((amount / totalCollected) * 100).toFixed(1) : 0}%
+                                            {totalPayments > 0 ? ((amount / totalPayments) * 100).toFixed(1) : 0}%
                                         </TableCell>
                                     </TableRow>
                                 ))}
