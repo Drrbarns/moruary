@@ -55,7 +55,14 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
         return sum + reg + cold
     }, 0)
 
-    const totalCollected = payments.reduce((sum, p) => sum + (p.amount || 0), 0)
+    // Total Collected = Registration Fees (all cases) + Coldroom Fees (discharged only)
+    // Same formula as Dashboard Total Revenue
+    const totalCollected = cases.reduce((sum, c) => {
+        const reg = c.registration_fee || 350
+        // Only add coldroom fee for discharged cases
+        const cold = c.status === 'DISCHARGED' ? (c.coldroom_fee || 0) : 0
+        return sum + reg + cold
+    }, 0)
 
     // Outstanding = Billed - Collected
     // This provides a consistent view avoiding individual row discrepancies
@@ -67,15 +74,42 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
         ? casesWithColdroom.reduce((sum, c) => sum + (c.coldroom_fee || 0), 0) / casesWithColdroom.length
         : 0
 
-    // This month's payments
+    // This month's revenue = Registration (admissions this month) + Coldroom (discharges this month)
+    const monthCases = cases.filter(c => {
+        const admDate = c.admission_date ? new Date(c.admission_date) : null
+        const disDate = c.discharge_date ? new Date(c.discharge_date) : null
+        const monthStart = new Date(startOfMonth)
+        const monthEnd = new Date(endOfMonth)
+
+        // Include if admitted this month OR discharged this month
+        const admittedThisMonth = admDate && admDate >= monthStart && admDate <= monthEnd
+        const dischargedThisMonth = disDate && disDate >= monthStart && disDate <= monthEnd
+        return admittedThisMonth || dischargedThisMonth
+    })
+
+    const monthRevenue = monthCases.reduce((sum, c) => {
+        const admDate = c.admission_date ? new Date(c.admission_date) : null
+        const disDate = c.discharge_date ? new Date(c.discharge_date) : null
+        const monthStart = new Date(startOfMonth)
+        const monthEnd = new Date(endOfMonth)
+
+        let amount = 0
+        // Registration if admitted this month
+        if (admDate && admDate >= monthStart && admDate <= monthEnd) {
+            amount += (c.registration_fee || 350)
+        }
+        // Coldroom if discharged this month
+        if (c.status === 'DISCHARGED' && disDate && disDate >= monthStart && disDate <= monthEnd) {
+            amount += (c.coldroom_fee || 0)
+        }
+        return sum + amount
+    }, 0)
+
+    // Count of payments this month (for display)
     const monthPayments = payments.filter(p => {
         const paidDate = new Date(p.paid_on)
         return paidDate >= new Date(startOfMonth) && paidDate <= new Date(endOfMonth)
     })
-    const monthRevenue = monthPayments.reduce((sum, p) => {
-        if (p.allocation === 'EMBALMING') return sum
-        return sum + (p.amount || 0)
-    }, 0)
 
     // Payment method breakdown
     const methodBreakdown = payments.reduce((acc, p) => {
@@ -83,11 +117,13 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
         return acc
     }, {} as Record<string, number>)
 
-    // Allocation breakdown
-    const allocationBreakdown = payments.reduce((acc, p) => {
-        acc[p.allocation] = (acc[p.allocation] || 0) + p.amount
-        return acc
-    }, {} as Record<string, number>)
+    // Allocation breakdown - calculated from cases, not payments
+    // REGISTRATION = sum of registration fees (all cases)
+    // COLDROOM = sum of coldroom fees (discharged cases only) - matches Total Billed
+    const allocationBreakdown: Record<string, number> = {
+        REGISTRATION: cases.reduce((sum, c) => sum + (c.registration_fee || 350), 0),
+        COLDROOM: cases.filter(c => c.status === 'DISCHARGED').reduce((sum, c) => sum + (c.coldroom_fee || 0), 0),
+    }
 
     // Average storage days
     const casesWithStorageDays = cases.filter(c => c.storage_days > 0)
@@ -237,11 +273,11 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
                         <CreditCard className="h-5 w-5 text-amber-600" />
                         Revenue by Allocation
                     </CardTitle>
-                    <CardDescription>How payments are allocated</CardDescription>
+                    <CardDescription>Revenue breakdown by fee type</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid gap-4 md:grid-cols-3">
-                        {['REGISTRATION', 'COLDROOM', 'GENERAL'].map((allocation) => (
+                    <div className="grid gap-4 md:grid-cols-2">
+                        {['REGISTRATION', 'COLDROOM'].map((allocation) => (
                             <div key={allocation} className="text-center p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
                                 <p className="text-sm text-muted-foreground">{allocation}</p>
                                 <p className="text-xl font-bold mt-1">GHS {(allocationBreakdown[allocation] || 0).toFixed(2)}</p>
