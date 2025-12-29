@@ -9,7 +9,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table'
-import { FileBarChart, TrendingUp, Users, DollarSign, Calendar, Wallet, CreditCard } from 'lucide-react'
+import { FileBarChart, TrendingUp, Users, DollarSign, Calendar, Wallet, CreditCard, Truck } from 'lucide-react'
 import type { DeceasedCase, Payment } from '@/lib/types'
 import { resolveBranch } from '@/lib/branch-resolver'
 import { notFound } from 'next/navigation'
@@ -134,6 +134,11 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
         ? Math.round(casesWithStorageDays.reduce((sum, c) => sum + c.storage_days, 0) / casesWithStorageDays.length)
         : 0
 
+    // Total Ambulance Cost (from discharged cases) - tracked separately, not added to revenue
+    const totalAmbulanceCost = cases
+        .filter(c => c.status === 'DISCHARGED' && c.ambulance_cost)
+        .reduce((sum, c) => sum + (c.ambulance_cost || 0), 0)
+
     return (
         <div className="space-y-6 p-8">
             {/* Header */}
@@ -143,7 +148,7 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
             </div>
 
             {/* Key Metrics */}
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
                 <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium text-blue-700">This Month&apos;s Revenue</CardTitle>
@@ -185,6 +190,17 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
                     <CardContent>
                         <div className="text-2xl font-bold text-purple-800">{avgStorageDays} days</div>
                         <p className="text-xs text-purple-600">Per case</p>
+                    </CardContent>
+                </Card>
+
+                <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium text-orange-700">Ambulance Cost</CardTitle>
+                        <Truck className="h-4 w-4 text-orange-600" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-2xl font-bold text-orange-800">GHS {totalAmbulanceCost.toFixed(2)}</div>
+                        <p className="text-xs text-orange-600">Total cost (Separate)</p>
                     </CardContent>
                 </Card>
             </div>

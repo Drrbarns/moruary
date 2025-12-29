@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Loader2, LogOut, Printer } from "lucide-react"
+import { Loader2, LogOut, Printer, Truck } from "lucide-react"
 import { toast } from "sonner"
 import { createClient } from "@/utils/supabase/client"
 import { useRouter } from "next/navigation"
@@ -46,6 +46,11 @@ export function DischargeDialog({
     const [dischargeDate, setDischargeDate] = useState(new Date().toISOString().split('T')[0])
     const [showReceipt, setShowReceipt] = useState(false)
 
+    // Ambulance information (optional)
+    const [ambulanceNumber, setAmbulanceNumber] = useState('')
+    const [ambulanceDriverName, setAmbulanceDriverName] = useState('')
+    const [ambulanceCost, setAmbulanceCost] = useState('')
+
     // Calculations
     const start = new Date(admissionDate)
     const end = new Date(dischargeDate)
@@ -74,6 +79,9 @@ export function DischargeDialog({
                     coldroom_fee: storageFee,
                     total_bill: newTotalBill,
                     balance: outstanding,
+                    ambulance_number: ambulanceNumber || null,
+                    ambulance_driver_name: ambulanceDriverName || null,
+                    ambulance_cost: ambulanceCost ? parseFloat(ambulanceCost) : null,
                     updated_at: new Date().toISOString()
                 })
                 .eq('id', caseId)
@@ -160,6 +168,14 @@ export function DischargeDialog({
                         <span>BALANCE DUE:</span>
                         <span>GHS ${outstanding.toFixed(2)}</span>
                     </div>
+                    
+                    ${ambulanceNumber || ambulanceDriverName || ambulanceCost ? `
+                    <div class="divider"></div>
+                    <h3>AMBULANCE INFORMATION</h3>
+                    ${ambulanceNumber ? `<div class="row"><span>Ambulance No:</span><span>${ambulanceNumber}</span></div>` : ''}
+                    ${ambulanceDriverName ? `<div class="row"><span>Driver Name:</span><span>${ambulanceDriverName}</span></div>` : ''}
+                    ${ambulanceCost ? `<div class="row"><span>Ambulance Cost:</span><span>GHS ${parseFloat(ambulanceCost).toFixed(2)}</span></div>` : ''}
+                    ` : ''}
                     
                     <div class="footer">
                         <p>.............................................</p>
@@ -262,6 +278,45 @@ export function DischargeDialog({
                         <div className="flex justify-between font-bold text-red-600 pt-2 border-t border-slate-200">
                             <span>Balance Due:</span>
                             <span>GHS {outstanding.toFixed(2)}</span>
+                        </div>
+                    </div>
+
+                    {/* Ambulance Information Section */}
+                    <div className="border-t pt-4 mt-4">
+                        <div className="flex items-center gap-2 mb-3">
+                            <Truck className="h-4 w-4 text-muted-foreground" />
+                            <Label className="text-sm font-medium">Ambulance Information (Optional)</Label>
+                        </div>
+                        <div className="space-y-3">
+                            <div className="grid grid-cols-2 gap-3">
+                                <div>
+                                    <Label className="text-xs text-muted-foreground">Ambulance Number</Label>
+                                    <Input
+                                        placeholder="e.g. GT-1234-20"
+                                        value={ambulanceNumber}
+                                        onChange={(e) => setAmbulanceNumber(e.target.value)}
+                                    />
+                                </div>
+                                <div>
+                                    <Label className="text-xs text-muted-foreground">Driver Name</Label>
+                                    <Input
+                                        placeholder="Driver's name"
+                                        value={ambulanceDriverName}
+                                        onChange={(e) => setAmbulanceDriverName(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <Label className="text-xs text-muted-foreground">Ambulance Cost (GHS)</Label>
+                                <Input
+                                    type="number"
+                                    step="0.01"
+                                    min="0"
+                                    placeholder="0.00"
+                                    value={ambulanceCost}
+                                    onChange={(e) => setAmbulanceCost(e.target.value)}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

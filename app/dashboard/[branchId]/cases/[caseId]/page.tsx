@@ -5,7 +5,7 @@ import { resolveBranch } from '@/lib/branch-resolver'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { ArrowLeft, Calendar, FileText, MapPin, Store, User, Phone, Clock, DollarSign, Plus, CreditCard, Receipt, Edit, Printer } from 'lucide-react'
+import { ArrowLeft, Calendar, FileText, MapPin, Store, User, Phone, Clock, DollarSign, Plus, CreditCard, Receipt, Edit, Printer, Truck } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import {
     Table,
@@ -340,6 +340,36 @@ export default async function CaseDetailsPage({ params }: PageProps) {
                                 </CardHeader>
                                 <CardContent>
                                     <p className="text-muted-foreground whitespace-pre-wrap">{deceased.notes}</p>
+                                </CardContent>
+                            </Card>
+                        )}
+
+                        {/* Ambulance Information - Only for Discharged Cases */}
+                        {deceased.status === 'DISCHARGED' && (deceased.ambulance_number || deceased.ambulance_driver_name || deceased.ambulance_cost) && (
+                            <Card className="md:col-span-2 border-orange-200 bg-orange-50/30">
+                                <CardHeader>
+                                    <CardTitle className="flex items-center gap-2">
+                                        <Truck className="h-5 w-5 text-orange-600" />
+                                        Ambulance Information
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="grid grid-cols-3 gap-4">
+                                        <div>
+                                            <p className="text-sm text-muted-foreground">Ambulance Number</p>
+                                            <p className="font-medium font-mono">{deceased.ambulance_number || '-'}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-muted-foreground">Driver Name</p>
+                                            <p className="font-medium">{deceased.ambulance_driver_name || '-'}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-muted-foreground">Cost</p>
+                                            <p className="font-medium text-orange-600">
+                                                {deceased.ambulance_cost ? `GHS ${deceased.ambulance_cost.toFixed(2)}` : '-'}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </CardContent>
                             </Card>
                         )}

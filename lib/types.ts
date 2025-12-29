@@ -53,6 +53,10 @@ export interface DeceasedCase {
     coldroom_receipt_no?: string
     discharge_receipt_no?: string
     notes?: string
+    // Ambulance information (for discharge)
+    ambulance_number?: string
+    ambulance_driver_name?: string
+    ambulance_cost?: number
     created_at: string
     updated_at: string
     created_by?: string
