@@ -117,8 +117,8 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
         return acc
     }, {} as Record<string, number>)
 
-    // Total payments (sum of all payment records)
-    const totalPayments = payments.reduce((sum, p) => sum + p.amount, 0)
+    // Total from all payments (for percentage calculation)
+    const totalPayments = Object.values(methodBreakdown).reduce((sum, amt) => sum + amt, 0)
 
     // Allocation breakdown - calculated from cases, not payments
     // REGISTRATION = sum of registration fees (all cases)
