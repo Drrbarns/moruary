@@ -44,7 +44,7 @@ export function CaseActions({ caseItem, branchCode, branchId }: CaseActionsProps
                     <>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem asChild>
-                            <Link href={`/dashboard/${branchCode}/cases/${caseItem.id}/discharge`}>
+                            <Link href={`/dashboard/${branchCode}/cases/${caseItem.id}`}>
                                 <LogOut className="mr-2 h-4 w-4 text-orange-600" />
                                 <span className="text-orange-600">Discharge Case</span>
                             </Link>
