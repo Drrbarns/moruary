@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import Link from 'next/link';
 import { resolveBranch } from "@/lib/branch-resolver";
 import { notFound } from "next/navigation";
+import { getRegistrationFee } from "@/lib/pricing";
 import { DashboardDateFilter } from "@/components/dashboard/date-filter";
 
 export default async function DashboardPage({
@@ -179,7 +180,7 @@ export default async function DashboardPage({
             (!rangeEndDate || admissionDate <= rangeEndDate)
         )
         if (admissionInRange) {
-            totalRevenue += (c.registration_fee || 350)
+            totalRevenue += (c.registration_fee || getRegistrationFee(branch.name, branch.code))
         }
 
         // Coldroom Fee: Only for DISCHARGED cases, if discharge is in period
@@ -198,7 +199,7 @@ export default async function DashboardPage({
         if (comparisonStartDate && comparisonEndDate) {
             // Registration in previous period
             if (admissionDate && admissionDate >= comparisonStartDate && admissionDate <= comparisonEndDate) {
-                previousRevenue += (c.registration_fee || 350)
+                previousRevenue += (c.registration_fee || getRegistrationFee(branch.name, branch.code))
             }
             // Coldroom in previous period (discharged cases only)
             if (c.status === 'DISCHARGED' && dischargeDate &&

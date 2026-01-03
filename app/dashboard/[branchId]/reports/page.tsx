@@ -12,6 +12,7 @@ import {
 import { FileBarChart, TrendingUp, Users, DollarSign, Calendar, Wallet, CreditCard, Truck } from 'lucide-react'
 import type { DeceasedCase, Payment } from '@/lib/types'
 import { resolveBranch } from '@/lib/branch-resolver'
+import { getRegistrationFee } from '@/lib/pricing'
 import { notFound } from 'next/navigation'
 
 export default async function ReportsPage({ params }: { params: Promise<{ branchId: string }> }) {
@@ -50,7 +51,7 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
     // Total Billed: Sum of Registration (350 or custom) + Coldroom Fees
     // We strictly exclude Embalming Fee (force 0) and ignore potentially dirty 'total_bill' column
     const totalBilled = cases.reduce((sum, c) => {
-        const reg = c.registration_fee || 350
+        const reg = c.registration_fee || getRegistrationFee(branch.name, branch.code)
         const cold = c.coldroom_fee || 0
         return sum + reg + cold
     }, 0)
@@ -58,7 +59,7 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
     // Total Collected = Registration Fees (all cases) + Coldroom Fees (discharged only)
     // Same formula as Dashboard Total Revenue
     const totalCollected = cases.reduce((sum, c) => {
-        const reg = c.registration_fee || 350
+        const reg = c.registration_fee || getRegistrationFee(branch.name, branch.code)
         // Only add coldroom fee for discharged cases
         const cold = c.status === 'DISCHARGED' ? (c.coldroom_fee || 0) : 0
         return sum + reg + cold
@@ -96,7 +97,7 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
         let amount = 0
         // Registration if admitted this month
         if (admDate && admDate >= monthStart && admDate <= monthEnd) {
-            amount += (c.registration_fee || 350)
+            amount += (c.registration_fee || getRegistrationFee(branch.name, branch.code))
         }
         // Coldroom if discharged this month
         if (c.status === 'DISCHARGED' && disDate && disDate >= monthStart && disDate <= monthEnd) {

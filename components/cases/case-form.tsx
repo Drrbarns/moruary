@@ -20,6 +20,7 @@ import { ArrowLeft, Loader2, Save, User, Phone, FileText, DollarSign } from 'luc
 import Link from 'next/link'
 import { toast } from 'sonner'
 import type { Branch } from '@/lib/types'
+import { getRegistrationFee } from '@/lib/pricing'
 
 interface CaseFormProps {
     branch: Branch
@@ -45,7 +46,7 @@ export function CaseForm({ branch, initialData, mode }: CaseFormProps) {
         relative_name: initialData?.relative_name || '',
         relative_contact: initialData?.relative_contact || '',
         relative_contact_secondary: initialData?.relative_contact_secondary || '',
-        registration_fee: initialData?.registration_fee || 350,
+        registration_fee: initialData?.registration_fee || getRegistrationFee(branch?.name, branch?.code),
         embalming_fee: initialData?.embalming_fee || 50,
         coldroom_fee: 0,
         initial_deposit: initialData?.total_paid || 0,

@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 
 export function SiteFooter() {
     return (
@@ -6,7 +7,15 @@ export function SiteFooter() {
             <div className="container mx-auto px-4">
                 <div className="grid md:grid-cols-4 gap-8 mb-8">
                     <div className="col-span-1 md:col-span-2">
-                        <h2 className="text-white text-xl font-bold mb-4">Ampah Prah Mortuary</h2>
+                        <Link href="/" className="inline-block mb-4 bg-white p-2 rounded-lg">
+                            <Image
+                                src="/images/ampah-logo.png"
+                                alt="Ampah Prah Mortuary"
+                                width={200}
+                                height={60}
+                                className="h-12 w-auto object-contain"
+                            />
+                        </Link>
                         <p className="max-w-md">
                             Providing dignified, professional, and compassionate mortuary services to families in Asanteman, Asuom, and beyond. We are here to support you in your time of need.
                         </p>

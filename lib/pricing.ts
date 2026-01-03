@@ -8,6 +8,25 @@ export const PRICING = {
     }
 } as const;
 
+export function getColdRoomRate(type: 'Normal' | 'VIP' = 'Normal', branchName: string = '', branchCode: string = '') {
+    // Check for Asanteman Branch specifics
+    const identifier = (branchName + '|' + branchCode).toUpperCase();
+    if (identifier.includes('ASANTEMAN')) {
+        return type === 'VIP' ? 30 : 15;
+    }
+    // Default (Asuom, etc.)
+    return type === 'VIP' ? PRICING.COLD_ROOM_DAILY_RATE.VIP : PRICING.COLD_ROOM_DAILY_RATE.NORMAL;
+}
+
+export function getRegistrationFee(branchName: string = '', branchCode: string = '') {
+    const identifier = (branchName + '|' + branchCode).toUpperCase();
+    if (identifier.includes('ASANTEMAN')) {
+        return 430;
+    }
+    return PRICING.REGISTRATION_FEE;
+}
+
+
 export function calculatedaysInStorage(admissionDate: string | Date, endDate: string | Date = new Date()): number {
     const start = new Date(admissionDate);
     const end = new Date(endDate);
@@ -22,14 +41,15 @@ export function calculateProjectedBill(
     existingFees: {
         registration?: number,
         embalming?: number
-    } = {}
+    } = {},
+    branchContext?: { name?: string, code?: string }
 ) {
     const days = calculatedaysInStorage(admissionDate);
-    const dailyRate = type === 'VIP' ? PRICING.COLD_ROOM_DAILY_RATE.VIP : PRICING.COLD_ROOM_DAILY_RATE.NORMAL;
+    const dailyRate = getColdRoomRate(type, branchContext?.name, branchContext?.code);
 
     const coldRoomFee = days * dailyRate;
-    const registrationFee = existingFees.registration ?? PRICING.REGISTRATION_FEE;
-    const embalmingFee = 0; // Forced to 0 as per request to remove it system-wide
+    const registrationFee = existingFees.registration ?? getRegistrationFee(branchContext?.name, branchContext?.code);
+    const embalmingFee = 0; // Forced to 0
 
     return {
         days,
@@ -39,7 +59,6 @@ export function calculateProjectedBill(
         embalmingFee,
         baseTotal: registrationFee + embalmingFee,
         total: coldRoomFee + registrationFee + embalmingFee,
-        // Outstanding total excludes registration (paid at admission)
         outstandingTotal: coldRoomFee + embalmingFee
     };
 }

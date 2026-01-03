@@ -18,7 +18,7 @@ import { toast } from "sonner"
 import { createClient } from "@/utils/supabase/client"
 import { useRouter } from "next/navigation"
 import { differenceInCalendarDays } from "date-fns"
-import { PRICING } from '@/lib/pricing'
+import { PRICING, getColdRoomRate } from '@/lib/pricing'
 
 interface DischargeDialogProps {
     caseId: string
@@ -27,6 +27,8 @@ interface DischargeDialogProps {
     currentTotalBill: number
     totalPaid: number
     branchId: string
+    branchName?: string // Added
+    branchCode?: string // Added
     tagNo: string
     name: string
 }
@@ -38,6 +40,8 @@ export function DischargeDialog({
     currentTotalBill,
     totalPaid,
     branchId,
+    branchName,
+    branchCode,
     tagNo,
     name
 }: DischargeDialogProps) {
@@ -61,7 +65,7 @@ export function DischargeDialog({
     // Ensure at least 1 day counts
     const days = Math.max(1, differenceInCalendarDays(end, start))
 
-    const rate = caseType === 'VIP' ? PRICING.COLD_ROOM_DAILY_RATE.VIP : PRICING.COLD_ROOM_DAILY_RATE.NORMAL
+    const rate = getColdRoomRate(caseType as 'Normal' | 'VIP', branchName, branchCode)
     const storageFee = days * rate
 
     // Note: currentTotalBill includes Reg + Emb (calculated at admission)

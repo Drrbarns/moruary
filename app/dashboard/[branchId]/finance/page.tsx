@@ -17,10 +17,11 @@ import type { Payment, DeceasedCase, BankTransaction, Expense } from '@/lib/type
 import { AddPaymentDialog } from '@/components/finance/add-payment-dialog'
 import { AddBankTransactionDialog } from '@/components/finance/add-bank-transaction-dialog'
 import { AddExpenseDialog } from '@/components/finance/add-expense-dialog'
+import { DeleteExpenseButton } from '@/components/finance/delete-expense-button'
 import { Toaster } from '@/components/ui/sonner'
 import { resolveBranch } from '@/lib/branch-resolver'
 import { notFound } from 'next/navigation'
-import { PRICING } from '@/lib/pricing'
+import { PRICING, getRegistrationFee } from '@/lib/pricing'
 
 const methodColors: Record<string, string> = {
     CASH: 'bg-green-100 text-green-800',
@@ -89,7 +90,7 @@ export default async function FinancePage({
     // Fetch All Cases for Total Billed stats
     const { data: allCasesData } = await supabase
         .from('deceased_cases')
-        .select('id, total_bill, coldroom_fee, status')
+        .select('id, total_bill, coldroom_fee, status, registration_fee')
         .eq('branch_id', branch.id)
 
     const allCases = (allCasesData || [])
@@ -106,9 +107,10 @@ export default async function FinancePage({
         return sum + (p.amount || 0)
     }, 0)
 
-    // Total Registration = All Cases * 350
-    // Logic: Every case implies a registration fee, paid or not.
-    const totalRegistration = allCases.length * PRICING.REGISTRATION_FEE
+    // Total Registration = Sum of registration_fee. Fallback to branch default if missing.
+    const totalRegistration = allCases.reduce((sum, c: any) => {
+        return sum + (c.registration_fee || getRegistrationFee(branch.name, branch.code))
+    }, 0)
 
     // Total Coldroom = Sum of coldroom_fee from all cases
     const totalColdroom = allCases.reduce((sum, c) => sum + (c.coldroom_fee || 0), 0)
@@ -379,12 +381,13 @@ export default async function FinancePage({
                                 <TableHead className="font-semibold">Description</TableHead>
                                 <TableHead className="font-semibold">Recorded By</TableHead>
                                 <TableHead className="font-semibold text-right">Amount (GHS)</TableHead>
+                                <TableHead className="w-[50px]"></TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {expenses.length === 0 ? (
                                 <TableRow>
-                                    <TableCell colSpan={5} className="h-32 text-center text-muted-foreground">
+                                    <TableCell colSpan={6} className="h-32 text-center text-muted-foreground">
                                         <div className="flex flex-col items-center justify-center">
                                             <MinusCircle className="h-8 w-8 mb-2 opacity-50" />
                                             <p>No expenses recorded yet</p>
@@ -408,6 +411,9 @@ export default async function FinancePage({
                                         </TableCell>
                                         <TableCell className="text-right font-bold text-red-600">
                                             -{expense.amount.toFixed(2)}
+                                        </TableCell>
+                                        <TableCell>
+                                            <DeleteExpenseButton expenseId={expense.id} />
                                         </TableCell>
                                     </TableRow>
                                 ))

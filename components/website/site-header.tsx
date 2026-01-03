@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { createClient } from "@/utils/supabase/server"
@@ -9,9 +10,15 @@ export async function SiteHeader() {
     return (
         <header className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm">
             <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-                <Link href="/" className="font-bold text-2xl text-slate-900 tracking-tight flex items-center gap-2">
-                    <div className="h-8 w-8 bg-red-600 rounded-lg flex items-center justify-center text-white font-serif">A</div>
-                    <span>Ampah Prah <span className="text-red-700">Mortuary</span></span>
+                <Link href="/" className="flex items-center gap-2">
+                    <Image
+                        src="/images/ampah-logo.png"
+                        alt="Ampah Prah Mortuary"
+                        width={220}
+                        height={60}
+                        className="h-14 w-auto object-contain"
+                        priority
+                    />
                 </Link>
 
                 <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">

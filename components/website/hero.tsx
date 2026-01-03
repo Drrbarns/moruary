@@ -18,7 +18,7 @@ export function Hero() {
                     className="relative w-full h-full"
                 >
                     <Image
-                        src="/images/hero-bg.jpg"
+                        src="/images/garden-hero.jpg"
                         alt="Serene Atmosphere"
                         fill
                         className="object-cover opacity-60"
