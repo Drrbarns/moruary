@@ -21,7 +21,7 @@ export function LocationsContact() {
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-slate-900 text-lg">Asanteman Branch</h4>
-                                    <p className="text-slate-600">Main Road, Asanteman</p>
+                                    <p className="text-slate-600">Asanteman near Morfram junction</p>
                                     <p className="text-sm text-slate-500 mt-1">Full Service Facility</p>
                                 </div>
                             </div>
@@ -32,7 +32,7 @@ export function LocationsContact() {
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-slate-900 text-lg">Asuom Branch</h4>
-                                    <p className="text-slate-600">Near the Community Center, Asuom</p>
+                                    <p className="text-slate-600">Asuom near Apam river</p>
                                     <p className="text-sm text-slate-500 mt-1">Full Service Facility</p>
                                 </div>
                             </div>

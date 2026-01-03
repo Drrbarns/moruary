@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Sidebar } from '@/components/dashboard/sidebar'
 import type { Branch } from '@/lib/types'
+import Image from 'next/image'
 import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
@@ -64,7 +65,13 @@ export function DashboardLayoutClient({
                     >
                         <Menu className="h-6 w-6" />
                     </Button>
-                    <span className="font-bold text-lg">MORTUARY<span className="text-blue-500">SYS</span></span>
+                    <Image
+                        src="/images/ampah-logo.png"
+                        alt="Ampah Prah Mortuary"
+                        width={140}
+                        height={40}
+                        className="h-8 w-auto"
+                    />
                 </header>
 
                 <main className="flex-1 h-full">

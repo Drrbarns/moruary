@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import type { Branch } from '@/lib/types'
@@ -58,8 +59,14 @@ export function Sidebar({
 
     return (
         <div className={cn("flex flex-col h-screen border-r bg-slate-900 text-slate-300", className)}>
-            <div className="p-6 border-b border-slate-800">
-                <h1 className="font-bold text-xl text-white tracking-wider">MORTUARY<span className="text-blue-500">SYS</span></h1>
+            <div className="p-4 border-b border-slate-800">
+                <Image
+                    src="/images/ampah-logo.png"
+                    alt="Ampah Prah Mortuary"
+                    width={180}
+                    height={50}
+                    className="h-12 w-auto"
+                />
             </div>
 
             <div className="flex-1 py-6 flex flex-col gap-1 overflow-y-auto">

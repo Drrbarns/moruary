@@ -41,7 +41,7 @@ export function BranchesSection() {
                     >
                         <div className="relative h-64 md:h-80 w-full overflow-hidden">
                             <Image
-                                src="/images/asanteman-branch.jpg"
+                                src="/images/asanteman-branch-new.jpg"
                                 alt="Asanteman Branch"
                                 fill
                                 className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -63,7 +63,7 @@ export function BranchesSection() {
                                     </div>
                                     <div>
                                         <h5 className="font-semibold text-slate-900">Location</h5>
-                                        <p className="text-slate-600">Main Road, Asanteman</p>
+                                        <p className="text-slate-600">Asanteman near Morfram junction</p>
                                     </div>
                                 </div>
 
@@ -78,9 +78,11 @@ export function BranchesSection() {
                                 </div>
                             </div>
 
-                            <Button className="w-full bg-slate-900 hover:bg-slate-800 text-white gap-2 group-hover:bg-red-600 transition-colors">
-                                Get Directions <ArrowRight className="w-4 h-4" />
-                            </Button>
+                            <a href="tel:+233550420202" className="w-full">
+                                <Button className="w-full bg-slate-900 hover:bg-slate-800 text-white gap-2 group-hover:bg-red-600 transition-colors">
+                                    Get Directions <ArrowRight className="w-4 h-4" />
+                                </Button>
+                            </a>
                         </div>
                     </motion.div>
 
@@ -116,7 +118,7 @@ export function BranchesSection() {
                                     </div>
                                     <div>
                                         <h5 className="font-semibold text-slate-900">Location</h5>
-                                        <p className="text-slate-600">Near Community Center, Asuom</p>
+                                        <p className="text-slate-600">Asuom near Apam river</p>
                                     </div>
                                 </div>
 
@@ -131,9 +133,11 @@ export function BranchesSection() {
                                 </div>
                             </div>
 
-                            <Button className="w-full bg-slate-900 hover:bg-slate-800 text-white gap-2 group-hover:bg-red-600 transition-colors">
-                                Get Directions <ArrowRight className="w-4 h-4" />
-                            </Button>
+                            <a href="tel:+233550420202" className="w-full">
+                                <Button className="w-full bg-slate-900 hover:bg-slate-800 text-white gap-2 group-hover:bg-red-600 transition-colors">
+                                    Get Directions <ArrowRight className="w-4 h-4" />
+                                </Button>
+                            </a>
                         </div>
                     </motion.div>
                 </div>

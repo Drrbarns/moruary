@@ -18,8 +18,8 @@ export function Hero() {
                     className="relative w-full h-full"
                 >
                     <Image
-                        src="/images/garden-hero.jpg"
-                        alt="Serene Atmosphere"
+                        src="/images/hero-bg.jpg"
+                        alt="Ampah Prah Mortuary"
                         fill
                         className="object-cover opacity-60"
                         priority
