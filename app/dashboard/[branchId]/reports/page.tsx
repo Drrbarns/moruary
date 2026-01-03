@@ -112,13 +112,14 @@ export default async function ReportsPage({ params }: { params: Promise<{ branch
     })
 
     // Payment method breakdown
-    const methodBreakdown = payments.reduce((acc, p) => {
-        acc[p.method] = (acc[p.method] || 0) + p.amount
-        return acc
-    }, {} as Record<string, number>)
+    // We attribute the calculated total revenue to CASH as per user request
+    // This ignores legacy payment records to ensure consistency with Total Collected
+    const methodBreakdown: Record<string, number> = {
+        'CASH': totalCollected
+    }
 
     // Total from all payments (for percentage calculation)
-    const totalPayments = Object.values(methodBreakdown).reduce((sum, amt) => sum + amt, 0)
+    const totalPayments = totalCollected
 
     // Allocation breakdown - calculated from cases, not payments
     // REGISTRATION = sum of registration fees (all cases)
