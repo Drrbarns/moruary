@@ -18,6 +18,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { calculateProjectedBill, getRegistrationFee } from '@/lib/pricing'
 import { DischargeDialog } from "@/components/cases/discharge-dialog"
+import { DeleteCaseButton } from "@/components/cases/delete-case-button"
 
 interface PageProps {
     params: Promise<{
@@ -32,6 +33,14 @@ export default async function CaseDetailsPage({ params }: PageProps) {
 
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) redirect('/auth/login')
+
+    const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', user.id)
+        .single()
+
+    const isAdmin = profile?.role === 'admin' || profile?.role === 'super_admin'
 
     const branch = await resolveBranch(branchId)
     if (!branch) notFound()
@@ -125,6 +134,13 @@ export default async function CaseDetailsPage({ params }: PageProps) {
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
+                    {isAdmin && (
+                        <DeleteCaseButton
+                            caseId={deceased.id}
+                            branchCode={branch.code}
+                            caseName={deceased.name_of_deceased}
+                        />
+                    )}
                     {deceased.status === 'IN_CUSTODY' && (
                         <DischargeDialog
                             caseId={deceased.id}

@@ -22,16 +22,16 @@ export async function SiteHeader() {
                 </Link>
 
                 <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
-                    <Link href="#services" className="hover:text-red-600 transition-colors">Services</Link>
-                    <Link href="#branches" className="hover:text-red-600 transition-colors">Locations</Link>
-                    <Link href="#contact" className="hover:text-red-600 transition-colors">Contact</Link>
+                    <Link href="#services" className="hover:text-blue-600 transition-colors">Services</Link>
+                    <Link href="#branches" className="hover:text-blue-600 transition-colors">Locations</Link>
+                    <Link href="#contact" className="hover:text-blue-600 transition-colors">Contact</Link>
                 </nav>
 
                 <div className="flex items-center gap-4">
                     <div className="hidden md:block text-sm text-slate-500 text-right pr-4 border-r">
-                        <p className="text-xs font-semibold uppercase text-red-600">Emergency</p>
+                        <p className="text-xs font-semibold uppercase text-blue-600">Emergency</p>
                         <p className="font-mono font-bold text-black">
-                            <a href="tel:+233550420202" className="hover:text-red-600 transition-colors">+233 55 042 0202</a>
+                            <a href="tel:+233550420202" className="hover:text-blue-600 transition-colors">+233 55 042 0202</a>
                         </p>
                     </div>
                     {user ? (
@@ -40,7 +40,7 @@ export async function SiteHeader() {
                         </Link>
                     ) : (
                         <Link href="/auth/login">
-                            <Button className="bg-red-600 hover:bg-red-700 shadow-lg shadow-red-500/20">Staff Login</Button>
+                            <Button className="bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-500/20">Staff Login</Button>
                         </Link>
                     )}
                 </div>

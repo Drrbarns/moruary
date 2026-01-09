@@ -23,17 +23,17 @@ export function SiteFooter() {
                     <div>
                         <h3 className="text-white font-semibold mb-4">Quick Links</h3>
                         <ul className="space-y-2">
-                            <li><Link href="/" className="hover:text-red-400">Home</Link></li>
-                            <li><Link href="#services" className="hover:text-red-400">Services</Link></li>
-                            <li><Link href="#contact" className="hover:text-red-400">Contact Us</Link></li>
-                            <li><Link href="/auth/login" className="hover:text-red-400">Staff Portal</Link></li>
+                            <li><Link href="/" className="hover:text-blue-400">Home</Link></li>
+                            <li><Link href="#services" className="hover:text-blue-400">Services</Link></li>
+                            <li><Link href="#contact" className="hover:text-blue-400">Contact Us</Link></li>
+                            <li><Link href="/auth/login" className="hover:text-blue-400">Staff Portal</Link></li>
                         </ul>
                     </div>
                     <div>
                         <h3 className="text-white font-semibold mb-4">Contact</h3>
                         <ul className="space-y-2">
-                            <li><a href="tel:+233550420202" className="hover:text-red-400">+233 55 042 0202</a></li>
-                            <li><a href="tel:0208360777" className="hover:text-red-400">0208 360 777</a></li>
+                            <li><a href="tel:+233550420202" className="hover:text-blue-400">+233 55 042 0202</a></li>
+                            <li><a href="tel:0208360777" className="hover:text-blue-400">0208 360 777</a></li>
                             <li>Asanteman & Asuom</li>
                         </ul>
                     </div>

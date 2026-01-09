@@ -45,6 +45,15 @@ export default async function CasesPage({
     const { query } = await searchParams
     const supabase = await createClient()
 
+    const { data: { user } } = await supabase.auth.getUser()
+
+    // Check admin role
+    let isAdmin = false
+    if (user) {
+        const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+        isAdmin = profile?.role === 'admin' || profile?.role === 'super_admin'
+    }
+
     // Resolve branch from code or UUID
     const branch = await resolveBranch(branchId)
     if (!branch) notFound()
@@ -248,6 +257,7 @@ export default async function CasesPage({
                                                     caseItem={caseItem}
                                                     branchCode={branch.code}
                                                     branchId={branch.id}
+                                                    isAdmin={isAdmin}
                                                 />
                                             </TableCell>
                                         </TableRow>

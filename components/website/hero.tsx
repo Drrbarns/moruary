@@ -28,8 +28,8 @@ export function Hero() {
             </div>
 
             {/* Background Gradient & Effects */}
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-950/75 via-slate-900/70 to-red-950/60 z-0" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-red-500/20 via-transparent to-transparent z-0" />
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-950/75 via-slate-900/70 to-blue-950/60 z-0" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent z-0" />
             <div className="absolute inset-0 bg-grid-white/[0.03] bg-[length:50px_50px] z-0" />
 
             <div className="container relative mx-auto px-4 text-center max-w-5xl z-10">
@@ -37,9 +37,9 @@ export function Hero() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
-                    className="inline-flex items-center rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1 text-sm font-medium text-red-300 mb-8 backdrop-blur-xl"
+                    className="inline-flex items-center rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-sm font-medium text-blue-300 mb-8 backdrop-blur-xl"
                 >
-                    <span className="flex h-2 w-2 rounded-full bg-red-400 mr-2 animate-pulse"></span>
+                    <span className="flex h-2 w-2 rounded-full bg-blue-400 mr-2 animate-pulse"></span>
                     Serving Asanteman & Asuom
                 </motion.div>
 
@@ -50,7 +50,7 @@ export function Hero() {
                     className="text-5xl md:text-7xl font-bold tracking-tight mb-8 leading-tight font-serif"
                 >
                     Dignity, Respect, & <br className="hidden md:block" />
-                    <span className="text-red-400">Compassionate Care.</span>
+                    <span className="text-blue-400">Compassionate Care.</span>
                 </motion.h1>
 
                 <motion.p
@@ -69,7 +69,7 @@ export function Hero() {
                     className="flex flex-col sm:flex-row gap-4 justify-center items-center"
                 >
                     <Link href="#contact">
-                        <Button size="lg" className="bg-red-600 hover:bg-red-700 text-lg h-14 px-8 rounded-full shadow-lg shadow-red-900/20 w-full sm:w-auto transition-all hover:scale-105">
+                        <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-lg h-14 px-8 rounded-full shadow-lg shadow-blue-900/20 w-full sm:w-auto transition-all hover:scale-105">
                             <Phone className="mr-2 h-5 w-5" />
                             Contact Us Now
                         </Button>

@@ -10,7 +10,7 @@ export function BranchesSection() {
         <section className="py-24 bg-white relative overflow-hidden">
             {/* Background Decorative Elements */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-red-50/50 rounded-bl-[100px] -z-10" />
+                <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-blue-50/50 rounded-bl-[100px] -z-10" />
                 <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-slate-50/50 rounded-tr-[100px] -z-10" />
             </div>
 
@@ -22,7 +22,7 @@ export function BranchesSection() {
                     transition={{ duration: 0.6 }}
                     className="text-center max-w-3xl mx-auto mb-16"
                 >
-                    <h2 className="text-red-600 font-semibold tracking-wide uppercase text-sm mb-3">Our Locations</h2>
+                    <h2 className="text-blue-600 font-semibold tracking-wide uppercase text-sm mb-3">Our Locations</h2>
                     <h3 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6 font-serif">World-Class Facilities</h3>
                     <p className="text-lg text-slate-600">
                         We operate superior mortuary facilities designed to provide comfort, dignity, and peace of mind.
@@ -48,7 +48,7 @@ export function BranchesSection() {
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
                             <div className="absolute bottom-0 left-0 p-6">
-                                <span className="inline-block px-3 py-1 bg-red-600 text-white text-xs font-bold uppercase tracking-wider rounded-full mb-2">
+                                <span className="inline-block px-3 py-1 bg-blue-600 text-white text-xs font-bold uppercase tracking-wider rounded-full mb-2">
                                     Main Branch
                                 </span>
                                 <h4 className="text-white text-2xl font-bold font-serif">Asanteman Branch</h4>
@@ -58,8 +58,8 @@ export function BranchesSection() {
                         <div className="p-8 flex-1 flex flex-col">
                             <div className="space-y-4 mb-8 flex-1">
                                 <div className="flex items-start gap-4">
-                                    <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center shrink-0">
-                                        <MapPin className="h-5 w-5 text-red-600" />
+                                    <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
+                                        <MapPin className="h-5 w-5 text-blue-600" />
                                     </div>
                                     <div>
                                         <h5 className="font-semibold text-slate-900">Location</h5>
@@ -68,8 +68,8 @@ export function BranchesSection() {
                                 </div>
 
                                 <div className="flex items-start gap-4">
-                                    <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center shrink-0">
-                                        <Clock className="h-5 w-5 text-red-600" />
+                                    <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
+                                        <Clock className="h-5 w-5 text-blue-600" />
                                     </div>
                                     <div>
                                         <h5 className="font-semibold text-slate-900">Hours</h5>
@@ -79,7 +79,7 @@ export function BranchesSection() {
                             </div>
 
                             <a href="tel:+233550420202" className="w-full">
-                                <Button className="w-full bg-slate-900 hover:bg-slate-800 text-white gap-2 group-hover:bg-red-600 transition-colors">
+                                <Button className="w-full bg-slate-900 hover:bg-slate-800 text-white gap-2 group-hover:bg-blue-600 transition-colors">
                                     Get Directions <ArrowRight className="w-4 h-4" />
                                 </Button>
                             </a>
@@ -113,8 +113,8 @@ export function BranchesSection() {
                         <div className="p-8 flex-1 flex flex-col">
                             <div className="space-y-4 mb-8 flex-1">
                                 <div className="flex items-start gap-4">
-                                    <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center shrink-0">
-                                        <MapPin className="h-5 w-5 text-red-600" />
+                                    <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
+                                        <MapPin className="h-5 w-5 text-blue-600" />
                                     </div>
                                     <div>
                                         <h5 className="font-semibold text-slate-900">Location</h5>
@@ -123,8 +123,8 @@ export function BranchesSection() {
                                 </div>
 
                                 <div className="flex items-start gap-4">
-                                    <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center shrink-0">
-                                        <Clock className="h-5 w-5 text-red-600" />
+                                    <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
+                                        <Clock className="h-5 w-5 text-blue-600" />
                                     </div>
                                     <div>
                                         <h5 className="font-semibold text-slate-900">Hours</h5>
@@ -134,7 +134,7 @@ export function BranchesSection() {
                             </div>
 
                             <a href="tel:+233550420202" className="w-full">
-                                <Button className="w-full bg-slate-900 hover:bg-slate-800 text-white gap-2 group-hover:bg-red-600 transition-colors">
+                                <Button className="w-full bg-slate-900 hover:bg-slate-800 text-white gap-2 group-hover:bg-blue-600 transition-colors">
                                     Get Directions <ArrowRight className="w-4 h-4" />
                                 </Button>
                             </a>
