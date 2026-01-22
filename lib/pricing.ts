@@ -32,7 +32,7 @@ export function calculatedaysInStorage(admissionDate: string | Date, endDate: st
     const end = new Date(endDate);
     const diffTime = Math.abs(end.getTime() - start.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return Math.max(0, diffDays); // Ensure no negative days
+    return Math.max(0, diffDays) + 1; // Ensure no negative days and add 1 day buffer
 }
 
 export function calculateProjectedBill(
@@ -58,7 +58,8 @@ export function calculateProjectedBill(
         registrationFee,
         embalmingFee,
         baseTotal: registrationFee + embalmingFee,
-        total: coldRoomFee + registrationFee + embalmingFee,
+        // Registration fee is taken at registration and excluded from discharge total
+        total: coldRoomFee + embalmingFee, 
         outstandingTotal: coldRoomFee + embalmingFee
     };
 }

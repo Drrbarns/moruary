@@ -31,7 +31,7 @@ export function DischargeForm({ branch, caseData }: DischargeFormProps) {
     // Calculate storage days
     const admissionDate = caseData.admission_date ? new Date(caseData.admission_date) : new Date(caseData.created_at)
     const selectedDischargeDate = new Date(dischargeDate)
-    const storageDays = Math.ceil((selectedDischargeDate.getTime() - admissionDate.getTime()) / (1000 * 60 * 60 * 24))
+    const storageDays = Math.ceil((selectedDischargeDate.getTime() - admissionDate.getTime()) / (1000 * 60 * 60 * 24)) + 1
 
     const hasOutstandingBalance = caseData.balance > 0
 
