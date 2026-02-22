@@ -14,7 +14,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { ArrowLeft, Loader2, CheckCircle, AlertTriangle, Calendar, DollarSign } from 'lucide-react'
 import { toast } from 'sonner'
 import type { DeceasedCase, Branch } from '@/lib/types'
-import { calculateProjectedBill } from '@/lib/pricing'
+import { calculateProjectedBill, calculatedaysInStorage } from '@/lib/pricing'
 
 interface DischargeFormProps {
     branch: Branch
@@ -28,10 +28,8 @@ export function DischargeForm({ branch, caseData }: DischargeFormProps) {
     const [confirmed, setConfirmed] = useState(false)
     const [dischargeDate, setDischargeDate] = useState(new Date().toISOString().split('T')[0])
 
-    // Calculate storage days
     const admissionDate = caseData.admission_date ? new Date(caseData.admission_date) : new Date(caseData.created_at)
-    const selectedDischargeDate = new Date(dischargeDate)
-    const storageDays = Math.ceil((selectedDischargeDate.getTime() - admissionDate.getTime()) / (1000 * 60 * 60 * 24)) + 1
+    const storageDays = calculatedaysInStorage(admissionDate, dischargeDate)
 
     const hasOutstandingBalance = caseData.balance > 0
 
@@ -72,17 +70,17 @@ export function DischargeForm({ branch, caseData }: DischargeFormProps) {
         }
     }
 
-    // Calculate fees dynamically based on selected date
     const calculatedFees = calculateProjectedBill(
         admissionDate,
         (caseData.type as 'Normal' | 'VIP') || 'Normal',
         {
             registration: caseData.registration_fee,
-            embalming: caseData.embalming_fee // Should be 0 based on recent changes
-        }
+            embalming: caseData.embalming_fee
+        },
+        { name: branch.name, code: branch.code },
+        dischargeDate
     )
 
-    // We override the days with our locally calculated one to match the date picker
     const dailyRate = calculatedFees.dailyRate
     const currentStorageFee = storageDays * dailyRate
 

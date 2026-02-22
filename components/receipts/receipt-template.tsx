@@ -1,3 +1,4 @@
+'use client'
 
 import { Branch } from "@/lib/types"
 import { Separator } from "@/components/ui/separator"

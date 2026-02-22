@@ -63,7 +63,7 @@ export function BranchesSection() {
                                     </div>
                                     <div>
                                         <h5 className="font-semibold text-slate-900">Location</h5>
-                                        <p className="text-slate-600">Asanteman near Morfram junction</p>
+                                        <p className="text-slate-600">Near Moffram Junction</p>
                                     </div>
                                 </div>
 
@@ -118,7 +118,7 @@ export function BranchesSection() {
                                     </div>
                                     <div>
                                         <h5 className="font-semibold text-slate-900">Location</h5>
-                                        <p className="text-slate-600">Asuom near Apam river</p>
+                                        <p className="text-slate-600">Near Apam River</p>
                                     </div>
                                 </div>
 

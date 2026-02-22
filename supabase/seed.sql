@@ -10,9 +10,8 @@
 
 -- Step 1: Create Default Branches
 INSERT INTO branches (id, name, code, address, phone, is_active) VALUES
-  ('11111111-1111-1111-1111-111111111111', 'Asuom Branch', 'ASU', 'Near Community Center, Asuom', '0302123456', true),
-  ('22222222-2222-2222-2222-222222222222', 'Asanteman Branch', 'ASA', 'Main Road, Asanteman', '0322654321', true),
-  ('33333333-3333-3333-3333-333333333333', 'Takoradi Branch', 'TAK', '78 Market Circle, Takoradi', '0312789012', true)
+  ('11111111-1111-1111-1111-111111111111', 'Asuom Branch', 'ASU', 'Near Apam River', '0302123456', true),
+  ('22222222-2222-2222-2222-222222222222', 'Asanteman Branch', 'ASA', 'Near Moffram Junction', '0322654321', true)
 ON CONFLICT (code) DO NOTHING;
 
 -- Step 2: Create Admin User via Supabase Auth
@@ -71,8 +70,7 @@ ON CONFLICT (id) DO UPDATE SET
 -- Step 4: Assign admin to all branches (super_admin has access to all)
 INSERT INTO user_branch_assignments (user_id, branch_id, is_primary) VALUES
   ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '11111111-1111-1111-1111-111111111111', true),
-  ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '22222222-2222-2222-2222-222222222222', false),
-  ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '33333333-3333-3333-3333-333333333333', false)
+  ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '22222222-2222-2222-2222-222222222222', false)
 ON CONFLICT (user_id, branch_id) DO NOTHING;
 
 -- Step 5: Create a sample staff user
@@ -129,17 +127,64 @@ INSERT INTO user_branch_assignments (user_id, branch_id, is_primary) VALUES
   ('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', '11111111-1111-1111-1111-111111111111', true)
 ON CONFLICT (user_id, branch_id) DO NOTHING;
 
--- Step 6: Initialize receipt sequences for each branch
+-- Step 6: Create Asuom Branch Staff
+INSERT INTO auth.users (
+  id, instance_id, email, encrypted_password, email_confirmed_at,
+  created_at, updated_at, raw_app_meta_data, raw_user_meta_data,
+  is_super_admin, role, aud,
+  confirmation_token, recovery_token, email_change_token_new, email_change
+) VALUES (
+  'cccccccc-cccc-cccc-cccc-cccccccccccc',
+  '00000000-0000-0000-0000-000000000000',
+  'asuom.staff@amprahmortuary.com',
+  crypt('AsuomStaff@2026', gen_salt('bf')),
+  NOW(), NOW(), NOW(),
+  '{"provider": "email", "providers": ["email"]}',
+  '{"full_name": "Asuom Staff"}',
+  false, 'authenticated', 'authenticated', '', '', '', ''
+) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO profiles (id, full_name, phone, role, is_active)
+VALUES ('cccccccc-cccc-cccc-cccc-cccccccccccc', 'Asuom Staff', '', 'staff', true)
+ON CONFLICT (id) DO UPDATE SET role = 'staff', full_name = 'Asuom Staff';
+
+INSERT INTO user_branch_assignments (user_id, branch_id, is_primary) VALUES
+  ('cccccccc-cccc-cccc-cccc-cccccccccccc', '11111111-1111-1111-1111-111111111111', true)
+ON CONFLICT (user_id, branch_id) DO NOTHING;
+
+-- Step 7: Create Asanteman Branch Staff
+INSERT INTO auth.users (
+  id, instance_id, email, encrypted_password, email_confirmed_at,
+  created_at, updated_at, raw_app_meta_data, raw_user_meta_data,
+  is_super_admin, role, aud,
+  confirmation_token, recovery_token, email_change_token_new, email_change
+) VALUES (
+  'dddddddd-dddd-dddd-dddd-dddddddddddd',
+  '00000000-0000-0000-0000-000000000000',
+  'asanteman.staff@amprahmortuary.com',
+  crypt('AsantemanStaff@2026', gen_salt('bf')),
+  NOW(), NOW(), NOW(),
+  '{"provider": "email", "providers": ["email"]}',
+  '{"full_name": "Asanteman Staff"}',
+  false, 'authenticated', 'authenticated', '', '', '', ''
+) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO profiles (id, full_name, phone, role, is_active)
+VALUES ('dddddddd-dddd-dddd-dddd-dddddddddddd', 'Asanteman Staff', '', 'staff', true)
+ON CONFLICT (id) DO UPDATE SET role = 'staff', full_name = 'Asanteman Staff';
+
+INSERT INTO user_branch_assignments (user_id, branch_id, is_primary) VALUES
+  ('dddddddd-dddd-dddd-dddd-dddddddddddd', '22222222-2222-2222-2222-222222222222', true)
+ON CONFLICT (user_id, branch_id) DO NOTHING;
+
+-- Step 8: Initialize receipt sequences for each branch
 INSERT INTO receipt_sequences (branch_id, receipt_type, next_number) VALUES
   ('11111111-1111-1111-1111-111111111111', 'ADM', 1),
   ('11111111-1111-1111-1111-111111111111', 'PMT', 1),
   ('11111111-1111-1111-1111-111111111111', 'DISCHARGE', 1),
   ('22222222-2222-2222-2222-222222222222', 'ADM', 1),
   ('22222222-2222-2222-2222-222222222222', 'PMT', 1),
-  ('22222222-2222-2222-2222-222222222222', 'DISCHARGE', 1),
-  ('33333333-3333-3333-3333-333333333333', 'ADM', 1),
-  ('33333333-3333-3333-3333-333333333333', 'PMT', 1),
-  ('33333333-3333-3333-3333-333333333333', 'DISCHARGE', 1)
+  ('22222222-2222-2222-2222-222222222222', 'DISCHARGE', 1)
 ON CONFLICT (branch_id, receipt_type) DO NOTHING;
 
 -- =============================================
@@ -152,8 +197,12 @@ ON CONFLICT (branch_id, receipt_type) DO NOTHING;
 --   Email: admin@mortuary.com
 --   Password: Admin@123
 -- 
--- STAFF USER:
---   Email: staff@mortuary.com
---   Password: Staff@123
+-- ASUOM STAFF:
+--   Email: asuom.staff@amprahmortuary.com
+--   Password: AsuomStaff@2026
+--
+-- ASANTEMAN STAFF:
+--   Email: asanteman.staff@amprahmortuary.com
+--   Password: AsantemanStaff@2026
 -- 
 -- =============================================

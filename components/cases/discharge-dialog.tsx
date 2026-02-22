@@ -17,8 +17,7 @@ import { Loader2, LogOut, Printer, Truck } from "lucide-react"
 import { toast } from "sonner"
 import { createClient } from "@/utils/supabase/client"
 import { useRouter } from "next/navigation"
-import { differenceInCalendarDays } from "date-fns"
-import { PRICING, getColdRoomRate } from '@/lib/pricing'
+import { getColdRoomRate, calculatedaysInStorage } from '@/lib/pricing'
 
 interface DischargeDialogProps {
     caseId: string
@@ -55,15 +54,10 @@ export function DischargeDialog({
     const [ambulanceDriverName, setAmbulanceDriverName] = useState('')
     const [ambulanceCost, setAmbulanceCost] = useState('')
 
-    // Calculations
-    const start = new Date(admissionDate)
-    const end = new Date(dischargeDate)
-
     const supabase = createClient()
     const router = useRouter()
 
-    // Ensure at least 1 day counts
-    const days = Math.max(1, differenceInCalendarDays(end, start))
+    const days = calculatedaysInStorage(admissionDate, dischargeDate)
 
     const rate = getColdRoomRate(caseType as 'Normal' | 'VIP', branchName, branchCode)
     const storageFee = days * rate

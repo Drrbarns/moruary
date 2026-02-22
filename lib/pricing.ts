@@ -30,9 +30,11 @@ export function getRegistrationFee(branchName: string = '', branchCode: string =
 export function calculatedaysInStorage(admissionDate: string | Date, endDate: string | Date = new Date()): number {
     const start = new Date(admissionDate);
     const end = new Date(endDate);
+    start.setHours(0, 0, 0, 0);
+    end.setHours(0, 0, 0, 0);
     const diffTime = Math.abs(end.getTime() - start.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return Math.max(0, diffDays) + 1; // Ensure no negative days and add 1 day buffer
+    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+    return Math.max(1, diffDays);
 }
 
 export function calculateProjectedBill(
@@ -42,9 +44,10 @@ export function calculateProjectedBill(
         registration?: number,
         embalming?: number
     } = {},
-    branchContext?: { name?: string, code?: string }
+    branchContext?: { name?: string, code?: string },
+    endDate?: string | Date
 ) {
-    const days = calculatedaysInStorage(admissionDate);
+    const days = calculatedaysInStorage(admissionDate, endDate || new Date());
     const dailyRate = getColdRoomRate(type, branchContext?.name, branchContext?.code);
 
     const coldRoomFee = days * dailyRate;

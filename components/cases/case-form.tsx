@@ -115,11 +115,10 @@ export function CaseForm({ branch, initialData, mode }: CaseFormProps) {
                             branch_id: branch.id,
                             case_id: data.id,
                             amount: initialDeposit,
-                            method: 'CASH', // Default for initial
+                            method: 'CASH',
                             allocation: 'GENERAL',
-                            receipt_no: `RCT-${Date.now()}`, // Simple receipt generation
+                            receipt_no: `RCT-${Date.now()}`,
                             paid_on: new Date().toISOString(),
-                            notes: 'Initial Deposit at Admission'
                         })
 
                     if (paymentError) {

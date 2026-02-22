@@ -201,7 +201,8 @@ export default async function CasesPage({
                                             {
                                                 registration: caseItem.registration_fee || 350,
                                                 embalming: caseItem.embalming_fee || 0
-                                            }
+                                            },
+                                            { name: branch.name, code: branch.code }
                                         )
 
                                         // Logic: Balance = Coldroom Fee - (Total Paid - Registration)

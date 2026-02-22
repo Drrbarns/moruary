@@ -16,7 +16,7 @@ import {
     TableRow,
 } from '@/components/ui/table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { calculateProjectedBill, getRegistrationFee } from '@/lib/pricing'
+import { calculateProjectedBill, getRegistrationFee, calculatedaysInStorage } from '@/lib/pricing'
 import { DischargeDialog } from "@/components/cases/discharge-dialog"
 import { DeleteCaseButton } from "@/components/cases/delete-case-button"
 
@@ -68,14 +68,9 @@ export default async function CaseDetailsPage({ params }: PageProps) {
     // Assuming a simple charges table or just empty for now if not fully implemented
     const charges: any[] = []
 
-    // Calculate Projected Bill Logic
-    const admissionDate = deceased.admission_date ? new Date(deceased.admission_date) : new Date(deceased.created_at)
-    // If discharged, use discharge date. If active, use NOW() for projection
-    const endDate = deceased.discharge_date ? new Date(deceased.discharge_date) : new Date()
-
-    // Difference in time
-    const diffTime = Math.abs(endDate.getTime() - admissionDate.getTime())
-    const storageDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+    const admissionDate = deceased.admission_date || deceased.created_at
+    const endDate = deceased.discharge_date || new Date()
+    const storageDays = calculatedaysInStorage(admissionDate, endDate)
 
     const projected = calculateProjectedBill(
         admissionDate,
@@ -84,7 +79,8 @@ export default async function CaseDetailsPage({ params }: PageProps) {
             registration: deceased.registration_fee || 0,
             embalming: deceased.embalming_fee || 0
         },
-        { name: branch.name, code: branch.code }
+        { name: branch.name, code: branch.code },
+        endDate
     )
 
     // For active cases, we show the projected running total
@@ -195,7 +191,7 @@ export default async function CaseDetailsPage({ params }: PageProps) {
                 <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 border-purple-200">
                     <CardContent className="pt-6">
                         <div className="text-sm text-purple-600 font-medium">Storage Days</div>
-                        <div className="text-2xl font-bold text-purple-700">{Math.max(1, storageDays)} days</div>
+                        <div className="text-2xl font-bold text-purple-700">{storageDays} days</div>
                     </CardContent>
                 </Card>
             </div>
